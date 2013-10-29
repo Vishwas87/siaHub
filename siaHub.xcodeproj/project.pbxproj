@@ -7,9 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D00C899181FAD620038B6EC /* venduto_report_cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D00C898181FAD620038B6EC /* venduto_report_cell.xib */; };
+		4D00C89C181FB6D10038B6EC /* client_cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D00C89B181FB6D10038B6EC /* client_cell.xib */; };
+		4D00C89F181FC6310038B6EC /* show.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D00C89D181FC6310038B6EC /* show.png */; };
+		4D00C8A0181FC6310038B6EC /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D00C89E181FC6310038B6EC /* refresh.png */; };
+		4D024A3218198611005BA4B0 /* client_list.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3018198611005BA4B0 /* client_list.m */; };
+		4D024A3318198611005BA4B0 /* client_list.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D024A3118198611005BA4B0 /* client_list.xib */; };
+		4D024A52181A5D77005BA4B0 /* logging_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A39181A5D77005BA4B0 /* logging_mosq.c */; };
+		4D024A53181A5D77005BA4B0 /* memory_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3A181A5D77005BA4B0 /* memory_mosq.c */; };
+		4D024A54181A5D77005BA4B0 /* messages_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3B181A5D77005BA4B0 /* messages_mosq.c */; };
+		4D024A55181A5D77005BA4B0 /* mosquitto.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3C181A5D77005BA4B0 /* mosquitto.c */; };
+		4D024A56181A5D77005BA4B0 /* net_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3D181A5D77005BA4B0 /* net_mosq.c */; };
+		4D024A57181A5D77005BA4B0 /* read_handle_client.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3E181A5D77005BA4B0 /* read_handle_client.c */; };
+		4D024A58181A5D77005BA4B0 /* read_handle_shared.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3F181A5D77005BA4B0 /* read_handle_shared.c */; };
+		4D024A59181A5D77005BA4B0 /* read_handle.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A40181A5D77005BA4B0 /* read_handle.c */; };
+		4D024A5A181A5D77005BA4B0 /* send_client_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A41181A5D77005BA4B0 /* send_client_mosq.c */; };
+		4D024A5B181A5D77005BA4B0 /* send_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A42181A5D77005BA4B0 /* send_mosq.c */; };
+		4D024A5C181A5D77005BA4B0 /* thread_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A43181A5D77005BA4B0 /* thread_mosq.c */; };
+		4D024A5D181A5D77005BA4B0 /* util_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A44181A5D77005BA4B0 /* util_mosq.c */; };
+		4D024A5E181A5D77005BA4B0 /* will_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A45181A5D77005BA4B0 /* will_mosq.c */; };
+		4D024A61181A5D92005BA4B0 /* MosquittoClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A60181A5D92005BA4B0 /* MosquittoClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4D024A64181A5E19005BA4B0 /* mosquitto_message.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A63181A5E19005BA4B0 /* mosquitto_message.m */; };
+		4D024A67181A8AF3005BA4B0 /* client_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A66181A8AF3005BA4B0 /* client_cell.m */; };
+		4D024A6A181A9DA4005BA4B0 /* uncheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D024A68181A9DA4005BA4B0 /* uncheck.png */; };
+		4D024A6B181A9DA4005BA4B0 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D024A69181A9DA4005BA4B0 /* check.png */; };
+		4D024A72181AC4CE005BA4B0 /* venduto_report.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A70181AC4CE005BA4B0 /* venduto_report.m */; };
+		4D024A73181AC4CE005BA4B0 /* venduto_report.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D024A71181AC4CE005BA4B0 /* venduto_report.xib */; };
+		4D17C7E91816AFC100942F0F /* app.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D17C7E81816AFC100942F0F /* app.m */; };
+		4D17C7EB1816C57F00942F0F /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D17C7EA1816C57F00942F0F /* placeholder.png */; };
+		4D17C7EF1817B05700942F0F /* apps_list.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D17C7ED1817B05700942F0F /* apps_list.m */; };
+		4D17C7F01817B05700942F0F /* apps_list.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D17C7EE1817B05700942F0F /* apps_list.xib */; };
+		4D17CA541817B88700942F0F /* app_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D17CA531817B88700942F0F /* app_cell.m */; };
 		4DDB489E181678FA00993975 /* loginBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4DE4B7CC181665570027A06B /* loginBundle.bundle */; };
-		4DDB48AF18167F2500993975 /* app_page.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDB48AD18167F2500993975 /* app_page.m */; };
-		4DDB48B018167F2500993975 /* app_page.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDB48AE18167F2500993975 /* app_page.xib */; };
+		4DDB48B81816AB9000993975 /* concrete_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DDB48B61816AB9000993975 /* concrete_wall.png */; };
+		4DDB48B91816AB9000993975 /* concrete_wall@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DDB48B71816AB9000993975 /* concrete_wall@2X.png */; };
+		4DDB48BE1816AC3600993975 /* appslist_source.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDB48BD1816AC3600993975 /* appslist_source.m */; };
 		4DE4B793181665490027A06B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE4B792181665490027A06B /* Foundation.framework */; };
 		4DE4B795181665490027A06B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE4B794181665490027A06B /* CoreGraphics.framework */; };
 		4DE4B797181665490027A06B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE4B796181665490027A06B /* UIKit.framework */; };
@@ -23,6 +55,7 @@
 		4DE4B7B6181665490027A06B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DE4B7B4181665490027A06B /* InfoPlist.strings */; };
 		4DE4B7B8181665490027A06B /* siaHubTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE4B7B7181665490027A06B /* siaHubTests.m */; };
 		4DE4B7CD181665840027A06B /* liblogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE4B7C8181665570027A06B /* liblogin.a */; };
+		4DF4A183181EC54000360682 /* venduto_report_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF4A182181EC54000360682 /* venduto_report_cell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,9 +106,62 @@
 /* Begin PBXFileReference section */
 		261A815969A24A06912727BA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		48619A2044EC4F098C3B13D9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		4DDB48AC18167F2500993975 /* app_page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app_page.h; sourceTree = "<group>"; };
-		4DDB48AD18167F2500993975 /* app_page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = app_page.m; sourceTree = "<group>"; };
-		4DDB48AE18167F2500993975 /* app_page.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = app_page.xib; sourceTree = "<group>"; };
+		4D00C898181FAD620038B6EC /* venduto_report_cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = venduto_report_cell.xib; sourceTree = "<group>"; };
+		4D00C89B181FB6D10038B6EC /* client_cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = client_cell.xib; sourceTree = "<group>"; };
+		4D00C89D181FC6310038B6EC /* show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = show.png; sourceTree = "<group>"; };
+		4D00C89E181FC6310038B6EC /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		4D024A2F18198611005BA4B0 /* client_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = client_list.h; sourceTree = "<group>"; };
+		4D024A3018198611005BA4B0 /* client_list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = client_list.m; sourceTree = "<group>"; };
+		4D024A3118198611005BA4B0 /* client_list.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = client_list.xib; sourceTree = "<group>"; };
+		4D024A38181A5D77005BA4B0 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		4D024A39181A5D77005BA4B0 /* logging_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = logging_mosq.c; sourceTree = "<group>"; };
+		4D024A3A181A5D77005BA4B0 /* memory_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memory_mosq.c; sourceTree = "<group>"; };
+		4D024A3B181A5D77005BA4B0 /* messages_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = messages_mosq.c; sourceTree = "<group>"; };
+		4D024A3C181A5D77005BA4B0 /* mosquitto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mosquitto.c; sourceTree = "<group>"; };
+		4D024A3D181A5D77005BA4B0 /* net_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = net_mosq.c; sourceTree = "<group>"; };
+		4D024A3E181A5D77005BA4B0 /* read_handle_client.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = read_handle_client.c; sourceTree = "<group>"; };
+		4D024A3F181A5D77005BA4B0 /* read_handle_shared.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = read_handle_shared.c; sourceTree = "<group>"; };
+		4D024A40181A5D77005BA4B0 /* read_handle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = read_handle.c; sourceTree = "<group>"; };
+		4D024A41181A5D77005BA4B0 /* send_client_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = send_client_mosq.c; sourceTree = "<group>"; };
+		4D024A42181A5D77005BA4B0 /* send_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = send_mosq.c; sourceTree = "<group>"; };
+		4D024A43181A5D77005BA4B0 /* thread_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = thread_mosq.c; sourceTree = "<group>"; };
+		4D024A44181A5D77005BA4B0 /* util_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util_mosq.c; sourceTree = "<group>"; };
+		4D024A45181A5D77005BA4B0 /* will_mosq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = will_mosq.c; sourceTree = "<group>"; };
+		4D024A46181A5D77005BA4B0 /* dummypthread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dummypthread.h; sourceTree = "<group>"; };
+		4D024A47181A5D77005BA4B0 /* logging_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging_mosq.h; sourceTree = "<group>"; };
+		4D024A48181A5D77005BA4B0 /* memory_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_mosq.h; sourceTree = "<group>"; };
+		4D024A49181A5D77005BA4B0 /* messages_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messages_mosq.h; sourceTree = "<group>"; };
+		4D024A4A181A5D77005BA4B0 /* mosquitto_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mosquitto_internal.h; sourceTree = "<group>"; };
+		4D024A4B181A5D77005BA4B0 /* mosquitto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mosquitto.h; sourceTree = "<group>"; };
+		4D024A4C181A5D77005BA4B0 /* mqtt3_protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mqtt3_protocol.h; sourceTree = "<group>"; };
+		4D024A4D181A5D77005BA4B0 /* net_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = net_mosq.h; sourceTree = "<group>"; };
+		4D024A4E181A5D77005BA4B0 /* read_handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = read_handle.h; sourceTree = "<group>"; };
+		4D024A4F181A5D77005BA4B0 /* send_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_mosq.h; sourceTree = "<group>"; };
+		4D024A50181A5D77005BA4B0 /* util_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util_mosq.h; sourceTree = "<group>"; };
+		4D024A51181A5D77005BA4B0 /* will_mosq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = will_mosq.h; sourceTree = "<group>"; };
+		4D024A5F181A5D92005BA4B0 /* MosquittoClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosquittoClient.h; sourceTree = "<group>"; };
+		4D024A60181A5D92005BA4B0 /* MosquittoClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosquittoClient.m; sourceTree = "<group>"; };
+		4D024A62181A5E19005BA4B0 /* mosquitto_message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mosquitto_message.h; sourceTree = "<group>"; };
+		4D024A63181A5E19005BA4B0 /* mosquitto_message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mosquitto_message.m; sourceTree = "<group>"; };
+		4D024A65181A8AF3005BA4B0 /* client_cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = client_cell.h; sourceTree = "<group>"; };
+		4D024A66181A8AF3005BA4B0 /* client_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = client_cell.m; sourceTree = "<group>"; };
+		4D024A68181A9DA4005BA4B0 /* uncheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheck.png; sourceTree = "<group>"; };
+		4D024A69181A9DA4005BA4B0 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		4D024A6F181AC4CE005BA4B0 /* venduto_report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = venduto_report.h; sourceTree = "<group>"; };
+		4D024A70181AC4CE005BA4B0 /* venduto_report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = venduto_report.m; sourceTree = "<group>"; };
+		4D024A71181AC4CE005BA4B0 /* venduto_report.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = venduto_report.xib; sourceTree = "<group>"; };
+		4D17C7E71816AFC100942F0F /* app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app.h; sourceTree = "<group>"; };
+		4D17C7E81816AFC100942F0F /* app.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = app.m; sourceTree = "<group>"; };
+		4D17C7EA1816C57F00942F0F /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		4D17C7EC1817B05700942F0F /* apps_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apps_list.h; sourceTree = "<group>"; };
+		4D17C7ED1817B05700942F0F /* apps_list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = apps_list.m; sourceTree = "<group>"; };
+		4D17C7EE1817B05700942F0F /* apps_list.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = apps_list.xib; sourceTree = "<group>"; };
+		4D17CA521817B88700942F0F /* app_cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app_cell.h; sourceTree = "<group>"; };
+		4D17CA531817B88700942F0F /* app_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = app_cell.m; sourceTree = "<group>"; };
+		4DDB48B61816AB9000993975 /* concrete_wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = concrete_wall.png; sourceTree = "<group>"; };
+		4DDB48B71816AB9000993975 /* concrete_wall@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "concrete_wall@2X.png"; sourceTree = "<group>"; };
+		4DDB48BC1816AC3600993975 /* appslist_source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appslist_source.h; sourceTree = "<group>"; };
+		4DDB48BD1816AC3600993975 /* appslist_source.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = appslist_source.m; sourceTree = "<group>"; };
 		4DE4B78F181665490027A06B /* siaHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = siaHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE4B792181665490027A06B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4DE4B794181665490027A06B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -93,6 +179,8 @@
 		4DE4B7B5181665490027A06B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4DE4B7B7181665490027A06B /* siaHubTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = siaHubTests.m; sourceTree = "<group>"; };
 		4DE4B7C1181665570027A06B /* login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = login.xcodeproj; path = ../login/login.xcodeproj; sourceTree = "<group>"; };
+		4DF4A181181EC54000360682 /* venduto_report_cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = venduto_report_cell.h; sourceTree = "<group>"; };
+		4DF4A182181EC54000360682 /* venduto_report_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = venduto_report_cell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,12 +208,74 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D024A37181A5D42005BA4B0 /* Libmosquitto */ = {
+			isa = PBXGroup;
+			children = (
+				4D024A38181A5D77005BA4B0 /* config.h */,
+				4D024A39181A5D77005BA4B0 /* logging_mosq.c */,
+				4D024A3A181A5D77005BA4B0 /* memory_mosq.c */,
+				4D024A3B181A5D77005BA4B0 /* messages_mosq.c */,
+				4D024A3C181A5D77005BA4B0 /* mosquitto.c */,
+				4D024A3D181A5D77005BA4B0 /* net_mosq.c */,
+				4D024A3E181A5D77005BA4B0 /* read_handle_client.c */,
+				4D024A3F181A5D77005BA4B0 /* read_handle_shared.c */,
+				4D024A40181A5D77005BA4B0 /* read_handle.c */,
+				4D024A41181A5D77005BA4B0 /* send_client_mosq.c */,
+				4D024A42181A5D77005BA4B0 /* send_mosq.c */,
+				4D024A43181A5D77005BA4B0 /* thread_mosq.c */,
+				4D024A44181A5D77005BA4B0 /* util_mosq.c */,
+				4D024A45181A5D77005BA4B0 /* will_mosq.c */,
+				4D024A46181A5D77005BA4B0 /* dummypthread.h */,
+				4D024A47181A5D77005BA4B0 /* logging_mosq.h */,
+				4D024A48181A5D77005BA4B0 /* memory_mosq.h */,
+				4D024A49181A5D77005BA4B0 /* messages_mosq.h */,
+				4D024A4A181A5D77005BA4B0 /* mosquitto_internal.h */,
+				4D024A4B181A5D77005BA4B0 /* mosquitto.h */,
+				4D024A4C181A5D77005BA4B0 /* mqtt3_protocol.h */,
+				4D024A4D181A5D77005BA4B0 /* net_mosq.h */,
+				4D024A4E181A5D77005BA4B0 /* read_handle.h */,
+				4D024A4F181A5D77005BA4B0 /* send_mosq.h */,
+				4D024A50181A5D77005BA4B0 /* util_mosq.h */,
+				4D024A51181A5D77005BA4B0 /* will_mosq.h */,
+			);
+			name = Libmosquitto;
+			sourceTree = "<group>";
+		};
+		4D17C7E51816AFA700942F0F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4D17C7E71816AFC100942F0F /* app.h */,
+				4D17C7E81816AFC100942F0F /* app.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		4DDB48AA18167EF100993975 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4DDB48AC18167F2500993975 /* app_page.h */,
-				4DDB48AD18167F2500993975 /* app_page.m */,
-				4DDB48AE18167F2500993975 /* app_page.xib */,
+				4D024A5F181A5D92005BA4B0 /* MosquittoClient.h */,
+				4D024A60181A5D92005BA4B0 /* MosquittoClient.m */,
+				4DDB48BC1816AC3600993975 /* appslist_source.h */,
+				4DDB48BD1816AC3600993975 /* appslist_source.m */,
+				4D17C7EC1817B05700942F0F /* apps_list.h */,
+				4D17C7ED1817B05700942F0F /* apps_list.m */,
+				4D17C7EE1817B05700942F0F /* apps_list.xib */,
+				4D17CA521817B88700942F0F /* app_cell.h */,
+				4D17CA531817B88700942F0F /* app_cell.m */,
+				4D024A2F18198611005BA4B0 /* client_list.h */,
+				4D024A3018198611005BA4B0 /* client_list.m */,
+				4D024A3118198611005BA4B0 /* client_list.xib */,
+				4D024A62181A5E19005BA4B0 /* mosquitto_message.h */,
+				4D024A63181A5E19005BA4B0 /* mosquitto_message.m */,
+				4D024A65181A8AF3005BA4B0 /* client_cell.h */,
+				4D024A66181A8AF3005BA4B0 /* client_cell.m */,
+				4D00C89B181FB6D10038B6EC /* client_cell.xib */,
+				4D024A6F181AC4CE005BA4B0 /* venduto_report.h */,
+				4D024A70181AC4CE005BA4B0 /* venduto_report.m */,
+				4DF4A181181EC54000360682 /* venduto_report_cell.h */,
+				4D00C898181FAD620038B6EC /* venduto_report_cell.xib */,
+				4DF4A182181EC54000360682 /* venduto_report_cell.m */,
+				4D024A71181AC4CE005BA4B0 /* venduto_report.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -135,6 +285,29 @@
 			children = (
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		4DDB48BA1816AB9400993975 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				4D00C89D181FC6310038B6EC /* show.png */,
+				4D00C89E181FC6310038B6EC /* refresh.png */,
+				4D024A68181A9DA4005BA4B0 /* uncheck.png */,
+				4D024A69181A9DA4005BA4B0 /* check.png */,
+				4D17C7EA1816C57F00942F0F /* placeholder.png */,
+				4DDB48B61816AB9000993975 /* concrete_wall.png */,
+				4DDB48B71816AB9000993975 /* concrete_wall@2X.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		4DDB48BB1816AB9C00993975 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4D024A37181A5D42005BA4B0 /* Libmosquitto */,
+				4DDB48BA1816AB9400993975 /* Images */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		4DE4B786181665490027A06B = {
@@ -173,6 +346,8 @@
 		4DE4B798181665490027A06B /* siaHub */ = {
 			isa = PBXGroup;
 			children = (
+				4D17C7E51816AFA700942F0F /* Models */,
+				4DDB48BB1816AB9C00993975 /* Resources */,
 				4DDB48AB18167EFB00993975 /* Views */,
 				4DDB48AA18167EF100993975 /* Controllers */,
 				4DE4B7A1181665490027A06B /* AppDelegate.h */,
@@ -331,10 +506,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D00C8A0181FC6310038B6EC /* refresh.png in Resources */,
+				4D00C89C181FB6D10038B6EC /* client_cell.xib in Resources */,
+				4D00C89F181FC6310038B6EC /* show.png in Resources */,
 				4DE4B79D181665490027A06B /* InfoPlist.strings in Resources */,
+				4D17C7F01817B05700942F0F /* apps_list.xib in Resources */,
+				4D024A73181AC4CE005BA4B0 /* venduto_report.xib in Resources */,
+				4D024A3318198611005BA4B0 /* client_list.xib in Resources */,
+				4DDB48B91816AB9000993975 /* concrete_wall@2X.png in Resources */,
 				4DE4B7A5181665490027A06B /* Images.xcassets in Resources */,
-				4DDB48B018167F2500993975 /* app_page.xib in Resources */,
+				4D17C7EB1816C57F00942F0F /* placeholder.png in Resources */,
+				4D024A6B181A9DA4005BA4B0 /* check.png in Resources */,
+				4DDB48B81816AB9000993975 /* concrete_wall.png in Resources */,
 				4DDB489E181678FA00993975 /* loginBundle.bundle in Resources */,
+				4D024A6A181A9DA4005BA4B0 /* uncheck.png in Resources */,
+				4D00C899181FAD620038B6EC /* venduto_report_cell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,9 +572,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D024A67181A8AF3005BA4B0 /* client_cell.m in Sources */,
 				4DE4B7A3181665490027A06B /* AppDelegate.m in Sources */,
-				4DDB48AF18167F2500993975 /* app_page.m in Sources */,
+				4D17C7EF1817B05700942F0F /* apps_list.m in Sources */,
+				4DF4A183181EC54000360682 /* venduto_report_cell.m in Sources */,
+				4D024A72181AC4CE005BA4B0 /* venduto_report.m in Sources */,
+				4D024A52181A5D77005BA4B0 /* logging_mosq.c in Sources */,
+				4DDB48BE1816AC3600993975 /* appslist_source.m in Sources */,
+				4D024A5B181A5D77005BA4B0 /* send_mosq.c in Sources */,
+				4D024A59181A5D77005BA4B0 /* read_handle.c in Sources */,
+				4D17CA541817B88700942F0F /* app_cell.m in Sources */,
+				4D17C7E91816AFC100942F0F /* app.m in Sources */,
 				4DE4B79F181665490027A06B /* main.m in Sources */,
+				4D024A5E181A5D77005BA4B0 /* will_mosq.c in Sources */,
+				4D024A64181A5E19005BA4B0 /* mosquitto_message.m in Sources */,
+				4D024A56181A5D77005BA4B0 /* net_mosq.c in Sources */,
+				4D024A53181A5D77005BA4B0 /* memory_mosq.c in Sources */,
+				4D024A57181A5D77005BA4B0 /* read_handle_client.c in Sources */,
+				4D024A5D181A5D77005BA4B0 /* util_mosq.c in Sources */,
+				4D024A55181A5D77005BA4B0 /* mosquitto.c in Sources */,
+				4D024A5A181A5D77005BA4B0 /* send_client_mosq.c in Sources */,
+				4D024A5C181A5D77005BA4B0 /* thread_mosq.c in Sources */,
+				4D024A3218198611005BA4B0 /* client_list.m in Sources */,
+				4D024A54181A5D77005BA4B0 /* messages_mosq.c in Sources */,
+				4D024A61181A5D92005BA4B0 /* MosquittoClient.m in Sources */,
+				4D024A58181A5D77005BA4B0 /* read_handle_shared.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

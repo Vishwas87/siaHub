@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="apps_list">
+            <connections>
+                <outlet property="collectionView" destination="aJi-YC-pic" id="YRl-VI-f1b"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleAspectFit" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aJi-YC-pic">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" red="1" green="0.1699696117" blue="0.21793878899999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="sDZ-XE-h6c">
+                        <size key="itemSize" width="110" height="110"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="22" minY="22" maxX="22" maxY="22"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="zya-3z-SWt"/>
+                        <outlet property="delegate" destination="-1" id="Isq-SZ-W5W"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="aJi-YC-pic" firstAttribute="top" secondItem="1" secondAttribute="top" id="8S1-NA-k54"/>
+                <constraint firstAttribute="trailing" secondItem="aJi-YC-pic" secondAttribute="trailing" id="8jQ-Rb-1op"/>
+                <constraint firstAttribute="bottom" secondItem="aJi-YC-pic" secondAttribute="bottom" id="AF7-Or-kUp"/>
+                <constraint firstItem="aJi-YC-pic" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Mbn-O8-Mse"/>
+                <constraint firstAttribute="bottom" secondItem="aJi-YC-pic" secondAttribute="bottom" id="NdA-3j-0ek"/>
+                <constraint firstItem="aJi-YC-pic" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="t9T-C7-DIe"/>
+                <constraint firstItem="aJi-YC-pic" firstAttribute="top" secondItem="1" secondAttribute="top" id="ytc-mN-hLt"/>
+                <constraint firstAttribute="trailing" secondItem="aJi-YC-pic" secondAttribute="trailing" id="zlk-0A-cx8"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

@@ -7,17 +7,38 @@
 //
 
 #import "AppDelegate.h"
+#import <AdSupport/ASIdentifierManager.h>
+
+@interface AppDelegate()
+
+@property (assign,readwrite) int incrementalNumber;
+
+@end
 
 @implementation AppDelegate
+@synthesize mosquittoClient,navigation;
+
+
+-(int)getIncrementalInt
+{
+    return self.incrementalNumber++;
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.incrementalNumber = 0;
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"loginBundle" withExtension:@"bundle"]];
-    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"http://desktop.sianet.it/wrlogin"];
+    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"http://192.168.3.109/desktop.sianet.it/index.php/wrlogin"];
     [controller setDelegate:self];
+    
+    
+    
     self.window.rootViewController = controller;
     controller = NULL;
     
@@ -26,8 +47,54 @@
 }
 
 
+
+-(NSString*)getUniqueClientId
+{
+    // Do any additional setup after loading the view from its nib.
+    if (NSClassFromString(@"ASIdentifierManager")) {
+        return   [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    }
+    else
+    {
+        return [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    }
+}
+
+
 -(void)loginSuccess:(NSMutableDictionary*)response //Method executed after a succeful login
 {
+    
+    NSLog(@"response %@",response);
+    
+    if([[response objectForKey:@"RETURNCODE"] intValue] == 0){
+        
+        NSDictionary* retval = [response objectForKey:@"RETURNVALUES"];
+        NSLog(@"retval %@",[retval objectForKey:@"customer_code"]);
+        
+        if([[retval allKeys]containsObject:@"customer_code"]){
+
+        }
+        else{
+            UIAlertView * errorCustomer = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"NO CUSTOMER_CODE", NULL) message:NSLocalizedString(@"NO CUSTOMER_CODE MESSAGE", NULL) delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
+            //[errorCustomer show];
+        }
+    }
+    
+    
+    if(self.navigation == NULL){
+        //Se ancora non è stata avviata l'app
+        apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
+        self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
+    }
+    
+    mosquittoClient  = [[MosquittoClient alloc]initWithClientId:[self getUniqueClientId]];
+    [mosquittoClient setHost: @"192.168.1.106"];
+    [mosquittoClient setUsername:@"fabio4"];
+    [mosquittoClient setPassword:@"fabio"];
+    [mosquittoClient connect];
+    [self.window.rootViewController presentViewController:self.navigation animated:NO completion:^{
+        
+    }];
     
 }
 -(void)loginError:(id)errorStatus //Method executed after a failed login
