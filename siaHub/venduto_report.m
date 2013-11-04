@@ -10,11 +10,13 @@
 
 #import "AppDelegate.h"
 #import "venduto_report_cell.h"
+#import "venduto_report_header.h"
 @interface venduto_report ()
 
-@property (nonatomic,weak)IBOutlet UITableView *table;
-@property (nonatomic,weak) MosquittoClient *clientMosquitto;
+@property (nonatomic,strong)IBOutlet UITableView *table;
 
+@property (nonatomic,weak) MosquittoClient *clientMosquitto;
+@property (nonatomic,retain) NSMutableDictionary *activityIndicator;
 
 @end
 
@@ -33,8 +35,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.activityIndicator = [[NSMutableDictionary alloc]init];
         // Custom initialization
-
+      //  [self.table registerClass:[venduto_report_header class] forHeaderFooterViewReuseIdentifier:@"header"];
+       // [self.table setTranslatesAutoresizingMaskIntoConstraints:FALSE];
     }
     return self;
 }
@@ -197,8 +201,16 @@
     [cell.valore setText:value];
     
     
-   
+    if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"RESULT"] != NULL &&  [[[self.source objectForKey:key] objectForKey:@"RESULT"] count] -1 == indexPath.row)
+    {
+        
+        UIView *currentSection = [self.activityIndicator objectForKey:key];
+        //[(UIActivityIndicatorView*)[currentSection viewWithTag:2] stopAnimating];
+        currentSection = NULL;
+    }
 
+    
+    
     
     
     return cell;
@@ -208,8 +220,70 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return [[self.source allKeys]count];
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     return [[self.source allKeys]objectAtIndex:section];
+}*/
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+  
+
+    UIView *view;
+    NSString* key = [[self.source allKeys] objectAtIndex:section];
+    
+    
+    if([self.activityIndicator objectForKey:key] == NULL){
+            //Non sono stati ricevuti ancora dati
+            view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40.0f)];
+            
+            
+            
+            
+            
+            UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, tableView.frame.size.width * 0.70, 40.0f) ];
+            [title setText:[[self.source allKeys]objectAtIndex:section]];
+            
+            [view addSubview:title];
+            UIActivityIndicatorView * activity = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [activity setTag:2]; //Il + 100 serve a distinguerla da altre view
+            
+            
+            activity.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                         UIViewAutoresizingFlexibleRightMargin |
+                                         UIViewAutoresizingFlexibleTopMargin |
+                                         UIViewAutoresizingFlexibleBottomMargin);
+            
+            
+            [activity setHidesWhenStopped:TRUE];
+            
+            
+            float offSet = tableView.frame.size.width * 0.70;
+            float width = tableView.frame.size.width * 0.30;
+            
+            
+            
+            
+            activity.transform = CGAffineTransformMakeScale(1.20, 1.20);
+            activity.center = CGPointMake((width / 2) + offSet  , title.frame.size.height / 2);
+            
+            
+            
+            [activity setColor:[UIColor yellowColor]];
+            [activity startAnimating];
+            
+            [view addSubview:activity];
+            
+            CALayer * l = [view layer];
+            [l setMasksToBounds:YES];
+            [l setCornerRadius:10];
+            
+            [view setBackgroundColor:[UIColor lightGrayColor]];
+            [self.activityIndicator setObject:view forKey:key];
+        }
+
+
+    else view = [self.activityIndicator objectForKey:key];
+
+    return view;
 }
 
 

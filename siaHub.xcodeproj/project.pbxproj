@@ -41,6 +41,8 @@
 		4D17C7EF1817B05700942F0F /* apps_list.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D17C7ED1817B05700942F0F /* apps_list.m */; };
 		4D17C7F01817B05700942F0F /* apps_list.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D17C7EE1817B05700942F0F /* apps_list.xib */; };
 		4D17CA541817B88700942F0F /* app_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D17CA531817B88700942F0F /* app_cell.m */; };
+		4D67C04D1827BCA300CF5FEA /* venduto_report_header.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */; };
+		4D67C04F1827BCDA00CF5FEA /* venduto_report_header.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */; };
 		4DDB489E181678FA00993975 /* loginBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4DE4B7CC181665570027A06B /* loginBundle.bundle */; };
 		4DDB48B81816AB9000993975 /* concrete_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DDB48B61816AB9000993975 /* concrete_wall.png */; };
 		4DDB48B91816AB9000993975 /* concrete_wall@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DDB48B71816AB9000993975 /* concrete_wall@2X.png */; };
@@ -164,6 +166,9 @@
 		4D17C7EE1817B05700942F0F /* apps_list.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = apps_list.xib; sourceTree = "<group>"; };
 		4D17CA521817B88700942F0F /* app_cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app_cell.h; sourceTree = "<group>"; };
 		4D17CA531817B88700942F0F /* app_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = app_cell.m; sourceTree = "<group>"; };
+		4D67C04B1827BCA300CF5FEA /* venduto_report_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = venduto_report_header.h; sourceTree = "<group>"; };
+		4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = venduto_report_header.m; sourceTree = "<group>"; };
+		4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = venduto_report_header.xib; sourceTree = "<group>"; };
 		4DDB48B61816AB9000993975 /* concrete_wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = concrete_wall.png; sourceTree = "<group>"; };
 		4DDB48B71816AB9000993975 /* concrete_wall@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "concrete_wall@2X.png"; sourceTree = "<group>"; };
 		4DDB48BC1816AC3600993975 /* appslist_source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appslist_source.h; sourceTree = "<group>"; };
@@ -282,6 +287,9 @@
 				4D00C898181FAD620038B6EC /* venduto_report_cell.xib */,
 				4DF4A182181EC54000360682 /* venduto_report_cell.m */,
 				4D024A71181AC4CE005BA4B0 /* venduto_report.xib */,
+				4D67C04B1827BCA300CF5FEA /* venduto_report_header.h */,
+				4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */,
+				4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -515,6 +523,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D67C04F1827BCDA00CF5FEA /* venduto_report_header.xib in Resources */,
 				4D0D573E18216E47007AB070 /* check.png in Resources */,
 				4D00C89C181FB6D10038B6EC /* client_cell.xib in Resources */,
 				4D0D573918216E47007AB070 /* deSelectAll.png in Resources */,
@@ -592,6 +601,7 @@
 				4D024A52181A5D77005BA4B0 /* logging_mosq.c in Sources */,
 				4DDB48BE1816AC3600993975 /* appslist_source.m in Sources */,
 				4D024A5B181A5D77005BA4B0 /* send_mosq.c in Sources */,
+				4D67C04D1827BCA300CF5FEA /* venduto_report_header.m in Sources */,
 				4D024A59181A5D77005BA4B0 /* read_handle.c in Sources */,
 				4D17CA541817B88700942F0F /* app_cell.m in Sources */,
 				4D17C7E91816AFC100942F0F /* app.m in Sources */,

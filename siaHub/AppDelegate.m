@@ -63,7 +63,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"loginBundle" withExtension:@"bundle"]];
-    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"http://192.168.1.109/desktop.sianet.it/index.php/wrlogin"];
+    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"http://192.168.3.109/desktop.sianet.it/index.php/wrlogin"];
     [controller setDelegate:self];
     
     
@@ -96,7 +96,8 @@
     
     if(!mosquittoClient) mosquittoClient  = [[MosquittoClient alloc]initWithClientId:[self getUniqueClientId]];
     
-    [mosquittoClient setHost: @"85.39.190.50"];
+    //[mosquittoClient setHost: @"85.39.190.50"];
+    [mosquittoClient setHost: @"192.168.1.106"];
     [mosquittoClient setUsername:[self.params objectForKey:@"username"]];
     [mosquittoClient setPassword:[self.params objectForKey:@"password"]];
    // [mosquittoClient connect];

@@ -210,6 +210,13 @@
         //Si deve riaggiornare la lista
         self.reload = TRUE;
         [self.clients setObject:mosq_msg.body forKey:mosq_msg.sender];
+        
+        
+      /*  int row = [self.clientList numberOfRowsInSection:0];
+        [self.clientList beginUpdates];
+        [self.clientList insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:row inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.clientList endUpdates];*/
+        
     }
     //Si è disconnesso un client
     if([mosq_msg.name isEqualToString:@"DISCONNECTEDCLIENT"]){
@@ -217,8 +224,12 @@
         self.reload = TRUE;
         [self.clients removeObjectForKey:mosq_msg.sender];
     }
+  
+   [self.clientList reloadData];
     
-    [self.clientList reloadData];
+   
+
+    
 }
 - (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos{
     
@@ -278,7 +289,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
    
-    return [self.clients count];
+    return [[self.clients allKeys] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
