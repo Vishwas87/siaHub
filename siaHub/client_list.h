@@ -14,6 +14,7 @@
 @interface client_list : UIViewController<UITableViewDataSource,UITableViewDelegate,MosquittoClientDelegate,client_cell_protocol>
 {
     MosquittoClient *msq_tto;
+     NSTimer *timerRespond;
 }
-- (void)selectClient:(NSIndexPath *)indexPath temp:(client_cell *)temp;
+
 @end

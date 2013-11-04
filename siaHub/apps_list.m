@@ -32,6 +32,9 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 
 -(void)listReady:(NSMutableArray*)arrayList
 {
+    
+    [loading stopAnimating];
+    [loading removeFromSuperview];
     self.dataArray = arrayList;
     [self.collectionView reloadData];
 }
@@ -51,10 +54,25 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 {
     [super viewDidLoad];
     
-    [self setTitle:@"Apps"];
+    [self setTitle:NSLocalizedString(@"APPS", NULL)];
     appslist_source *source = [appslist_source sharedInstance];
+    
+    loading = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    [loading setHidesWhenStopped:TRUE];
+    
+    
+    
+    
+    loading.transform = CGAffineTransformMakeScale(2.75, 2.75);
+    loading.center = CGPointMake(self.collectionView.frame.size.width /2 , self.collectionView.frame.size.height /2 );
+    [loading setColor:[UIColor yellowColor]];
+    [loading startAnimating];
     [source setDelegate:self];
     [source startListDownlod:@"htp://google.it"];
+    
+    [self.collectionView addSubview:loading];
+    
     
 	[self setupCollectionView];
     
@@ -79,7 +97,7 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 
         
     [self.collectionView setPagingEnabled:NO];
-   // [self.collectionView setCollectionViewLayout:flowLayout];
+
 }
 
 
@@ -130,10 +148,7 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
     
     
     client_list *client = [[client_list alloc]initWithNibName:@"client_list" bundle:NULL];
-   // [self presentViewController:client animated:YES completion:^{
-    
-    
-    //}];
+
     [self.navigationController pushViewController:client animated:YES];
     
 }

@@ -16,11 +16,40 @@
 @end
 
 @implementation AppDelegate
-@synthesize mosquittoClient,navigation;
+@synthesize mosquittoClient,navigation,params;
+
+
+- (void) didConnect: (NSUInteger)code{
+    
+}
+- (void) didDisconnect{
+    
+}
+- (void) didPublish: (NSUInteger)messageId{
+    
+}
+
+- (void) didReceiveMessage: (mosquitto_message*)mosq_msg{
+    
+}
+- (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos{
+    
+}
+- (void) didUnsubscribe: (NSUInteger)messageId{
+    
+}
+
+-(void)resetDelegateMosquitto{
+
+    [mosquittoClient setDelegate:self];
+    
+}
 
 
 -(int)getIncrementalInt
 {
+    
+    //Utilizzato per l'id dei messaggi 
     return self.incrementalNumber++;
 }
 
@@ -34,7 +63,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"loginBundle" withExtension:@"bundle"]];
-    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"http://192.168.3.109/desktop.sianet.it/index.php/wrlogin"];
+    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"http://192.168.1.109/desktop.sianet.it/index.php/wrlogin"];
     [controller setDelegate:self];
     
     
@@ -61,6 +90,20 @@
 }
 
 
+
+-(void)connectMosquittoClient
+{
+    
+    if(!mosquittoClient) mosquittoClient  = [[MosquittoClient alloc]initWithClientId:[self getUniqueClientId]];
+    
+    [mosquittoClient setHost: @"85.39.190.50"];
+    [mosquittoClient setUsername:[self.params objectForKey:@"username"]];
+    [mosquittoClient setPassword:[self.params objectForKey:@"password"]];
+   // [mosquittoClient connect];
+}
+
+
+
 -(void)loginSuccess:(NSMutableDictionary*)response //Method executed after a succeful login
 {
     
@@ -68,33 +111,49 @@
     
     if([[response objectForKey:@"RETURNCODE"] intValue] == 0){
         
-        NSDictionary* retval = [response objectForKey:@"RETURNVALUES"];
-        NSLog(@"retval %@",[retval objectForKey:@"customer_code"]);
+        NSArray* retval = [response objectForKey:@"RETURNVALUES"];
+        if([retval count]>0){
+            
+            NSMutableDictionary *parameters = [retval objectAtIndex:0];
+            if([[parameters allKeys]containsObject:@"customer_code"] &&
+               [[parameters allKeys]containsObject:@"username"] &&
+               [[parameters allKeys]containsObject:@"password"]
+               ){
+                self.params = [[NSMutableDictionary alloc]init];
+                [self.params setObject:[parameters objectForKey:@"customer_code"] forKey:@"customer_code"];
+                [self.params setObject:[parameters objectForKey:@"username"] forKey:@"username"];
+                [self.params setObject:[parameters objectForKey:@"password"] forKey:@"password"];
+                parameters = NULL;
+                response = NULL;
+                retval = NULL;
+                
+                if(self.navigation == NULL){
+                    //Se ancora non è stata avviata l'app
+                    apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
+                    self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
+                }
+                
+                [self connectMosquittoClient];
+                [self.window.rootViewController presentViewController:self.navigation animated:NO completion:^{
+                    
+                }];
+                
+                
+            }
+            else{
+                UIAlertView * errorCustomer = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"NO PARAMETERS", NULL) message:NSLocalizedString(@"NO PARAMETERS MESSAGE", NULL) delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
+                //[errorCustomer show];
+            }
+            
+        }
+           
         
-        if([[retval allKeys]containsObject:@"customer_code"]){
+        
 
-        }
-        else{
-            UIAlertView * errorCustomer = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"NO CUSTOMER_CODE", NULL) message:NSLocalizedString(@"NO CUSTOMER_CODE MESSAGE", NULL) delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
-            //[errorCustomer show];
-        }
     }
     
     
-    if(self.navigation == NULL){
-        //Se ancora non è stata avviata l'app
-        apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
-        self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
-    }
-    
-    mosquittoClient  = [[MosquittoClient alloc]initWithClientId:[self getUniqueClientId]];
-    [mosquittoClient setHost: @"192.168.1.106"];
-    [mosquittoClient setUsername:@"fabio4"];
-    [mosquittoClient setPassword:@"fabio"];
-    [mosquittoClient connect];
-    [self.window.rootViewController presentViewController:self.navigation animated:NO completion:^{
-        
-    }];
+
     
 }
 -(void)loginError:(id)errorStatus //Method executed after a failed login

@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 #import "mosquitto_message.h"
 
-@protocol MosquittoClientDelegate
+@protocol MosquittoClientDelegate<NSObject>
 
 - (void) didConnect: (NSUInteger)code;
 - (void) didDisconnect;

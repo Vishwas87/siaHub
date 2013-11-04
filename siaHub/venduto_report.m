@@ -34,9 +34,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.clientMosquitto = [delegate mosquittoClient];
-        [self.clientMosquitto setDelegate:self];
+
     }
     return self;
 }
@@ -44,6 +42,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
      [self.table setContentInset:UIEdgeInsetsMake(10, 0, 0, 0)];
+    
+
 }
 
 - (void)subscription
@@ -58,7 +58,7 @@
     AppDelegate *del = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     
     NSString *unique = [del getUniqueClientId];
-    
+
     
     //code to be executed on the main queue after delay
     [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -67,7 +67,7 @@
         NSString* messaggio =
         [self.clientMosquitto createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,idx] responseTo:@"" name:@"EXECGENERICSQL" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[NSDictionary dictionaryWithObject:@"" forKey:@"query"] andSender:unique];
         
-        [self.clientMosquitto publishString:messaggio toTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:1 retain:FALSE];
+        [self.clientMosquitto publishString:messaggio toTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:0 retain:TRUE];
         
         
     }];
@@ -76,10 +76,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.clientMosquitto = [delegate mosquittoClient];
+    [self.clientMosquitto setDelegate:self];
+    
     [self subscription];
 
 
     
+}
+
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    AppDelegate *del = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
+    NSString *unique = [del getUniqueClientId];
+    
+    
+    //code to be executed on the main queue after delay
+    [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        //in body deve essere recuperata la query
+        [self.clientMosquitto unsubscribe:[NSString stringWithFormat:@"C43/%@/OUT/%@",obj,unique]];
+
+        
+        
+    }];
+    
+    [del resetDelegateMosquitto];
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,7 +130,7 @@
     
     
     int index = [[self.source allKeys] indexOfObject:mosq_msg.sender];
-    NSLog(@"index %d",index);
+
     [self.table reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationFade];
     
 }

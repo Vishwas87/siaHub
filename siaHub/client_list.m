@@ -10,14 +10,30 @@
 #import "AppDelegate.h"
 @interface client_list ()
 
-@property (nonatomic, weak) IBOutlet UITableView *clientList;
-@property (nonatomic, weak) IBOutlet UINavigationBar *navBar;
-@property (nonatomic, weak) IBOutlet UIButton *refresh;
-@property (nonatomic, weak) IBOutlet UIButton *show;
+@property (nonatomic, strong) IBOutlet UITableView *clientList;
+@property (nonatomic, strong) IBOutlet UINavigationBar *navBar;
+@property (nonatomic, strong) IBOutlet UIButton *refresh;
+@property (nonatomic, strong) IBOutlet UIButton *show;
+@property (nonatomic, strong) IBOutlet UIButton *selectAll;
+@property (nonatomic,retain)NSString *queue;
+
+
+
+
+
+@property (nonatomic, strong) IBOutlet UIView *header;
+@property (nonatomic, strong) IBOutlet UIButton *headerButton;
+
+@property (nonatomic, strong) IBOutlet UILabel *headerTitle;
+
+
 
 @property (nonatomic,retain) NSMutableDictionary *clients;
 @property (nonatomic,retain) NSMutableDictionary *selectedClient;
 @property (assign, readwrite) BOOL reload; //Variabile per indicare che la tabella è stata aggiornata
+
+
+
 
 @end
 
@@ -25,11 +41,17 @@
 
 - (void)setMosquittoClient
 {
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    msq_tto = [delegate mosquittoClient];
+    
+    if(!msq_tto ){
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        msq_tto = [delegate mosquittoClient];
+        
+        delegate = NULL;
+    }
+    
     [msq_tto setDelegate:self];
-    [msq_tto connect];
-    delegate = NULL;
+    
+    
 }
 
 
@@ -50,6 +72,10 @@
         self.reload = FALSE;
         [self setMosquittoClient];
         self.selectedClient = [[NSMutableDictionary alloc]init];
+        AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+        self.queue = [[app params] objectForKey:@"customer_code"];
+
+        
     }
     return self;
 }
@@ -59,23 +85,40 @@
 -(IBAction)refresh:(id)sender
 {
     
-    [self.clients removeAllObjects];
-    [self.selectedClient removeAllObjects];
-    [self.clientList reloadData];
+
     
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     
     NSString *unique = [delegate getUniqueClientId];
-    
+    [self connectionSetUp];
    
+    if([[self.clients allKeys]count]>0){
+        [self.headerButton setEnabled:TRUE];
+        if(([[self.selectedClient allKeys]count] == [[self.clients allKeys]count]) ){
+            //Sono stati selezionati tutti gli elementi -> il pulsante deve essere DEseleziona
+            [self.headerTitle setText:NSLocalizedString(@"DESELECT ALL", NULL)];
+            [self.selectAll setImage:[UIImage imageNamed:@"deSelectAll.png"] forState:UIControlStateNormal];
+        }
+        else{
+            [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
+            [self.selectAll setImage:[UIImage imageNamed:@"selectAll.png"] forState:UIControlStateNormal];
+        }
+    }
+    else{
+        [self.headerTitle setText:NSLocalizedString(@"NO CONNECTED CLIENT", NULL)];
+        [self.headerButton setEnabled:FALSE];
+    }
     
     
     NSString* messaggio =
     [msq_tto createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,[delegate getIncrementalInt]] responseTo:@"" name:@"DISCOVERINGCONNECTEDCLIENT" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
+
     
-    [msq_tto publishString:messaggio toTopic:[NSString stringWithFormat:@"C43/BROADCAST"] withQos:1 retain:FALSE];
+    [msq_tto publishString:messaggio toTopic:[NSString stringWithFormat:@"%@/BROADCAST",self.queue] withQos:1 retain:TRUE];
     
     
+    
+    if(![timerRespond isValid]) timerRespond = [NSTimer scheduledTimerWithTimeInterval:50.0 target:self selector:@selector(refresh:) userInfo:NULL repeats:NO];
     
 }
 -(IBAction)show:(id)sender
@@ -105,31 +148,40 @@
 {
     [super viewDidLoad];
     
+    
 }
 
 - (void)connectionSetUp {
     //Proviamo a ricollegarci
-    [self setMosquittoClient];
     [self.clients removeAllObjects];
     [self.selectedClient removeAllObjects];
     [self.clientList reloadData];
+    [self setMosquittoClient];
+    
+    // TODO : OGNI VOLTA DEVE RIEFFETTUARE IL CONNECT???? POSSIBILE??
+    [msq_tto connect];
     
     [msq_tto subscribe:@"C43/BROADCAST"];
-    [self refresh:NULL];
+
 }
+
+
+
 
 -(void)viewWillAppear:(BOOL)animated{
      [self.clientList setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
+
     
-    [self connectionSetUp];
+    [self refresh:NULL];
     
 }
 
+
 -(void)viewWillDisappear:(BOOL)animated{
+    
     //In modo che non vengano più gestite le eventuali comunicazioni  da questa view
-    [msq_tto unsubscribe:@"C43/BROADCAST"];
-    [self.clients removeAllObjects];
+    [msq_tto unsubscribe:[NSString stringWithFormat:@"%@/BROADCAST",self.queue]];
 
 }
 
@@ -151,17 +203,20 @@
 }
 
 - (void) didReceiveMessage: (mosquitto_message*)mosq_msg{
+    
+    if([timerRespond isValid])[timerRespond invalidate];
+    //Si è connesso un client
     if([mosq_msg.name isEqualToString:@"CONNECTEDCLIENT"]){
-        
-        NSLog(@"Body Message %@",mosq_msg.body);
-        
         //Si deve riaggiornare la lista
         self.reload = TRUE;
         [self.clients setObject:mosq_msg.body forKey:mosq_msg.sender];
     }
-    
-    
-    
+    //Si è disconnesso un client
+    if([mosq_msg.name isEqualToString:@"DISCONNECTEDCLIENT"]){
+        //Si deve riaggiornare la lista
+        self.reload = TRUE;
+        [self.clients removeObjectForKey:mosq_msg.sender];
+    }
     
     [self.clientList reloadData];
 }
@@ -185,15 +240,44 @@
 
 
 #pragma mark UITableDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return [client_cell returnCellHeight];
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    
+    [self.header setFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
+   
+    if([[self.clients allKeys]count]>0){
+        [self.headerButton setEnabled:TRUE];
+        if([[self.clients allKeys]count]>0 && [[self.selectedClient allKeys]count] == [[self.clients allKeys]count]){
+            [self.headerTitle setText:NSLocalizedString(@"DESELECT ALL", NULL)];
+            [self.headerButton setImage:[UIImage imageNamed:@"check.png"] forState:UIControlStateNormal];
+        }
+        else {
+            [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
+            [self.headerButton setImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+        }
+    }
+    else{
+         [self.headerTitle setText:NSLocalizedString(@"NO CONNECTED CLIENT", NULL)];
+        [self.headerButton setEnabled:FALSE];
+    }
+
+    return self.header;
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    return 85.0f;
+    return [client_cell returnCellHeight];
 }
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-   // return [[self.clients allKeys]count];
+   
     return [self.clients count];
 }
 
@@ -256,7 +340,27 @@
             [self.selectedClient setObject:[[NSMutableDictionary alloc]init] forKey:[[self.clients allKeys]objectAtIndex:selfIndex.row]];
             [temp selectCell];
     }
+    
+    
+    if([[self.selectedClient allKeys]count] == [[self.clients allKeys]count]){
+        //Sono stati selezionati tutti gli elementi -> il pulsante deve essere DEseleziona
+        [self.headerButton setImage:[UIImage imageNamed:@"check.png"] forState:UIControlStateNormal];
+        [self.headerTitle setText:NSLocalizedString(@"DESELECT ALL", NULL)];
+
+    }
+    else{
+        [self.headerButton setImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+        [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
+ 
+    }
+   // [self.header setNeedsDisplay];
+    
 }
+
+
+
+
+
 
 
 
@@ -272,11 +376,14 @@
 }
 
 
--(IBAction)toggleAllRow:(id)sender{
+-(IBAction)toggleAllRow:(id)sender
+{
 
 
     if([[self.selectedClient allKeys] count] != [[self.clients allKeys]count]){
         //Non sono selezionati tutti gli elementi
+        [(UIButton*)sender setImage:[UIImage imageNamed:@"check.png"] forState:UIControlStateNormal];
+        [self.headerTitle setText:NSLocalizedString(@"DESELECT ALL", NULL)];
         [[self.clients allKeys]enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             
             [self.selectedClient setObject:[self.clients objectForKey:obj] forKey:obj];
@@ -286,8 +393,11 @@
     else{
         //Sono selezionati alcuni elementi -> Deselezioniamo tutto
         [self.selectedClient removeAllObjects];
+        [(UIButton*)sender setImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+        [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
+        
     }
-    
+   // [self.header setNeedsDisplay];
     [self.clientList reloadData];
 }
 

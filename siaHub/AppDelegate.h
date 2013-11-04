@@ -12,13 +12,14 @@
 
 @class MosquittoClient;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,login_view_protocol>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,login_view_protocol,MosquittoClientDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (readonly) MosquittoClient *mosquittoClient;
+@property (nonatomic,retain, readonly) MosquittoClient *mosquittoClient;
 @property (strong,nonatomic) UINavigationController *navigation;
+@property (strong,nonatomic) NSMutableDictionary *params; //Conserva nome utente password customer code
 
 -(NSString*)getUniqueClientId;
 -(int)getIncrementalInt; //Metodo utilizzato per ottenere un autoincremental number
-
+-(void)resetDelegateMosquitto;
 @end

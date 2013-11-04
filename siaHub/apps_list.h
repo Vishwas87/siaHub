@@ -11,5 +11,7 @@
 #import "appslist_source.h"
 #import "client_list.h"
 @interface apps_list : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,appsList_protocol>
-
+{
+    UIActivityIndicatorView * loading;
+}
 @end

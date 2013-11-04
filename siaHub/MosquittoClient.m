@@ -21,6 +21,10 @@
 static void on_connect(struct mosquitto *mosq, void *obj, int rc)
 {
     MosquittoClient* client = (MosquittoClient*)obj;
+   /* if([client delegate] && [[client delegate] performSelector:@selector(didConnect:)]){
+        
+    }
+    */
     [[client delegate] didConnect:(NSUInteger)rc];
 }
 
@@ -123,6 +127,8 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
 - (void) connect {
     const char *cstrHost = [host cStringUsingEncoding:NSASCIIStringEncoding];
     const char *cstrUsername = NULL, *cstrPassword = NULL;
+    
+    
     
     if (username)
         cstrUsername = [username cStringUsingEncoding:NSUTF8StringEncoding];
