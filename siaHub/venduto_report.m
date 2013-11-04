@@ -66,12 +66,16 @@
     
     //code to be executed on the main queue after delay
     [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        
+        NSString *query = @"select sum(-TIPM07 * QTAM07) as total_qty, sum(-TIPM07 * (EPREV07 - ESCON07)) as total_value from movart1p where MAGZ07={STORE_ID} and DATM07 <= {TODAY_INT} and DATM07 >= {TODAY_INT} and CAUM07 in ('VENDT','RESOC')";
+        
         //in body deve essere recuperata la query
         [self.clientMosquitto subscribe:[NSString stringWithFormat:@"C43/%@/OUT/%@",obj,unique]];
         NSString* messaggio =
-        [self.clientMosquitto createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,idx] responseTo:@"" name:@"EXECGENERICSQL" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[NSDictionary dictionaryWithObject:@"" forKey:@"query"] andSender:unique];
+        [self.clientMosquitto createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,idx] responseTo:@"" name:@"EXECGENERICSQL" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[NSDictionary dictionaryWithObject:query forKey:@"QUERY"] andSender:unique];
         
-        [self.clientMosquitto publishString:messaggio toTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:0 retain:TRUE];
+        [self.clientMosquitto publishString:messaggio toTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:1 retain:FALSE];
         
         
     }];
@@ -130,8 +134,19 @@
 
 }
 - (void) didReceiveMessage: (mosquitto_message*)mosq_msg{
-    [self.source setObject:mosq_msg.body  forKey:mosq_msg.sender];
     
+    NSLog(@"message body %@",mosq_msg.body);
+    NSMutableArray *rowDef = [[mosq_msg.body objectForKey:@"RESULT"] objectForKey:@"row_def"];
+    
+    NSMutableArray *rows = [[mosq_msg.body objectForKey:@"RESULT"] objectForKey:@"rows"];
+    
+    NSMutableDictionary * object = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:rowDef,rows, nil] forKeys:[NSArray arrayWithObjects:@"row_def",@"rows", nil] ];
+    
+    [self.source setObject:object  forKey:mosq_msg.sender];
+    
+    rowDef = NULL;
+    rows = NULL;
+    object = NULL;
     
     int index = [[self.source allKeys] indexOfObject:mosq_msg.sender];
 
@@ -166,7 +181,10 @@
     NSString *key = [[self.source allKeys]objectAtIndex:section];
 
     
-    if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"RESULT"] != NULL) return [[[self.source objectForKey:key] objectForKey:@"RESULT"] count];
+    if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"row_def"] != NULL )
+    {
+        return [[[self.source objectForKey:key] objectForKey:@"row_def"] count];
+    }
     
     return 0;
     
@@ -183,35 +201,41 @@
     }
     
     NSString *key = [[self.source allKeys]objectAtIndex:indexPath.section];
+    NSDictionary * row_def =[[[self.source objectForKey:key] objectForKey:@"row_def"] objectAtIndex:indexPath.row];
+    NSString *currentColumnName = [row_def objectForKey:@"ColumnName"];
+    NSArray * current_Obj = [[[self.source objectForKey:key] objectForKey:@"rows"] objectAtIndex:indexPath.section];
+    
+    NSString *currentValue = [current_Obj objectAtIndex:indexPath.row];
+    
+    
+/*
+    
     NSDictionary *currentValue = [[self.source objectForKey:key] objectForKey:@"RESULT"];
     
     NSString *currentKeyInDic = [[currentValue allKeys] objectAtIndex:indexPath.row];
+    */
+    
+    [cell.key setText:currentColumnName];
     
     
-    [cell.key setText:currentKeyInDic];
     
-    NSString *value = @"";
     
-    if(floorf([[currentValue objectForKey:currentKeyInDic] floatValue]) != [[currentValue objectForKey:currentKeyInDic] intValue]){
-        value = [NSString stringWithFormat:@"%f",[[currentValue objectForKey:currentKeyInDic] floatValue]];
-    }
-    else value = [NSString stringWithFormat:@"%d",[[currentValue objectForKey:currentKeyInDic] intValue]];
     
     [cell.valore setTextAlignment:NSTextAlignmentRight];
-    [cell.valore setText:value];
+    [cell.valore setText:currentValue];
     
     
-    if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"RESULT"] != NULL &&  [[[self.source objectForKey:key] objectForKey:@"RESULT"] count] -1 == indexPath.row)
+  /*  if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"RESULT"] != NULL &&  [[[self.source objectForKey:key] objectForKey:@"RESULT"] count] -1 == indexPath.row)
     {
         
         UIView *currentSection = [self.activityIndicator objectForKey:key];
-        //[(UIActivityIndicatorView*)[currentSection viewWithTag:2] stopAnimating];
+        [(UIActivityIndicatorView*)[currentSection viewWithTag:2] stopAnimating];
         currentSection = NULL;
     }
 
     
     
-    
+    */
     
     return cell;
 }

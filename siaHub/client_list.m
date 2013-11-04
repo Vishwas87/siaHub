@@ -114,7 +114,7 @@
     [msq_tto createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,[delegate getIncrementalInt]] responseTo:@"" name:@"DISCOVERINGCONNECTEDCLIENT" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
 
     
-    [msq_tto publishString:messaggio toTopic:[NSString stringWithFormat:@"%@/BROADCAST",self.queue] withQos:1 retain:TRUE];
+    [msq_tto publishString:messaggio toTopic:[NSString stringWithFormat:@"%@/BROADCAST",self.queue] withQos:1 retain:FALSE];
     
     
     
