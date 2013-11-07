@@ -68,7 +68,22 @@
     
     
     
-    self.window.rootViewController = controller;
+    self.params = [[NSMutableDictionary alloc]init];
+    [self.params setObject:@"C43" forKey:@"customer_code"];
+    [self.params setObject:@"vincenzo" forKey:@"username"];
+    [self.params setObject:@"vincenzo" forKey:@"password"];
+    
+    
+    if(self.navigation == NULL){
+        //Se ancora non è stata avviata l'app
+        apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
+        self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
+    }
+    
+    [self connectMosquittoClient];
+    
+    self.window.rootViewController = self.navigation;
+    //self.window.rootViewController = controller;
     controller = NULL;
     
     [self.window makeKeyAndVisible];
@@ -108,7 +123,6 @@
 -(void)loginSuccess:(NSMutableDictionary*)response //Method executed after a succeful login
 {
     
-    NSLog(@"response %@",response);
     
     if([[response objectForKey:@"RETURNCODE"] intValue] == 0){
         
@@ -143,7 +157,7 @@
             }
             else{
                 UIAlertView * errorCustomer = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"NO PARAMETERS", NULL) message:NSLocalizedString(@"NO PARAMETERS MESSAGE", NULL) delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
-                //[errorCustomer show];
+                [errorCustomer show];
             }
             
         }
@@ -190,5 +204,62 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+
+
+
+#pragma mark COMMON METHOD
+
+-(NSString*)getColumnValueForConfiguration:(NSDictionary*)configuration andString:(NSString*)value{
+    const int precisionDecimal = 2;
+    
+    if([configuration objectForKey:@"ColumnSize"] != NULL &&
+       [configuration objectForKey:@"DataType"] != NULL &&
+       [configuration objectForKey:@"NumericPrecision"] != NULL &&
+       [value length]>0
+       )
+    {
+        
+        if([[configuration objectForKey:@"DataType"] isEqualToString:@"System.Int32"]){
+            //Intero
+            
+            if([value intValue] == 0 && ![value isEqualToString:@"0"]) //Stringa non corretta
+                    return @"Err";
+            else return value;
+        }
+        if([[configuration objectForKey:@"DataType"] isEqualToString:@"System.Decimal"]){
+            //Float
+            
+            if([value floatValue] == 0.0 && ![value isEqualToString:@"0.0"]) //Stringa non corretta
+                return @"Err";
+            else {
+                //Formattazione in funzione del numero di cifre
+                NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+                [formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+                [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+                [formatter setGroupingSeparator:@""];
+                [formatter setDecimalSeparator:@"."];
+                
+                
+                [formatter setMaximumFractionDigits:precisionDecimal];
+                [formatter setMinimumFractionDigits:precisionDecimal];
+                NSNumber *numberFromString = [formatter numberFromString:value];
+                [formatter setGroupingSeparator:@"."];
+                [formatter setDecimalSeparator:@","];
+                [formatter setGroupingSize:3];
+                
+                return [formatter stringFromNumber:numberFromString];
+            }
+        }
+        return value;
+        
+    }
+    
+    
+    
+    return @"Err";
+}
+
 
 @end

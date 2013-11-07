@@ -74,7 +74,7 @@
         self.selectedClient = [[NSMutableDictionary alloc]init];
         AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication]delegate];
         self.queue = [[app params] objectForKey:@"customer_code"];
-
+        self.title = NSLocalizedString(@"CLIENT LIST", NULL);
         
     }
     return self;
@@ -169,7 +169,7 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
-     [self.clientList setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+     [self.clientList setContentInset:UIEdgeInsetsMake(10, 10, 10, 10)];
     
 
     
@@ -252,13 +252,12 @@
 
 #pragma mark UITableDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return [client_cell returnCellHeight];
+    return 40.0f;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     
-    [self.header setFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
-   
+    [self.header setFrame:CGRectMake(0, 0, tableView.bounds.size.width, 40.0f)];
     if([[self.clients allKeys]count]>0){
         [self.headerButton setEnabled:TRUE];
         if([[self.clients allKeys]count]>0 && [[self.selectedClient allKeys]count] == [[self.clients allKeys]count]){

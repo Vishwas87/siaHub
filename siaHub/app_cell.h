@@ -11,6 +11,6 @@
 @interface app_cell : UICollectionViewCell
 
 @property (nonatomic, strong,readonly) UIImageView *imageView;
-
-
+@property (nonatomic, strong,readonly) UIActivityIndicatorView *activity;
+@property (nonatomic, strong,readonly) UILabel *text;
 @end

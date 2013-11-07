@@ -22,4 +22,5 @@
 -(NSString*)getUniqueClientId;
 -(int)getIncrementalInt; //Metodo utilizzato per ottenere un autoincremental number
 -(void)resetDelegateMosquitto;
+-(NSString*)getColumnValueForConfiguration:(NSDictionary*)configuration andString:(NSString*)value;
 @end

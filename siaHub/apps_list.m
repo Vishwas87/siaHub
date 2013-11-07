@@ -116,9 +116,9 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
    
     [cell prepareForReuse];
      app *photo = self.dataArray[indexPath.item];
-    
+    [cell.text setText:[photo appName]];
     // load photo images in the background
-    
+
   __weak apps_list *weakSelf = self;
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
         UIImage *image = [photo icon];
@@ -129,6 +129,7 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
                 app_cell *cell =
                 (app_cell *)[weakSelf.collectionView cellForItemAtIndexPath:indexPath];
                 cell.imageView.image = image;
+                [cell.activity stopAnimating];
             }
         });
     }];

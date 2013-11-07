@@ -36,6 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.activityIndicator = [[NSMutableDictionary alloc]init];
+        self.title = NSLocalizedString(@"REPORT VENDUTO", NULL);
         // Custom initialization
       //  [self.table registerClass:[venduto_report_header class] forHeaderFooterViewReuseIdentifier:@"header"];
        // [self.table setTranslatesAutoresizingMaskIntoConstraints:FALSE];
@@ -81,15 +82,20 @@
     }];
 }
 
-- (void)viewDidLoad
+- (void)connectionAndSubscription
 {
-    [super viewDidLoad];
-    
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.clientMosquitto = [delegate mosquittoClient];
     [self.clientMosquitto setDelegate:self];
     
     [self subscription];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self connectionAndSubscription];
 
 
     
@@ -128,21 +134,28 @@
 }
 - (void) didDisconnect{
     
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
+    [self connectionAndSubscription];
 }
 - (void) didPublish: (NSUInteger)messageId{
 
 }
 - (void) didReceiveMessage: (mosquitto_message*)mosq_msg{
     
-    NSLog(@"message body %@",mosq_msg.body);
-    NSMutableArray *rowDef = [[mosq_msg.body objectForKey:@"RESULT"] objectForKey:@"row_def"];
+
     
+    
+    
+    
+    NSMutableArray *rowDef = [[mosq_msg.body objectForKey:@"RESULT"] objectForKey:@"row_def"];
+    NSLog(@"Body %@",rowDef);
     NSMutableArray *rows = [[mosq_msg.body objectForKey:@"RESULT"] objectForKey:@"rows"];
     
     NSMutableDictionary * object = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:rowDef,rows, nil] forKeys:[NSArray arrayWithObjects:@"row_def",@"rows", nil] ];
     
     [self.source setObject:object  forKey:mosq_msg.sender];
+    
+    
     
     rowDef = NULL;
     rows = NULL;
@@ -183,6 +196,8 @@
     
     if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"row_def"] != NULL )
     {
+        
+        NSLog(@"%d",[[[self.source objectForKey:key] objectForKey:@"row_def"] count]);
         return [[[self.source objectForKey:key] objectForKey:@"row_def"] count];
     }
     
@@ -192,6 +207,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"TableCellID";
+    
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
     venduto_report_cell *cell = (venduto_report_cell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     
@@ -203,29 +221,22 @@
     NSString *key = [[self.source allKeys]objectAtIndex:indexPath.section];
     NSDictionary * row_def =[[[self.source objectForKey:key] objectForKey:@"row_def"] objectAtIndex:indexPath.row];
     NSString *currentColumnName = [row_def objectForKey:@"ColumnName"];
-    NSArray * current_Obj = [[[self.source objectForKey:key] objectForKey:@"rows"] objectAtIndex:indexPath.section];
     
-    NSString *currentValue = [current_Obj objectAtIndex:indexPath.row];
+   // NSLog(@"rows for key %@",[[self.source objectForKey:key] objectForKey:@"rows"]);
+    NSString * currentValue = ([[[self.source objectForKey:key] objectForKey:@"rows"] count]>0)?[[[[self.source objectForKey:key] objectForKey:@"rows"] objectAtIndex:0]objectAtIndex:indexPath.row]:NSLocalizedString(@"NOT AVIABLE", NULL);
     
-    
-/*
-    
-    NSDictionary *currentValue = [[self.source objectForKey:key] objectForKey:@"RESULT"];
-    
-    NSString *currentKeyInDic = [[currentValue allKeys] objectAtIndex:indexPath.row];
-    */
-    
+   	
     [cell.key setText:currentColumnName];
     
     
-    
-    
+    currentValue = [NSString stringWithFormat:@"%@",currentValue];
+    currentValue = [appDelegate getColumnValueForConfiguration:row_def andString:currentValue];
     
     [cell.valore setTextAlignment:NSTextAlignmentRight];
     [cell.valore setText:currentValue];
     
     
-  /*  if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"RESULT"] != NULL &&  [[[self.source objectForKey:key] objectForKey:@"RESULT"] count] -1 == indexPath.row)
+    if([self.source objectForKey:key]!= NULL && indexPath.row == [[[[self.source objectForKey:key] objectForKey:@"rows"] objectAtIndex:0] count]-1)
     {
         
         UIView *currentSection = [self.activityIndicator objectForKey:key];
@@ -235,7 +246,7 @@
 
     
     
-    */
+    
     
     return cell;
 }

@@ -59,32 +59,10 @@ static appslist_source *sharedInstance = nil;
     
     
         //Questo metodo avvierà la richiesta per la lista di funzionalità
-    NSURL *url = [NSURL URLWithString:@"https://cdn1.iconfinder.com/data/icons/Real-Estate-png/65/House-Sold.png"];
-    app *Venduto = [app appWithIconUrl:url name:@"Resoconto Venduto"  andQuery:@"SELECT * FROM VENDUTO"];
+    NSURL *url = [NSURL URLWithString:@"https://cdn1.iconfinder.com/data/icons/pretty_office_3/128/sales-report.png"];
+    app *Venduto = [app appWithIconUrl:url name:@"Venduto"  andQuery:@"SELECT * FROM VENDUTO"];
     
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    [sharedInstance.appsList addObject:Venduto];
-    
+    [sharedInstance.appsList addObject:Venduto];    
     Venduto = NULL;
     if(sharedInstance.delegate != Nil && [sharedInstance.delegate respondsToSelector:@selector(listReady:)]){
         [sharedInstance.delegate listReady:sharedInstance.appsList];

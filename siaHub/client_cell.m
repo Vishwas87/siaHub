@@ -22,7 +22,7 @@
 
 +(float)returnCellHeight
 {
-    return 85.0f;
+    return 65.0f;
 }
 
 
@@ -44,7 +44,19 @@
         
         [self.checkBtn setBackgroundImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
 
-            
+        
+        CALayer *layer = [self.checkBtn layer];
+        
+        [layer setMasksToBounds:YES];
+        [layer setBorderWidth:1.0];
+        [layer setBorderColor:[UIColor blackColor].CGColor];
+        
+        CGPoint coord = self.checkBtn.center;
+        
+        self.checkBtn.transform =CGAffineTransformMakeScale(1.5, 2);
+        
+        self.checkBtn.center = coord;
+        
         self.checkBtn.userInteractionEnabled = YES;
         [self.checkBtn addTarget:self action:@selector(pressCell) forControlEvents:UIControlEventTouchUpInside];
        

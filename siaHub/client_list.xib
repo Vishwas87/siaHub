@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4u6-5C-7xP">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="444"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="510"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -30,11 +30,11 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1WW-Ta-CWu">
-                    <rect key="frame" x="20" y="498" width="50" height="50"/>
+                    <rect key="frame" x="20" y="518" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="ALm-W4-qg3"/>
-                        <constraint firstAttribute="height" constant="50" id="VH1-B1-njZ"/>
+                        <constraint firstAttribute="width" constant="30" id="ALm-W4-qg3"/>
+                        <constraint firstAttribute="height" constant="30" id="VH1-B1-njZ"/>
                     </constraints>
                     <state key="normal" title="Refresh" image="reload.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,10 +44,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nXv-Wv-Oye">
-                    <rect key="frame" x="250" y="498" width="50" height="50"/>
+                    <rect key="frame" x="270" y="518" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="hC7-1e-FhD"/>
+                        <constraint firstAttribute="width" constant="30" id="hC7-1e-FhD"/>
                     </constraints>
                     <state key="normal" title="Show" image="filter.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -59,7 +59,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="1WW-Ta-CWu" firstAttribute="top" secondItem="4u6-5C-7xP" secondAttribute="bottom" constant="54" id="93n-Cg-5J3"/>
+                <constraint firstItem="1WW-Ta-CWu" firstAttribute="top" secondItem="4u6-5C-7xP" secondAttribute="bottom" constant="8" id="93n-Cg-5J3"/>
                 <constraint firstItem="4u6-5C-7xP" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="H6K-DZ-Tte"/>
                 <constraint firstItem="1WW-Ta-CWu" firstAttribute="top" secondItem="nXv-Wv-Oye" secondAttribute="top" id="KpT-Ct-kUh"/>
                 <constraint firstAttribute="trailing" secondItem="4u6-5C-7xP" secondAttribute="trailing" id="Mys-sB-Z7H"/>
@@ -72,12 +72,15 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
         <view contentMode="scaleToFill" id="Ujt-mk-FPQ">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVc-Jp-MaH">
-                    <rect key="frame" x="20" y="7" width="50" height="50"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVc-Jp-MaH">
+                    <rect key="frame" x="20" y="-5" width="50" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="4ZE-JV-rc0"/>
+                    </constraints>
                     <state key="normal" image="uncheck.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -85,8 +88,8 @@
                         <action selector="toggleAllRow:" destination="-1" eventType="touchUpInside" id="aV0-LD-H0H"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrC-pr-ZgA">
-                    <rect key="frame" x="78" y="20" width="222" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrC-pr-ZgA">
+                    <rect key="frame" x="87" y="9" width="222" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -94,6 +97,15 @@
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="QrC-pr-ZgA" secondAttribute="trailing" constant="11" id="4He-LA-RQT"/>
+                <constraint firstItem="YVc-Jp-MaH" firstAttribute="centerY" secondItem="Ujt-mk-FPQ" secondAttribute="centerY" id="B8G-IL-KVr"/>
+                <constraint firstAttribute="bottom" secondItem="QrC-pr-ZgA" secondAttribute="bottom" constant="10" id="HuY-9K-zZ6"/>
+                <constraint firstItem="YVc-Jp-MaH" firstAttribute="leading" secondItem="Ujt-mk-FPQ" secondAttribute="leading" constant="20" symbolic="YES" id="LHy-Q9-Mpd"/>
+                <constraint firstItem="YVc-Jp-MaH" firstAttribute="top" secondItem="Ujt-mk-FPQ" secondAttribute="top" constant="-5" id="RnT-SH-bIW"/>
+                <constraint firstItem="QrC-pr-ZgA" firstAttribute="top" secondItem="Ujt-mk-FPQ" secondAttribute="top" constant="9" id="Xs7-fq-qOt"/>
+                <constraint firstItem="QrC-pr-ZgA" firstAttribute="leading" secondItem="YVc-Jp-MaH" secondAttribute="trailing" constant="17" id="k82-CA-3LC"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
