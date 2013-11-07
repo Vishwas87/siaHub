@@ -12,6 +12,12 @@
 @interface AppDelegate()
 
 @property (assign,readwrite) int incrementalNumber;
+@property (assign,readwrite) NSMutableDictionary *topicsReuqested; //Dizionario dei topic richiesti (le key sono gli argomenti ed
+//i value sono invece array di subscriber
+
+
+@property (nonatomic,retain, readwrite) MosquittoClient *mosquittoClient;
+
 
 @end
 
@@ -19,20 +25,97 @@
 @synthesize mosquittoClient,navigation,params;
 
 
-- (void) didConnect: (NSUInteger)code{
+
+#pragma mark --- Mqtt client Methods
+-(int)unsubscribeClient:(id)aClient fromTopic:(NSString*)aTopic {
+    
+    
+    
+    if([self.topicsReuqested objectForKey:aTopic] != NULL &&
+       [[self.topicsReuqested objectForKey:aTopic] containsObject:aClient]
+       ){
+        
+        [[self.topicsReuqested objectForKey:aTopic] removeObject:aClient];
+        
+        
+        if([[self.topicsReuqested objectForKey:aTopic] count] == 0)
+        {
+            [self.topicsReuqested removeObjectForKey:aTopic]; //Se non ci sono più subscriber-> elimina la voce del registro
+        }
+        
+    }
+    return 0;
+}
+
+
+-(int)subscribeClient:(id)aClient toTopic:(NSString*)aTopic{
+
+    
+    if([self.topicsReuqested objectForKey:aTopic]== NULL){
+        //Se nessuno si è mai sottoscritto a questo topic-> crea key ed array di subscribers
+        [self.topicsReuqested setObject:[[NSMutableArray alloc]init] forKey:aTopic];
+    }
+    
+    [[self.topicsReuqested objectForKey:aTopic] addObject:aClient]; //Aggiungi il subscriber
+    
+    [self.mosquittoClient subscribe:aTopic];
+    
+    
+    return 0;
+}
+
+-(void)publishMessage:(NSString*)aMessage
+              onTopic:(NSString*)topic
+              withQos:(int)Qos
+              retained:(BOOL)retain
+         andPublisher:(id)publisher
+{
+    
+
+    if([self.topicsReuqested objectForKey:topic]!= NULL
+       &&
+       [[self.topicsReuqested objectForKey:topic] containsObject:publisher]
+       )
+    {
+        [self.mosquittoClient publishString:aMessage toTopic:topic withQos:Qos retain:retain];
+    }
+}
+
+
+- (void) didConnect: (NSUInteger)code
+{
     
 }
-- (void) didDisconnect{
+- (void) didDisconnect
+{
     
 }
-- (void) didPublish: (NSUInteger)messageId{
+- (void) didPublish: (NSUInteger)messageId
+{
     
 }
 
-- (void) didReceiveMessage: (mosquitto_message*)mosq_msg{
+- (void) didReceiveMessage: (mosquitto_message*)mosq_msg
+{
+    
+    if([self.topicsReuqested objectForKey:mosq_msg.topic] != NULL
+       //Se non ci sono subscriber il value per il topic è null
+       ){
+        
+        [[self.topicsReuqested objectForKey:mosq_msg.topic] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            
+            if([obj conformsToProtocol:@protocol(AppDelegate_protocol)] && [obj respondsToSelector:@selector(receivedAMessage:withStatus:)]){
+                [obj receivedAMessage:mosq_msg withStatus:NULL];
+            }
+            
+        }];
+        
+    }
     
 }
-- (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos{
+- (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos
+{
     
 }
 - (void) didUnsubscribe: (NSUInteger)messageId{
