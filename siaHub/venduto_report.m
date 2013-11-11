@@ -60,9 +60,7 @@
     
     
     
-    AppDelegate *del = (AppDelegate*)[[UIApplication sharedApplication]delegate];
-    
-    NSString *unique = [del getUniqueClientId];
+    NSString *unique = [MqttBroker getUniqueClientId];
 
     
     //code to be executed on the main queue after delay
@@ -74,7 +72,7 @@
         //in body deve essere recuperata la query
         [self.clientMosquitto subscribe:[NSString stringWithFormat:@"C43/%@/OUT/%@",obj,unique]];
         NSString* messaggio =
-        [self.clientMosquitto createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,idx] responseTo:@"" name:@"EXECGENERICSQL" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[NSDictionary dictionaryWithObject:query forKey:@"QUERY"] andSender:unique];
+        [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,idx] responseTo:@"" name:@"EXECGENERICSQL" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[NSDictionary dictionaryWithObject:query forKey:@"QUERY"] andSender:unique];
         
         [self.clientMosquitto publishString:messaggio toTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:1 retain:FALSE];
         
@@ -85,7 +83,7 @@
 - (void)connectionAndSubscription
 {
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.clientMosquitto = [delegate mosquittoClient];
+  //  self.clientMosquitto = [delegate mosquittoClient];
     [self.clientMosquitto setDelegate:self];
     
     [self subscription];
@@ -107,7 +105,7 @@
 {
     AppDelegate *del = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     
-    NSString *unique = [del getUniqueClientId];
+    NSString *unique = [MqttBroker getUniqueClientId];
     
     
     //code to be executed on the main queue after delay

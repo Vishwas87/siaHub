@@ -17,7 +17,8 @@
                         <rect key="frame" x="83" y="6" width="217" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="fxG-Pr-ntI"/>
+                            <constraint firstAttribute="height" constant="21" id="Wlq-Oi-51v"/>
+                            <constraint firstAttribute="width" constant="217" id="nnG-vv-wAu"/>
                         </constraints>
                         <attributedString key="attributedText">
                             <fragment content="Label">
@@ -36,28 +37,21 @@
                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhl-7X-9Wp">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhl-7X-9Wp">
                         <rect key="frame" x="20" y="20" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="30" id="aGO-Vh-CeB"/>
-                        </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="fhl-7X-9Wp" firstAttribute="leading" secondItem="UYI-Sd-asy" secondAttribute="leading" constant="20" id="1GX-uY-tXn"/>
-                    <constraint firstItem="558-tu-DHC" firstAttribute="leading" secondItem="7dL-bm-nnJ" secondAttribute="leading" id="4Q7-6c-AdN"/>
-                    <constraint firstItem="7dL-bm-nnJ" firstAttribute="leading" secondItem="fhl-7X-9Wp" secondAttribute="trailing" constant="33" id="8gb-9m-ej4"/>
-                    <constraint firstItem="fhl-7X-9Wp" firstAttribute="top" secondItem="UYI-Sd-asy" secondAttribute="top" constant="20" id="94E-On-g8y"/>
-                    <constraint firstItem="558-tu-DHC" firstAttribute="trailing" secondItem="7dL-bm-nnJ" secondAttribute="trailing" id="EmO-UQ-NWh"/>
-                    <constraint firstAttribute="bottom" secondItem="558-tu-DHC" secondAttribute="bottom" constant="-3" id="FG4-aV-TEe"/>
-                    <constraint firstItem="558-tu-DHC" firstAttribute="top" secondItem="7dL-bm-nnJ" secondAttribute="bottom" constant="8" id="h3N-Bc-vzd"/>
-                    <constraint firstAttribute="trailing" secondItem="7dL-bm-nnJ" secondAttribute="trailing" constant="20" symbolic="YES" id="lV0-QZ-6zc"/>
-                    <constraint firstItem="7dL-bm-nnJ" firstAttribute="top" secondItem="UYI-Sd-asy" secondAttribute="top" constant="6" id="rAV-qT-vqR"/>
-                    <constraint firstItem="fhl-7X-9Wp" firstAttribute="centerY" secondItem="UYI-Sd-asy" secondAttribute="centerY" id="wea-e8-b57"/>
+                    <constraint firstAttribute="trailing" secondItem="7dL-bm-nnJ" secondAttribute="trailing" constant="20" symbolic="YES" id="7wT-wP-tBq"/>
+                    <constraint firstItem="558-tu-DHC" firstAttribute="top" secondItem="7dL-bm-nnJ" secondAttribute="bottom" constant="8" symbolic="YES" id="GC8-f3-zys"/>
+                    <constraint firstItem="558-tu-DHC" firstAttribute="leading" secondItem="7dL-bm-nnJ" secondAttribute="leading" id="HHf-bV-XX5"/>
+                    <constraint firstItem="558-tu-DHC" firstAttribute="trailing" secondItem="7dL-bm-nnJ" secondAttribute="trailing" id="YwI-Wy-6by"/>
+                    <constraint firstAttribute="bottom" secondItem="558-tu-DHC" secondAttribute="bottom" constant="-3" id="hMs-9o-pKF"/>
+                    <constraint firstItem="7dL-bm-nnJ" firstAttribute="top" secondItem="UYI-Sd-asy" secondAttribute="top" constant="6" id="uHY-lR-pco"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

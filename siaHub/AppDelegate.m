@@ -7,12 +7,12 @@
 //
 
 #import "AppDelegate.h"
-#import <AdSupport/ASIdentifierManager.h>
+
 
 @interface AppDelegate()
 
 @property (assign,readwrite) int incrementalNumber;
-@property (assign,readwrite) NSMutableDictionary *topicsReuqested; //Dizionario dei topic richiesti (le key sono gli argomenti ed
+@property (nonatomic,readwrite) NSMutableDictionary *topicsReuqested; //Dizionario dei topic richiesti (le key sono gli argomenti ed
 //i value sono invece array di subscriber
 
 
@@ -26,120 +26,26 @@
 
 
 
-#pragma mark --- Mqtt client Methods
--(int)unsubscribeClient:(id)aClient fromTopic:(NSString*)aTopic {
-    
-    
-    
-    if([self.topicsReuqested objectForKey:aTopic] != NULL &&
-       [[self.topicsReuqested objectForKey:aTopic] containsObject:aClient]
-       ){
-        
-        [[self.topicsReuqested objectForKey:aTopic] removeObject:aClient];
-        
-        
-        if([[self.topicsReuqested objectForKey:aTopic] count] == 0)
-        {
-            [self.topicsReuqested removeObjectForKey:aTopic]; //Se non ci sono più subscriber-> elimina la voce del registro
-        }
-        
-    }
-    return 0;
-}
 
 
--(int)subscribeClient:(id)aClient toTopic:(NSString*)aTopic{
-
-    
-    if([self.topicsReuqested objectForKey:aTopic]== NULL){
-        //Se nessuno si è mai sottoscritto a questo topic-> crea key ed array di subscribers
-        [self.topicsReuqested setObject:[[NSMutableArray alloc]init] forKey:aTopic];
-    }
-    
-    [[self.topicsReuqested objectForKey:aTopic] addObject:aClient]; //Aggiungi il subscriber
-    
-    [self.mosquittoClient subscribe:aTopic];
-    
-    
-    return 0;
-}
-
--(void)publishMessage:(NSString*)aMessage
-              onTopic:(NSString*)topic
-              withQos:(int)Qos
-              retained:(BOOL)retain
-         andPublisher:(id)publisher
-{
-    
-
-    if([self.topicsReuqested objectForKey:topic]!= NULL
-       &&
-       [[self.topicsReuqested objectForKey:topic] containsObject:publisher]
-       )
-    {
-        [self.mosquittoClient publishString:aMessage toTopic:topic withQos:Qos retain:retain];
-    }
-}
-
-
-- (void) didConnect: (NSUInteger)code
-{
-    
-}
-- (void) didDisconnect
-{
-    
-}
-- (void) didPublish: (NSUInteger)messageId
-{
-    
-}
-
-- (void) didReceiveMessage: (mosquitto_message*)mosq_msg
-{
-    
-    if([self.topicsReuqested objectForKey:mosq_msg.topic] != NULL
-       //Se non ci sono subscriber il value per il topic è null
-       ){
-        
-        [[self.topicsReuqested objectForKey:mosq_msg.topic] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            
-            
-            if([obj conformsToProtocol:@protocol(AppDelegate_protocol)] && [obj respondsToSelector:@selector(receivedAMessage:withStatus:)]){
-                [obj receivedAMessage:mosq_msg withStatus:NULL];
-            }
-            
-        }];
-        
-    }
-    
-}
-- (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos
-{
-    
-}
-- (void) didUnsubscribe: (NSUInteger)messageId{
-    
-}
 
 -(void)resetDelegateMosquitto{
 
-    [mosquittoClient setDelegate:self];
+  //  [mosquittoClient setDelegate:self];
     
 }
 
 
--(int)getIncrementalInt
-{
-    
-    //Utilizzato per l'id dei messaggi 
-    return self.incrementalNumber++;
-}
+
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.incrementalNumber = 0;
+    
+    
+    
+    
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -162,11 +68,9 @@
         apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
         self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
     }
-    
-    [self connectMosquittoClient];
+
     
     self.window.rootViewController = self.navigation;
-    //self.window.rootViewController = controller;
     controller = NULL;
     
     [self.window makeKeyAndVisible];
@@ -175,31 +79,9 @@
 
 
 
--(NSString*)getUniqueClientId
-{
-    // Do any additional setup after loading the view from its nib.
-    if (NSClassFromString(@"ASIdentifierManager")) {
-        return   [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    }
-    else
-    {
-        return [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    }
-}
 
 
 
--(void)connectMosquittoClient
-{
-    
-    if(!mosquittoClient) mosquittoClient  = [[MosquittoClient alloc]initWithClientId:[self getUniqueClientId]];
-    
-    //[mosquittoClient setHost: @"85.39.190.50"];
-    [mosquittoClient setHost: @"192.168.1.106"];
-    [mosquittoClient setUsername:[self.params objectForKey:@"username"]];
-    [mosquittoClient setPassword:[self.params objectForKey:@"password"]];
-   // [mosquittoClient connect];
-}
 
 
 
@@ -230,8 +112,6 @@
                     apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
                     self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
                 }
-                
-                [self connectMosquittoClient];
                 [self.window.rootViewController presentViewController:self.navigation animated:NO completion:^{
                     
                 }];

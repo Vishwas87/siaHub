@@ -129,7 +129,7 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
                 app_cell *cell =
                 (app_cell *)[weakSelf.collectionView cellForItemAtIndexPath:indexPath];
                 cell.imageView.image = image;
-                [cell.activity stopAnimating];
+                if(!image)[cell.activity stopAnimating];
             }
         });
     }];

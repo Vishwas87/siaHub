@@ -7,7 +7,7 @@
 //
 
 #import "client_list.h"
-#import "AppDelegate.h"
+#import "selectPeriod.h"
 @interface client_list ()
 
 @property (nonatomic, strong) IBOutlet UITableView *clientList;
@@ -27,7 +27,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *headerTitle;
 
 
-
+@property (nonatomic,retain) NSOperationQueue *operations;
 @property (nonatomic,retain) NSMutableDictionary *clients;
 @property (nonatomic,retain) NSMutableDictionary *selectedClient;
 @property (assign, readwrite) BOOL reload; //Variabile per indicare che la tabella è stata aggiornata
@@ -39,17 +39,42 @@
 
 @implementation client_list
 
+
+
+
+
+- (void)discoverClients:(MqttBroker *)broker
+{
+    int num =[broker getIncrementalInt];
+    NSString *unique = [MqttBroker getUniqueClientId];
+    NSString* messaggio =
+    [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,num] responseTo:@"" name:@"DISCOVERINGCONNECTEDCLIENT" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
+    
+    
+    
+    [broker publishMessage:messaggio onTopic:@"C43/BROADCAST" withQos:1 retained:FALSE andPublisher:self];
+}
+- (IBAction)selectPeriod:(id)sender {
+    
+    selectPeriod *period = [[selectPeriod alloc]initWithNibName:@"selectPeriod" bundle:NULL];
+    
+    
+    [self presentViewController:period animated:NO completion:^{
+        
+    }];
+    
+    
+}
+
 - (void)setMosquittoClient
 {
-    
-    if(!msq_tto ){
-        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        msq_tto = [delegate mosquittoClient];
-        
-        delegate = NULL;
-    }
-    
-    [msq_tto setDelegate:self];
+ 
+   
+
+    MqttBroker *broker = [MqttBroker instance];
+    [broker subscribeClient:self toTopic:@"C43/BROADCAST"];
+
+    [self discoverClients:broker];
     
     
 }
@@ -75,7 +100,8 @@
         AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication]delegate];
         self.queue = [[app params] objectForKey:@"customer_code"];
         self.title = NSLocalizedString(@"CLIENT LIST", NULL);
-        
+        self.operations = [[NSOperationQueue alloc] init];
+        [self.operations setMaxConcurrentOperationCount:1]; //Una sola operazione alla volta
     }
     return self;
 }
@@ -84,15 +110,14 @@
 
 -(IBAction)refresh:(id)sender
 {
+  
+    MqttBroker *broker = [MqttBroker instance];
     
-
+    [self.clients removeAllObjects];
+    [self.selectedClient removeAllObjects];
     
-    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     
-    NSString *unique = [delegate getUniqueClientId];
-    [self connectionSetUp];
-   
-    if([[self.clients allKeys]count]>0){
+  /*  if([[self.clients allKeys]count]>0){
         [self.headerButton setEnabled:TRUE];
         if(([[self.selectedClient allKeys]count] == [[self.clients allKeys]count]) ){
             //Sono stati selezionati tutti gli elementi -> il pulsante deve essere DEseleziona
@@ -104,21 +129,13 @@
             [self.selectAll setImage:[UIImage imageNamed:@"selectAll.png"] forState:UIControlStateNormal];
         }
     }
-    else{
+    else{*/
         [self.headerTitle setText:NSLocalizedString(@"NO CONNECTED CLIENT", NULL)];
         [self.headerButton setEnabled:FALSE];
-    }
+    //}
     
     
-    NSString* messaggio =
-    [msq_tto createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,[delegate getIncrementalInt]] responseTo:@"" name:@"DISCOVERINGCONNECTEDCLIENT" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
-
-    
-    [msq_tto publishString:messaggio toTopic:[NSString stringWithFormat:@"%@/BROADCAST",self.queue] withQos:1 retain:FALSE];
-    
-    
-    
-    if(![timerRespond isValid]) timerRespond = [NSTimer scheduledTimerWithTimeInterval:50.0 target:self selector:@selector(refresh:) userInfo:NULL repeats:NO];
+    [self discoverClients:broker];
     
 }
 -(IBAction)show:(id)sender
@@ -144,6 +161,41 @@
 
 
 
+-(void)receivedAMessage:(mosquitto_message*)aMessage withStatus:(NSDictionary*)aConfig
+{
+    
+    
+    
+    
+    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
+        
+
+        
+        //Si è connesso un client
+        if([aMessage.name isEqualToString:@"CONNECTEDCLIENT"]){
+            //Si deve riaggiornare la lista
+            self.reload = TRUE;
+            [self.clients setObject:aMessage.body forKey:aMessage.sender];
+        }
+        //Si è disconnesso un client
+        if([aMessage.name isEqualToString:@"DISCONNECTEDCLIENT"]){
+            //Si deve riaggiornare la lista
+            self.reload = TRUE;
+            [self.clients removeObjectForKey:aMessage.sender];
+        }
+        
+        
+        [self.clientList performSelectorOnMainThread:@selector(reloadData) withObject:NULL waitUntilDone:NO];
+        
+   }];
+    
+    [self.operations addOperation:op];
+    
+    
+    
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -151,29 +203,17 @@
     
 }
 
-- (void)connectionSetUp {
-    //Proviamo a ricollegarci
-    [self.clients removeAllObjects];
-    [self.selectedClient removeAllObjects];
-    [self.clientList reloadData];
-    [self setMosquittoClient];
-    
-    // TODO : OGNI VOLTA DEVE RIEFFETTUARE IL CONNECT???? POSSIBILE??
-    [msq_tto connect];
-    
-    [msq_tto subscribe:@"C43/BROADCAST"];
 
-}
 
 
 
 
 -(void)viewWillAppear:(BOOL)animated{
-     [self.clientList setContentInset:UIEdgeInsetsMake(10, 10, 10, 10)];
+     [self.clientList setContentInset:UIEdgeInsetsMake(20, 0, 0, 0)];
     
 
     
-    [self refresh:NULL];
+  //  [self refresh:NULL];
     
 }
 
@@ -181,7 +221,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     
     //In modo che non vengano più gestite le eventuali comunicazioni  da questa view
-    [msq_tto unsubscribe:[NSString stringWithFormat:@"%@/BROADCAST",self.queue]];
+  //  [msq_tto unsubscribe:[NSString stringWithFormat:@"%@/BROADCAST",self.queue]];
 
 }
 
@@ -194,52 +234,8 @@
     
     
 }
-- (void) didDisconnect
-{
-    [self connectionSetUp];
-}
-- (void) didPublish: (NSUInteger)messageId{
-   
-}
 
-- (void) didReceiveMessage: (mosquitto_message*)mosq_msg{
-    
-    if([timerRespond isValid])[timerRespond invalidate];
-    //Si è connesso un client
-    if([mosq_msg.name isEqualToString:@"CONNECTEDCLIENT"]){
-        //Si deve riaggiornare la lista
-        self.reload = TRUE;
-        [self.clients setObject:mosq_msg.body forKey:mosq_msg.sender];
-        
-        
-      /*  int row = [self.clientList numberOfRowsInSection:0];
-        [self.clientList beginUpdates];
-        [self.clientList insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:row inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-        [self.clientList endUpdates];*/
-        
-    }
-    //Si è disconnesso un client
-    if([mosq_msg.name isEqualToString:@"DISCONNECTEDCLIENT"]){
-        //Si deve riaggiornare la lista
-        self.reload = TRUE;
-        [self.clients removeObjectForKey:mosq_msg.sender];
-    }
-  
-   [self.clientList reloadData];
-    
-   
 
-    
-}
-- (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos{
-    
-    NSLog(@"didSubscribe");
-}
-- (void) didUnsubscribe: (NSUInteger)messageId{
-    
-    NSLog(@"didUnsubscribe");
-    
-}
 
 
 - (void)didReceiveMemoryWarning
@@ -258,6 +254,14 @@
     
     
     [self.header setFrame:CGRectMake(0, 0, tableView.bounds.size.width, 40.0f)];
+    
+    CALayer *layer = [self.headerButton layer];
+    
+    [layer setMasksToBounds:YES];
+    [layer setBorderWidth:1.0];
+    [layer setBorderColor:[UIColor blackColor].CGColor];
+
+    
     if([[self.clients allKeys]count]>0){
         [self.headerButton setEnabled:TRUE];
         if([[self.clients allKeys]count]>0 && [[self.selectedClient allKeys]count] == [[self.clients allKeys]count]){
@@ -266,14 +270,18 @@
         }
         else {
             [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
-            [self.headerButton setImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+            [self.headerButton setImage:NULL forState:UIControlStateNormal];
         }
     }
     else{
          [self.headerTitle setText:NSLocalizedString(@"NO CONNECTED CLIENT", NULL)];
         [self.headerButton setEnabled:FALSE];
     }
+    
+    
 
+    
+    
     return self.header;
 }
 
@@ -359,7 +367,7 @@
 
     }
     else{
-        [self.headerButton setImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+        [self.headerButton setImage:NULL forState:UIControlStateNormal];
         [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
  
     }
@@ -403,7 +411,7 @@
     else{
         //Sono selezionati alcuni elementi -> Deselezioniamo tutto
         [self.selectedClient removeAllObjects];
-        [(UIButton*)sender setImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+        [(UIButton*)sender setImage:NULL forState:UIControlStateNormal];
         [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
         
     }

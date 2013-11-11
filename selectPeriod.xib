@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="selectPeriod">
+            <connections>
+                <outlet property="cancel" destination="JEg-dm-uq0" id="EZd-UV-3tI"/>
+                <outlet property="dateSelector" destination="vTC-pq-Dfu" id="bER-PQ-2sd"/>
+                <outlet property="from" destination="V7X-6K-3al" id="qBM-X2-unU"/>
+                <outlet property="ok" destination="8PP-EK-Z8m" id="BdV-Bj-ucP"/>
+                <outlet property="pageTitle" destination="o7O-Rp-SJP" id="VcH-7Q-xUy"/>
+                <outlet property="to" destination="LBm-Or-ykX" id="gNM-f4-JPz"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JEg-dm-uq0">
+                    <rect key="frame" x="20" y="518" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="M3b-Ic-8Aj"/>
+                        <constraint firstAttribute="height" constant="30" id="kXw-XE-iDR"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="Delete.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PP-EK-Z8m">
+                    <rect key="frame" x="270" y="518" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button" image="Accept.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V7X-6K-3al">
+                    <rect key="frame" x="20" y="199" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBm-Or-ykX">
+                    <rect key="frame" x="20" y="310" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kMY-1g-sfV">
+                    <rect key="frame" x="20" y="228" width="244" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="RfR-gn-542"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YG7-iW-aDh">
+                    <rect key="frame" x="270" y="228" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="Calendar.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="showCalendar:" destination="-1" eventType="touchUpInside" id="8td-J7-ZML"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OSE-2E-Pab">
+                    <rect key="frame" x="20" y="338" width="244" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Lrt-Nd-tFZ"/>
+                        <constraint firstAttribute="width" constant="244" id="O8F-a4-AnX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8DD-Ul-1HW">
+                    <rect key="frame" x="270" y="338" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="Calendar.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="showCalendar:" destination="-1" eventType="touchUpInside" id="I42-O7-2z1"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7O-Rp-SJP">
+                    <rect key="frame" x="20" y="11" width="280" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="8DD-Ul-1HW" firstAttribute="leading" secondItem="OSE-2E-Pab" secondAttribute="trailing" constant="6" id="3Kf-tj-iO2"/>
+                <constraint firstItem="JEg-dm-uq0" firstAttribute="leading" secondItem="LBm-Or-ykX" secondAttribute="leading" id="3mk-eB-IFm"/>
+                <constraint firstItem="OSE-2E-Pab" firstAttribute="top" secondItem="LBm-Or-ykX" secondAttribute="bottom" constant="7" id="474-3N-TO4"/>
+                <constraint firstItem="8PP-EK-Z8m" firstAttribute="leading" secondItem="8DD-Ul-1HW" secondAttribute="leading" id="Ceg-su-tzX"/>
+                <constraint firstItem="YG7-iW-aDh" firstAttribute="trailing" secondItem="8DD-Ul-1HW" secondAttribute="trailing" id="EDx-zC-jty"/>
+                <constraint firstAttribute="bottom" secondItem="JEg-dm-uq0" secondAttribute="bottom" constant="20" symbolic="YES" id="EEb-h3-NvI"/>
+                <constraint firstItem="YG7-iW-aDh" firstAttribute="bottom" secondItem="kMY-1g-sfV" secondAttribute="bottom" id="Ikh-0I-FEH"/>
+                <constraint firstItem="8PP-EK-Z8m" firstAttribute="top" secondItem="JEg-dm-uq0" secondAttribute="top" id="Iy1-nF-B1x"/>
+                <constraint firstItem="o7O-Rp-SJP" firstAttribute="top" secondItem="1" secondAttribute="top" constant="11" id="LQV-oY-kAd"/>
+                <constraint firstItem="JEg-dm-uq0" firstAttribute="leading" secondItem="V7X-6K-3al" secondAttribute="leading" id="NxU-TK-CIq"/>
+                <constraint firstItem="OSE-2E-Pab" firstAttribute="trailing" secondItem="kMY-1g-sfV" secondAttribute="trailing" id="QyZ-kZ-DdI"/>
+                <constraint firstItem="JEg-dm-uq0" firstAttribute="leading" secondItem="OSE-2E-Pab" secondAttribute="leading" id="TtE-ua-eAB"/>
+                <constraint firstItem="YG7-iW-aDh" firstAttribute="leading" secondItem="8DD-Ul-1HW" secondAttribute="leading" id="VJE-yz-tWF"/>
+                <constraint firstAttribute="bottom" secondItem="OSE-2E-Pab" secondAttribute="bottom" constant="200" id="ZUC-CO-f6F"/>
+                <constraint firstItem="JEg-dm-uq0" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Zfb-rm-OL6"/>
+                <constraint firstItem="o7O-Rp-SJP" firstAttribute="trailing" secondItem="YG7-iW-aDh" secondAttribute="trailing" id="btc-b8-1I5"/>
+                <constraint firstItem="JEg-dm-uq0" firstAttribute="leading" secondItem="kMY-1g-sfV" secondAttribute="leading" id="eDI-W4-pYQ"/>
+                <constraint firstItem="o7O-Rp-SJP" firstAttribute="leading" secondItem="V7X-6K-3al" secondAttribute="leading" id="fKG-iM-7eM"/>
+                <constraint firstItem="8PP-EK-Z8m" firstAttribute="bottom" secondItem="JEg-dm-uq0" secondAttribute="bottom" id="fqw-ur-GLV"/>
+                <constraint firstAttribute="trailing" secondItem="8PP-EK-Z8m" secondAttribute="trailing" constant="20" symbolic="YES" id="goe-Ag-x66"/>
+                <constraint firstItem="OSE-2E-Pab" firstAttribute="bottom" secondItem="8DD-Ul-1HW" secondAttribute="bottom" id="ioI-EO-tCj"/>
+                <constraint firstItem="8PP-EK-Z8m" firstAttribute="trailing" secondItem="8DD-Ul-1HW" secondAttribute="trailing" id="irX-ro-S6d"/>
+                <constraint firstItem="kMY-1g-sfV" firstAttribute="top" secondItem="V7X-6K-3al" secondAttribute="bottom" constant="8" symbolic="YES" id="jRs-mm-hFM"/>
+                <constraint firstItem="YG7-iW-aDh" firstAttribute="top" secondItem="kMY-1g-sfV" secondAttribute="top" id="mCN-jA-sKe"/>
+                <constraint firstItem="LBm-Or-ykX" firstAttribute="top" secondItem="kMY-1g-sfV" secondAttribute="bottom" constant="52" id="rfh-wm-wvf"/>
+                <constraint firstItem="OSE-2E-Pab" firstAttribute="top" secondItem="8DD-Ul-1HW" secondAttribute="top" id="suU-Ad-6YM"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+        <view contentMode="scaleToFill" id="vTC-pq-Dfu">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="55v-XS-wFL">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <date key="date" timeIntervalSinceReferenceDate="405621532.95221901">
+                        <!--2013-11-08 16:38:52 +0000-->
+                    </date>
+                    <timeZone key="timeZone" name="America/Los_Angeles">
+                        <mutableData key="data">
+VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
+y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
+5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
+8n/BkPNvwKD0X6OQ9U+ioPY/hZD3L4Sg+CiiEPkPZqD6CIQQ+viDIPvoZhD82GUg/chIEP64RyD/qCoQ
+AJgpIAGIDBACeAsgA3EokARhJ6AFUQqQBkEJoAcw7JAHjUOgCRDOkAmtvyAK8LCQC+CvoAzZzRANwJGg
+DrmvEA+priAQmZEQEYmQIBJ5cxATaXIgFFlVEBVJVCAWOTcQFyk2IBgiU5AZCRggGgI1kBryNKAb4heQ
+HNIWoB3B+ZAesfigH6HbkCB2KyAhgb2QIlYNICNq2hAkNe8gJUq8ECYV0SAnKp4QJ/7toCkKgBAp3s+g
+KupiECu+saAs036QLZ6ToC6zYJAvfnWgMJNCkDFnkiAycySQM0d0IDRTBpA1J1YgNjLokDcHOCA4HAUQ
+OOcaIDn75xA6xvwgO9vJEDywGKA9u6sQPo/6oD+bjRBAb9ygQYSpkEJPvqBDZIuQRC+goEVEbZBF89Mg
+Ry2KEEfTtSBJDWwQSbOXIErtThBLnLOgTNZqkE18laBOtkyQT1x3oFCWLpBRPFmgUnYQkFMcO6BUVfKQ
+VPwdoFY11JBW5TogWB7xEFjFHCBZ/tMQWqT+IFvetRBchOAgXb6XEF5kwiBfnnkQYE3eoGGHlZBiLcCg
+Y2d3kGQNoqBlR1mQZe2EoGcnO5BnzWagaQcdkGmtSKBq5v+Qa5ZlIGzQHBBtdkcgbq/+EG9WKSBwj+AQ
+cTYLIHJvwhBzFe0gdE+kEHT/CaB2OMCQdt7roHgYopB4vs2gefiEkHqer6B72GaQfH6RoH24SJB+XnOg
+f5gqkAABAAECAwEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
+</mutableData>
+                    </timeZone>
+                </datePicker>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXW-A0-7GL">
+                    <rect key="frame" x="20" y="184" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="WsR-nO-z4J"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="Delete.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H7e-Ny-4Y8">
+                    <rect key="frame" x="254" y="184" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="fJa-Ma-xDH"/>
+                        <constraint firstAttribute="height" constant="30" id="prG-yx-L57"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="Accept.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="55v-XS-wFL" secondAttribute="trailing" id="49c-Lu-QHN"/>
+                <constraint firstItem="YXW-A0-7GL" firstAttribute="bottom" secondItem="H7e-Ny-4Y8" secondAttribute="bottom" id="9YY-ZX-ajA"/>
+                <constraint firstAttribute="trailing" secondItem="H7e-Ny-4Y8" secondAttribute="trailing" constant="36" id="Amk-FO-9j9"/>
+                <constraint firstItem="H7e-Ny-4Y8" firstAttribute="top" secondItem="55v-XS-wFL" secondAttribute="bottom" constant="22" id="Aqk-aa-kMC"/>
+                <constraint firstItem="YXW-A0-7GL" firstAttribute="top" secondItem="H7e-Ny-4Y8" secondAttribute="top" id="YkS-fC-gcF"/>
+                <constraint firstItem="55v-XS-wFL" firstAttribute="leading" secondItem="vTC-pq-Dfu" secondAttribute="leading" id="rCI-JK-EAT"/>
+                <constraint firstItem="YXW-A0-7GL" firstAttribute="leading" secondItem="vTC-pq-Dfu" secondAttribute="leading" constant="20" symbolic="YES" id="sv0-EL-luk"/>
+                <constraint firstItem="55v-XS-wFL" firstAttribute="top" secondItem="vTC-pq-Dfu" secondAttribute="top" id="xaQ-iD-Prg"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Accept.png" width="128" height="128"/>
+        <image name="Calendar.png" width="128" height="128"/>
+        <image name="Delete.png" width="128" height="128"/>
+    </resources>
+</document>

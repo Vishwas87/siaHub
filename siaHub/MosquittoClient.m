@@ -234,7 +234,7 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
 
 
 
--(NSString*)createMessageForId:(NSString*)ident responseTo:(NSString*)responseTo
++(NSString*)createMessageForId:(NSString*)ident responseTo:(NSString*)responseTo
                           name:(NSString*)name command:(NSDictionary*)command
                         header:(NSDictionary*)header body:(NSDictionary*)body andSender:(NSString*)sender
 {

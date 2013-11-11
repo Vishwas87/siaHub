@@ -42,7 +42,7 @@
         // Initialization code
       
         
-        [self.checkBtn setBackgroundImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+        [self.checkBtn setBackgroundImage:NULL forState:UIControlStateNormal];
 
         
         CALayer *layer = [self.checkBtn layer];
@@ -51,11 +51,11 @@
         [layer setBorderWidth:1.0];
         [layer setBorderColor:[UIColor blackColor].CGColor];
         
-        CGPoint coord = self.checkBtn.center;
+        //CGPoint coord = self.checkBtn.center;
         
-        self.checkBtn.transform =CGAffineTransformMakeScale(1.5, 2);
+        //self.checkBtn.transform =CGAffineTransformMakeScale(1, 1);
         
-        self.checkBtn.center = coord;
+        //self.checkBtn.center = coord;
         
         self.checkBtn.userInteractionEnabled = YES;
         [self.checkBtn addTarget:self action:@selector(pressCell) forControlEvents:UIControlEventTouchUpInside];
@@ -80,7 +80,8 @@
     [self.checkBtn setBackgroundImage:[UIImage imageNamed:@"check.png"] forState:UIControlStateNormal];
 }
 -(void)deSelectCell{
-    [self.checkBtn setBackgroundImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+//    [self.checkBtn setBackgroundImage:[UIImage imageNamed:@"uncheck.png"] forState:UIControlStateNormal];
+        [self.checkBtn setBackgroundImage:NULL forState:UIControlStateNormal];
 }
 
 @end

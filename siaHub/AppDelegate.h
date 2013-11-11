@@ -9,34 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "login_view.h"
 #import "apps_list.h"
-
+#import "MqttBroker.h"
 @class MosquittoClient;
 
-@protocol AppDelegate_protocol <NSObject>
-
--(void)receivedAMessage:(mosquitto_message*)aMessage withStatus:(NSDictionary*)aConfig;
 
 
-@end
-
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate,login_view_protocol,MosquittoClientDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,login_view_protocol>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong,nonatomic) UINavigationController *navigation;
 @property (strong,nonatomic) NSMutableDictionary *params; //Conserva nome utente password customer code
 
--(NSString*)getUniqueClientId;
--(int)getIncrementalInt; //Metodo utilizzato per ottenere un autoincremental number
+
 -(void)resetDelegateMosquitto;
 
 
 -(NSString*)getColumnValueForConfiguration:(NSDictionary*)configuration andString:(NSString*)value;
 
-
--(int)unsubscribeClient:(id)aClient fromTopic:(NSString*)aTopic;
--(int)subscribeClient:(id)aClient toTopic:(NSString*)aTopic;
--(void)publishMessage:(NSString*)aMessage onTopic:(NSString*)topic withQos:(int)Qos retained:(BOOL)retain andPublisher:(id)publisher;
 
 
 

@@ -61,6 +61,14 @@
 		4DE4B7B8181665490027A06B /* siaHubTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE4B7B7181665490027A06B /* siaHubTests.m */; };
 		4DE4B7CD181665840027A06B /* liblogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE4B7C8181665570027A06B /* liblogin.a */; };
 		4DF4A183181EC54000360682 /* venduto_report_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF4A182181EC54000360682 /* venduto_report_cell.m */; };
+		4DFC3E56182CF952008B5896 /* MqttBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFC3E51182CDE59008B5896 /* MqttBroker.m */; };
+		4DFC3E70182D3C4E008B5896 /* selectPeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFC3E6E182D3C4E008B5896 /* selectPeriod.m */; };
+		4DFC3E71182D3C4E008B5896 /* selectPeriod.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E6F182D3C4E008B5896 /* selectPeriod.xib */; };
+		4DFC3E77182D44DB008B5896 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E76182D44DB008B5896 /* Delete.png */; };
+		4DFC3E79182D452D008B5896 /* Accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E78182D452D008B5896 /* Accept.png */; };
+		4DFC3E7B182D453D008B5896 /* Alert.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E7A182D453D008B5896 /* Alert.png */; };
+		4DFC3E7D182D454C008B5896 /* Calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E7C182D454C008B5896 /* Calendar.png */; };
+		4DFC3E7F182D455F008B5896 /* Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E7E182D455F008B5896 /* Clock.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +200,16 @@
 		4DE4B7C1181665570027A06B /* login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = login.xcodeproj; path = ../login/login.xcodeproj; sourceTree = "<group>"; };
 		4DF4A181181EC54000360682 /* venduto_report_cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = venduto_report_cell.h; sourceTree = "<group>"; };
 		4DF4A182181EC54000360682 /* venduto_report_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = venduto_report_cell.m; sourceTree = "<group>"; };
+		4DFC3E50182CDE59008B5896 /* MqttBroker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MqttBroker.h; sourceTree = "<group>"; };
+		4DFC3E51182CDE59008B5896 /* MqttBroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MqttBroker.m; sourceTree = "<group>"; };
+		4DFC3E6D182D3C4E008B5896 /* selectPeriod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = selectPeriod.h; sourceTree = SOURCE_ROOT; };
+		4DFC3E6E182D3C4E008B5896 /* selectPeriod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = selectPeriod.m; sourceTree = SOURCE_ROOT; };
+		4DFC3E6F182D3C4E008B5896 /* selectPeriod.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = selectPeriod.xib; sourceTree = SOURCE_ROOT; };
+		4DFC3E76182D44DB008B5896 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Delete.png; sourceTree = "<group>"; };
+		4DFC3E78182D452D008B5896 /* Accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Accept.png; sourceTree = "<group>"; };
+		4DFC3E7A182D453D008B5896 /* Alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Alert.png; sourceTree = "<group>"; };
+		4DFC3E7C182D454C008B5896 /* Calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Calendar.png; sourceTree = "<group>"; };
+		4DFC3E7E182D455F008B5896 /* Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clock.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,32 +282,10 @@
 		4DDB48AA18167EF100993975 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4D024A5F181A5D92005BA4B0 /* MosquittoClient.h */,
-				4D024A60181A5D92005BA4B0 /* MosquittoClient.m */,
-				4DDB48BC1816AC3600993975 /* appslist_source.h */,
-				4DDB48BD1816AC3600993975 /* appslist_source.m */,
-				4D17C7EC1817B05700942F0F /* apps_list.h */,
-				4D17C7ED1817B05700942F0F /* apps_list.m */,
-				4D17C7EE1817B05700942F0F /* apps_list.xib */,
-				4D17CA521817B88700942F0F /* app_cell.h */,
-				4D17CA531817B88700942F0F /* app_cell.m */,
-				4D024A2F18198611005BA4B0 /* client_list.h */,
-				4D024A3018198611005BA4B0 /* client_list.m */,
-				4D024A3118198611005BA4B0 /* client_list.xib */,
-				4D024A62181A5E19005BA4B0 /* mosquitto_message.h */,
-				4D024A63181A5E19005BA4B0 /* mosquitto_message.m */,
-				4D024A65181A8AF3005BA4B0 /* client_cell.h */,
-				4D024A66181A8AF3005BA4B0 /* client_cell.m */,
-				4D00C89B181FB6D10038B6EC /* client_cell.xib */,
-				4D024A6F181AC4CE005BA4B0 /* venduto_report.h */,
-				4D024A70181AC4CE005BA4B0 /* venduto_report.m */,
-				4DF4A181181EC54000360682 /* venduto_report_cell.h */,
-				4D00C898181FAD620038B6EC /* venduto_report_cell.xib */,
-				4DF4A182181EC54000360682 /* venduto_report_cell.m */,
-				4D024A71181AC4CE005BA4B0 /* venduto_report.xib */,
-				4D67C04B1827BCA300CF5FEA /* venduto_report_header.h */,
-				4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */,
-				4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */,
+				4DFC3E72182D4434008B5896 /* Mqtt */,
+				4DFC3E73182D4444008B5896 /* App List */,
+				4DFC3E74182D4452008B5896 /* Clients List */,
+				4DFC3E75182D4462008B5896 /* Report Venduto */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -414,6 +410,70 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4DFC3E72182D4434008B5896 /* Mqtt */ = {
+			isa = PBXGroup;
+			children = (
+				4D024A5F181A5D92005BA4B0 /* MosquittoClient.h */,
+				4D024A60181A5D92005BA4B0 /* MosquittoClient.m */,
+				4D024A62181A5E19005BA4B0 /* mosquitto_message.h */,
+				4D024A63181A5E19005BA4B0 /* mosquitto_message.m */,
+				4DFC3E50182CDE59008B5896 /* MqttBroker.h */,
+				4DFC3E51182CDE59008B5896 /* MqttBroker.m */,
+			);
+			name = Mqtt;
+			sourceTree = "<group>";
+		};
+		4DFC3E73182D4444008B5896 /* App List */ = {
+			isa = PBXGroup;
+			children = (
+				4DDB48BC1816AC3600993975 /* appslist_source.h */,
+				4DDB48BD1816AC3600993975 /* appslist_source.m */,
+				4D17C7EC1817B05700942F0F /* apps_list.h */,
+				4D17C7ED1817B05700942F0F /* apps_list.m */,
+				4D17C7EE1817B05700942F0F /* apps_list.xib */,
+				4D17CA521817B88700942F0F /* app_cell.h */,
+				4D17CA531817B88700942F0F /* app_cell.m */,
+			);
+			name = "App List";
+			sourceTree = "<group>";
+		};
+		4DFC3E74182D4452008B5896 /* Clients List */ = {
+			isa = PBXGroup;
+			children = (
+				4DFC3E7C182D454C008B5896 /* Calendar.png */,
+				4DFC3E78182D452D008B5896 /* Accept.png */,
+				4DFC3E76182D44DB008B5896 /* Delete.png */,
+				4DFC3E6D182D3C4E008B5896 /* selectPeriod.h */,
+				4DFC3E6E182D3C4E008B5896 /* selectPeriod.m */,
+				4DFC3E6F182D3C4E008B5896 /* selectPeriod.xib */,
+				4D024A2F18198611005BA4B0 /* client_list.h */,
+				4D024A3018198611005BA4B0 /* client_list.m */,
+				4D024A3118198611005BA4B0 /* client_list.xib */,
+				4D024A65181A8AF3005BA4B0 /* client_cell.h */,
+				4D024A66181A8AF3005BA4B0 /* client_cell.m */,
+				4D00C89B181FB6D10038B6EC /* client_cell.xib */,
+			);
+			name = "Clients List";
+			sourceTree = "<group>";
+		};
+		4DFC3E75182D4462008B5896 /* Report Venduto */ = {
+			isa = PBXGroup;
+			children = (
+				4DFC3E7E182D455F008B5896 /* Clock.png */,
+				4DFC3E7A182D453D008B5896 /* Alert.png */,
+				4D024A6F181AC4CE005BA4B0 /* venduto_report.h */,
+				4D024A70181AC4CE005BA4B0 /* venduto_report.m */,
+				4DF4A181181EC54000360682 /* venduto_report_cell.h */,
+				4D00C898181FAD620038B6EC /* venduto_report_cell.xib */,
+				4DF4A182181EC54000360682 /* venduto_report_cell.m */,
+				4D024A71181AC4CE005BA4B0 /* venduto_report.xib */,
+				4D67C04B1827BCA300CF5FEA /* venduto_report_header.h */,
+				4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */,
+				4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */,
+			);
+			name = "Report Venduto";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -527,13 +587,17 @@
 				4D0D573E18216E47007AB070 /* check.png in Resources */,
 				4D00C89C181FB6D10038B6EC /* client_cell.xib in Resources */,
 				4D0D573918216E47007AB070 /* deSelectAll.png in Resources */,
+				4DFC3E71182D3C4E008B5896 /* selectPeriod.xib in Resources */,
 				4D0D573B18216E47007AB070 /* uncheck.png in Resources */,
+				4DFC3E77182D44DB008B5896 /* Delete.png in Resources */,
 				4D00C89F181FC6310038B6EC /* show.png in Resources */,
 				4D0D573C18216E47007AB070 /* reload.png in Resources */,
+				4DFC3E7D182D454C008B5896 /* Calendar.png in Resources */,
 				4DE4B79D181665490027A06B /* InfoPlist.strings in Resources */,
 				4D17C7F01817B05700942F0F /* apps_list.xib in Resources */,
 				4D024A73181AC4CE005BA4B0 /* venduto_report.xib in Resources */,
 				4D024A3318198611005BA4B0 /* client_list.xib in Resources */,
+				4DFC3E7B182D453D008B5896 /* Alert.png in Resources */,
 				4D0D573D18216E47007AB070 /* filter.png in Resources */,
 				4DDB48B91816AB9000993975 /* concrete_wall@2X.png in Resources */,
 				4DE4B7A5181665490027A06B /* Images.xcassets in Resources */,
@@ -542,6 +606,8 @@
 				4DDB489E181678FA00993975 /* loginBundle.bundle in Resources */,
 				4D00C899181FAD620038B6EC /* venduto_report_cell.xib in Resources */,
 				4D0D573A18216E47007AB070 /* selectAll.png in Resources */,
+				4DFC3E7F182D455F008B5896 /* Clock.png in Resources */,
+				4DFC3E79182D452D008B5896 /* Accept.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +659,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DFC3E70182D3C4E008B5896 /* selectPeriod.m in Sources */,
+				4DFC3E56182CF952008B5896 /* MqttBroker.m in Sources */,
 				4D024A67181A8AF3005BA4B0 /* client_cell.m in Sources */,
 				4DE4B7A3181665490027A06B /* AppDelegate.m in Sources */,
 				4D17C7EF1817B05700942F0F /* apps_list.m in Sources */,

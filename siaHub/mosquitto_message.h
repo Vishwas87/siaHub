@@ -29,15 +29,15 @@
 
 //Struttura del messaggio
 
-@property (readwrite, assign) NSString *ID;
-@property (readwrite, assign) NSString *responseto;
-@property (readwrite, assign) NSString *name;
-@property (readwrite, assign) NSString *sender;
-@property (readwrite, assign) NSDictionary *command;
-@property (readwrite, assign) NSDictionary *header;
-@property (readwrite, assign) NSDictionary *body;
-@property (readwrite, assign) NSDictionary *ondemandlist;
-@property (readwrite, assign) NSDictionary *notificationlist;
+@property (nonatomic,retain, readwrite) NSString *ID;
+@property (nonatomic,retain, readwrite) NSString *responseto;
+@property (nonatomic,retain, readwrite) NSString *name;
+@property (nonatomic,retain, readwrite) NSString *sender;
+@property (nonatomic,retain, readwrite) NSDictionary *command;
+@property (nonatomic,retain, readwrite) NSDictionary *header;
+@property (nonatomic,retain, readwrite) NSDictionary *body;
+@property (nonatomic,retain, readwrite) NSDictionary *ondemandlist;
+@property (nonatomic,retain, readwrite) NSDictionary *notificationlist;
 
 
 

@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MosquittoClient.h"
+#import "AppDelegate.h"
 #import "client_cell.h"
 #import "venduto_report.h"
+#import "MqttBroker.h"
 
-@interface client_list : UIViewController<UITableViewDataSource,UITableViewDelegate,MosquittoClientDelegate,client_cell_protocol>
+
+
+@interface client_list : UIViewController<broker_protocol ,UITableViewDataSource,UITableViewDelegate,client_cell_protocol>
 {
     MosquittoClient *msq_tto;
      NSTimer *timerRespond;

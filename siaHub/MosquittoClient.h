@@ -61,7 +61,7 @@
 - (void)subscribe: (NSString *)topic withQos:(NSUInteger)qos;
 - (void)unsubscribe: (NSString *)topic;
 
--(NSString*)createMessageForId:(NSString*)ident responseTo:(NSString*)responseTo
++(NSString*)createMessageForId:(NSString*)ident responseTo:(NSString*)responseTo
                      name:(NSString*)name command:(NSDictionary*)command
                         header:(NSDictionary*)header body:(NSDictionary*)body andSender:(NSString*)sender;
 
