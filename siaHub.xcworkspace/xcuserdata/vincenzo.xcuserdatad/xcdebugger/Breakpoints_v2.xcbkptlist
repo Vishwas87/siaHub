@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../login/login/login_view.m"
-            timestampString = "404931139.142739"
+            timestampString = "411402766.200514"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "-signIn:"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,6 +106,22 @@
             startingLineNumber = "523"
             endingLineNumber = "523"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "siaHub/client_list.m"
+            timestampString = "411405418.316961"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "-discoverClients:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

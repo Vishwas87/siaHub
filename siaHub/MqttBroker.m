@@ -133,6 +133,7 @@ static MqttBroker *uniqueInstance = NULL;
                     [obj changedStatus:[NSDictionary dictionaryWithObjectsAndKeys:weakSelf.status,@"STATUS", nil]];
                 }
                 
+                
             }];
             [weakSelf.mosquittoClient connect];
         });

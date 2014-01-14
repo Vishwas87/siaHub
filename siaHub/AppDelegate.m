@@ -52,9 +52,13 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"loginBundle" withExtension:@"bundle"]];
-    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"http://192.168.3.109/desktop.sianet.it/index.php/wrlogin"];
+    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"https://192.168.3.109/index.php/login"];
     [controller setDelegate:self];
     
+    
+    self.window.rootViewController = controller;
+    
+    /*
     
     
     self.params = [[NSMutableDictionary alloc]init];
@@ -72,7 +76,7 @@
     
     self.window.rootViewController = self.navigation;
     controller = NULL;
-    
+    */
     [self.window makeKeyAndVisible];
     
     
@@ -98,14 +102,28 @@
         if([retval count]>0){
             
             NSMutableDictionary *parameters = [retval objectAtIndex:0];
-            if([[parameters allKeys]containsObject:@"customer_code"] &&
+            if([[parameters allKeys]containsObject:@"azienda"] &&
                [[parameters allKeys]containsObject:@"username"] &&
                [[parameters allKeys]containsObject:@"password"]
                ){
+                
+                
+                
+                
+                
+                
                 self.params = [[NSMutableDictionary alloc]init];
-                [self.params setObject:[parameters objectForKey:@"customer_code"] forKey:@"customer_code"];
+                
+                [parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                    
+                    [self.params setObject:obj forKey:key];
+                    
+                }];
+                
+                
+ /*               [self.params setObject:[parameters objectForKey:@"azienda"] forKey:@"azienda"];
                 [self.params setObject:[parameters objectForKey:@"username"] forKey:@"username"];
-                [self.params setObject:[parameters objectForKey:@"password"] forKey:@"password"];
+                [self.params setObject:[parameters objectForKey:@"password"] forKey:@"password"];*/
                 parameters = NULL;
                 response = NULL;
                 retval = NULL;

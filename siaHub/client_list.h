@@ -17,7 +17,7 @@
 @interface client_list : UIViewController<broker_protocol ,UITableViewDataSource,UITableViewDelegate,client_cell_protocol>
 {
     MosquittoClient *msq_tto;
-     NSTimer *timerRespond;
+    NSTimer *timerRespond;
 }
 
 @end

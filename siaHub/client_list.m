@@ -92,19 +92,53 @@
 
 - (void)discoverClients:(MqttBroker *)broker
 {
-    int num =[broker getIncrementalInt];
+    
+    NSDictionary*parm = ((AppDelegate*)[UIApplication sharedApplication].delegate).params;
+    
+    
+    
+    NSLog(@"Params %@",parm);
+    
+    int num = 0;
+    NSDictionary* res;
+    NSString* azienda =  NULL;
     NSString *unique = [MqttBroker getUniqueClientId];
-    NSString* messaggio =
-    [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,num] responseTo:@"" name:@"DISCOVERINGCONNECTEDCLIENT" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
+    NSString* messaggio;
+    NSString* topic;
+    if([parm objectForKey:@"azienda"]!= NULL) azienda = [parm objectForKey:@"azienda"];
+        
     
     
-    
-   NSDictionary* res = [broker publishMessage:messaggio onTopic:@"C43/BROADCAST" withQos:1 retained:FALSE andPublisher:self];
-    
-    if(![[res objectForKey:@"CODE"] isEqualToString:@"0"]){
-        //messaggio non è pubblicato
-        //Aggiorna status
+    if(azienda!= NULL && [parm objectForKey:@"gruppi"]!= NULL){
+        NSString *groupName;
+        
+        for (NSDictionary* d in [parm objectForKey:@"gruppi"]) {
+           groupName  = [d objectForKey:@"groupName"];
+           num =[broker getIncrementalInt];
+            messaggio =
+            [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,num] responseTo:@"" name:@"DISCOVERINGCONNECTEDCLIENT" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
+            NSLog(@"Coda %@",[NSString stringWithFormat:@"%@/%@",azienda,groupName]);
+            topic = [NSString stringWithFormat:@"%@/%@/BROADCAST",azienda,groupName];
+            [broker subscribeClient:self toTopic:topic];
+            res = [broker publishMessage:messaggio onTopic:topic withQos:1 retained:FALSE andPublisher:self];
+            
+            if(![[res objectForKey:@"CODE"] isEqualToString:@"0"]){
+                //messaggio non è pubblicato
+                //Aggiorna status
+            }
+            
+            
+        }
+
+        
     }
+    
+    
+
+    
+    
+    
+
     
     
 }
@@ -124,7 +158,7 @@
    
 
     MqttBroker *broker = [MqttBroker instance];
-    [broker subscribeClient:self toTopic:@"C43/BROADCAST"];
+    //[broker subscribeClient:self toTopic:@"C43/BROADCAST"];
     [self discoverClients:broker];
     
     
