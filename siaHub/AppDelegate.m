@@ -23,7 +23,7 @@
 
 @implementation AppDelegate
 @synthesize mosquittoClient,navigation,params;
-
+@synthesize from,to;
 
 
 
@@ -74,6 +74,9 @@
     controller = NULL;
     
     [self.window makeKeyAndVisible];
+    
+    
+    
     return YES;
 }
 

@@ -23,6 +23,50 @@
 @implementation venduto_report
 
 
+
+
+- (void)requestSold:(MqttBroker *)broker
+{
+    
+    int num =[broker getIncrementalInt];
+    NSString *unique = [MqttBroker getUniqueClientId];
+    
+    AppDelegate*del = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
+    NSDate *from = del.from;
+    NSDate *to = del.to;
+    
+    NSMutableDictionary *header = [[NSMutableDictionary alloc]init];
+    
+    if(from!= NULL) [header setObject:from forKey:@"DATE_FROM"];
+    if(to!= NULL) [header setObject:from forKey:@"DATE_TO"];
+    
+    
+    
+    NSString* messaggio =
+    [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,num] responseTo:@"" name:@"CURRENTSTOREPERFORMANCEINDEX" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
+    
+
+    [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+
+        if(![[[broker publishMessage:messaggio onTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:1 retained:FALSE andPublisher:self] objectForKey:@"CODE"]isEqualToString:@"0"] ){
+            
+        }
+        
+        
+    }];
+    
+    
+    
+    
+
+    
+    
+}
+
+
+
+
 -(void)viewDidLayoutSubviews{
     self.navigationController.navigationBar.opaque = FALSE;
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
@@ -37,16 +81,13 @@
     if (self) {
         self.activityIndicator = [[NSMutableDictionary alloc]init];
         self.title = NSLocalizedString(@"REPORT VENDUTO", NULL);
-        // Custom initialization
-      //  [self.table registerClass:[venduto_report_header class] forHeaderFooterViewReuseIdentifier:@"header"];
-       // [self.table setTranslatesAutoresizingMaskIntoConstraints:FALSE];
-    }
+     }
     return self;
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
-     [self.table setContentInset:UIEdgeInsetsMake(10, 0, 0, 0)];
+   //  [self.table setContentInset:UIEdgeInsetsMake(10, 0, 0, 0)];
     
 
 }
@@ -57,7 +98,7 @@
     
     
 
-    
+  /*
     
     
     NSString *unique = [MqttBroker getUniqueClientId];
@@ -77,24 +118,16 @@
         [self.clientMosquitto publishString:messaggio toTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:1 retain:FALSE];
         
         
-    }];
+    }];*/
 }
 
-- (void)connectionAndSubscription
-{
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  //  self.clientMosquitto = [delegate mosquittoClient];
-    [self.clientMosquitto setDelegate:self];
-    
-    [self subscription];
-}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self connectionAndSubscription];
-
+   
 
     
 }
@@ -103,21 +136,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    AppDelegate *del = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     
-    NSString *unique = [MqttBroker getUniqueClientId];
+    //Unregister from all topic
     
     
-    //code to be executed on the main queue after delay
-    [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        //in body deve essere recuperata la query
-        [self.clientMosquitto unsubscribe:[NSString stringWithFormat:@"C43/%@/OUT/%@",obj,unique]];
-
-        
-        
-    }];
-    
-    [del resetDelegateMosquitto];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,17 +149,6 @@
 }
 
 
-- (void) didConnect: (NSUInteger)code{
-
-}
-- (void) didDisconnect{
-    
-    //[self.navigationController popViewControllerAnimated:YES];
-    [self connectionAndSubscription];
-}
-- (void) didPublish: (NSUInteger)messageId{
-
-}
 - (void) didReceiveMessage: (mosquitto_message*)mosq_msg{
     
 
@@ -162,12 +173,6 @@
     int index = [[self.source allKeys] indexOfObject:mosq_msg.sender];
 
     [self.table reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationFade];
-    
-}
-- (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos{
-    
-}
-- (void) didUnsubscribe: (NSUInteger)messageId{
     
 }
 
@@ -195,7 +200,6 @@
     if([self.source objectForKey:key]!= NULL && [[self.source objectForKey:key] objectForKey:@"row_def"] != NULL )
     {
         
-        NSLog(@"%d",[[[self.source objectForKey:key] objectForKey:@"row_def"] count]);
         return [[[self.source objectForKey:key] objectForKey:@"row_def"] count];
     }
     
@@ -221,7 +225,7 @@
     NSString *currentColumnName = [row_def objectForKey:@"ColumnName"];
     
    // NSLog(@"rows for key %@",[[self.source objectForKey:key] objectForKey:@"rows"]);
-    NSString * currentValue = ([[[self.source objectForKey:key] objectForKey:@"rows"] count]>0)?[[[[self.source objectForKey:key] objectForKey:@"rows"] objectAtIndex:0]objectAtIndex:indexPath.row]:NSLocalizedString(@"NOT AVIABLE", NULL);
+    NSString * currentValue = ([[[self.source objectForKey:key] objectForKey:@"rows"] count]>0)?[[[[self.source objectForKey:key] objectForKey:@"rows"] objectAtIndex:0]objectAtIndex:indexPath.row]:NSLocalizedString(@"NOT AVAIABLE", NULL);
     
    	
     [cell.key setText:currentColumnName];

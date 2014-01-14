@@ -184,23 +184,23 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
 }
 
 
-- (void)publishString: (NSString *)payload toTopic:(NSString *)topic withQos:(NSUInteger)qos retain:(BOOL)retain {
+- (int)publishString: (NSString *)payload toTopic:(NSString *)topic withQos:(NSUInteger)qos retain:(BOOL)retain {
     const char* cstrTopic = [topic cStringUsingEncoding:NSUTF8StringEncoding];
     const uint8_t* cstrPayload = (const uint8_t*)[payload cStringUsingEncoding:NSUTF8StringEncoding];
     size_t cstrlen = [payload lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-    mosquitto_publish(mosq, NULL, cstrTopic, cstrlen, cstrPayload, qos, retain);
+   return mosquitto_publish(mosq, NULL, cstrTopic, cstrlen, cstrPayload, qos, retain);
     
 }
 
 
 
-- (void)subscribe: (NSString *)topic {
-    [self subscribe:topic withQos:0];
+- (int)subscribe: (NSString *)topic {
+   return [self subscribe:topic withQos:0];
 }
 
-- (void)subscribe: (NSString *)topic withQos:(NSUInteger)qos {
+- (int)subscribe: (NSString *)topic withQos:(NSUInteger)qos {
     const char* cstrTopic = [topic cStringUsingEncoding:NSUTF8StringEncoding];
-    mosquitto_subscribe(mosq, NULL, cstrTopic, qos);
+    return mosquitto_subscribe(mosq, NULL, cstrTopic, qos);
 }
 
 - (void)unsubscribe: (NSString *)topic {

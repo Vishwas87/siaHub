@@ -10,6 +10,9 @@
 		4D00C899181FAD620038B6EC /* venduto_report_cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D00C898181FAD620038B6EC /* venduto_report_cell.xib */; };
 		4D00C89C181FB6D10038B6EC /* client_cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D00C89B181FB6D10038B6EC /* client_cell.xib */; };
 		4D00C89F181FC6310038B6EC /* show.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D00C89D181FC6310038B6EC /* show.png */; };
+		4D02470E1832A2F000CBD5BE /* Connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D02470B1832A2F000CBD5BE /* Connected.png */; };
+		4D02470F1832A2F000CBD5BE /* Connecting.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D02470C1832A2F000CBD5BE /* Connecting.png */; };
+		4D0247101832A2F000CBD5BE /* Disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D02470D1832A2F000CBD5BE /* Disconnected.png */; };
 		4D024A3218198611005BA4B0 /* client_list.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A3018198611005BA4B0 /* client_list.m */; };
 		4D024A3318198611005BA4B0 /* client_list.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D024A3118198611005BA4B0 /* client_list.xib */; };
 		4D024A52181A5D77005BA4B0 /* logging_mosq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A39181A5D77005BA4B0 /* logging_mosq.c */; };
@@ -30,6 +33,14 @@
 		4D024A67181A8AF3005BA4B0 /* client_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A66181A8AF3005BA4B0 /* client_cell.m */; };
 		4D024A72181AC4CE005BA4B0 /* venduto_report.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D024A70181AC4CE005BA4B0 /* venduto_report.m */; };
 		4D024A73181AC4CE005BA4B0 /* venduto_report.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D024A71181AC4CE005BA4B0 /* venduto_report.xib */; };
+		4D0261F0183A0E980060CEB7 /* report_venduto.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0261EE183A0E980060CEB7 /* report_venduto.m */; };
+		4D0261F1183A0E980060CEB7 /* report_venduto.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D0261EF183A0E980060CEB7 /* report_venduto.xib */; };
+		4D0261F6183A0F020060CEB7 /* report_venduto_header.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0261F4183A0F020060CEB7 /* report_venduto_header.m */; };
+		4D0261F7183A0F020060CEB7 /* report_venduto_header.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D0261F5183A0F020060CEB7 /* report_venduto_header.xib */; };
+		4D0261FA183BB6C50060CEB7 /* buttonWithSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0261F9183BB6C50060CEB7 /* buttonWithSource.m */; };
+		4D0261FD183BCC100060CEB7 /* collapse.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0261FB183BCC0F0060CEB7 /* collapse.png */; };
+		4D0261FE183BCC100060CEB7 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0261FC183BCC100060CEB7 /* expand.png */; };
+		4D06A7081830DC9400971391 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D06A7071830DC9400971391 /* close.png */; };
 		4D0D573918216E47007AB070 /* deSelectAll.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0D573318216E47007AB070 /* deSelectAll.png */; };
 		4D0D573A18216E47007AB070 /* selectAll.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0D573418216E47007AB070 /* selectAll.png */; };
 		4D0D573B18216E47007AB070 /* uncheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D0D573518216E47007AB070 /* uncheck.png */; };
@@ -41,6 +52,10 @@
 		4D17C7EF1817B05700942F0F /* apps_list.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D17C7ED1817B05700942F0F /* apps_list.m */; };
 		4D17C7F01817B05700942F0F /* apps_list.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D17C7EE1817B05700942F0F /* apps_list.xib */; };
 		4D17CA541817B88700942F0F /* app_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D17CA531817B88700942F0F /* app_cell.m */; };
+		4D36B3021830F4C10017788C /* selectPeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D36B3001830F4C10017788C /* selectPeriod.m */; };
+		4D36B3031830F4C10017788C /* selectPeriod.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D36B3011830F4C10017788C /* selectPeriod.xib */; };
+		4D36B307183116B70017788C /* Save.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D36B305183116B70017788C /* Save.png */; };
+		4D36B308183116B70017788C /* Recycle Bin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D36B306183116B70017788C /* Recycle Bin.png */; };
 		4D67C04D1827BCA300CF5FEA /* venduto_report_header.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */; };
 		4D67C04F1827BCDA00CF5FEA /* venduto_report_header.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */; };
 		4DDB489E181678FA00993975 /* loginBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4DE4B7CC181665570027A06B /* loginBundle.bundle */; };
@@ -62,8 +77,6 @@
 		4DE4B7CD181665840027A06B /* liblogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE4B7C8181665570027A06B /* liblogin.a */; };
 		4DF4A183181EC54000360682 /* venduto_report_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF4A182181EC54000360682 /* venduto_report_cell.m */; };
 		4DFC3E56182CF952008B5896 /* MqttBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFC3E51182CDE59008B5896 /* MqttBroker.m */; };
-		4DFC3E70182D3C4E008B5896 /* selectPeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFC3E6E182D3C4E008B5896 /* selectPeriod.m */; };
-		4DFC3E71182D3C4E008B5896 /* selectPeriod.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E6F182D3C4E008B5896 /* selectPeriod.xib */; };
 		4DFC3E77182D44DB008B5896 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E76182D44DB008B5896 /* Delete.png */; };
 		4DFC3E79182D452D008B5896 /* Accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E78182D452D008B5896 /* Accept.png */; };
 		4DFC3E7B182D453D008B5896 /* Alert.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DFC3E7A182D453D008B5896 /* Alert.png */; };
@@ -122,6 +135,9 @@
 		4D00C898181FAD620038B6EC /* venduto_report_cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = venduto_report_cell.xib; sourceTree = "<group>"; };
 		4D00C89B181FB6D10038B6EC /* client_cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = client_cell.xib; sourceTree = "<group>"; };
 		4D00C89D181FC6310038B6EC /* show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = show.png; sourceTree = "<group>"; };
+		4D02470B1832A2F000CBD5BE /* Connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Connected.png; sourceTree = "<group>"; };
+		4D02470C1832A2F000CBD5BE /* Connecting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Connecting.png; sourceTree = "<group>"; };
+		4D02470D1832A2F000CBD5BE /* Disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Disconnected.png; sourceTree = "<group>"; };
 		4D024A2F18198611005BA4B0 /* client_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = client_list.h; sourceTree = "<group>"; };
 		4D024A3018198611005BA4B0 /* client_list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = client_list.m; sourceTree = "<group>"; };
 		4D024A3118198611005BA4B0 /* client_list.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = client_list.xib; sourceTree = "<group>"; };
@@ -160,6 +176,17 @@
 		4D024A6F181AC4CE005BA4B0 /* venduto_report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = venduto_report.h; sourceTree = "<group>"; };
 		4D024A70181AC4CE005BA4B0 /* venduto_report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = venduto_report.m; sourceTree = "<group>"; };
 		4D024A71181AC4CE005BA4B0 /* venduto_report.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = venduto_report.xib; sourceTree = "<group>"; };
+		4D0261ED183A0E980060CEB7 /* report_venduto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = report_venduto.h; sourceTree = "<group>"; };
+		4D0261EE183A0E980060CEB7 /* report_venduto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = report_venduto.m; sourceTree = "<group>"; };
+		4D0261EF183A0E980060CEB7 /* report_venduto.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = report_venduto.xib; sourceTree = "<group>"; };
+		4D0261F3183A0F020060CEB7 /* report_venduto_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = report_venduto_header.h; sourceTree = "<group>"; };
+		4D0261F4183A0F020060CEB7 /* report_venduto_header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = report_venduto_header.m; sourceTree = "<group>"; };
+		4D0261F5183A0F020060CEB7 /* report_venduto_header.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = report_venduto_header.xib; sourceTree = "<group>"; };
+		4D0261F8183BB6C50060CEB7 /* buttonWithSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buttonWithSource.h; sourceTree = "<group>"; };
+		4D0261F9183BB6C50060CEB7 /* buttonWithSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = buttonWithSource.m; sourceTree = "<group>"; };
+		4D0261FB183BCC0F0060CEB7 /* collapse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collapse.png; sourceTree = "<group>"; };
+		4D0261FC183BCC100060CEB7 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand.png; sourceTree = "<group>"; };
+		4D06A7071830DC9400971391 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		4D0D573318216E47007AB070 /* deSelectAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deSelectAll.png; path = ../../../../../Downloads/ravenna/PNG/deSelectAll.png; sourceTree = "<group>"; };
 		4D0D573418216E47007AB070 /* selectAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selectAll.png; path = ../../../../../Downloads/ravenna/PNG/selectAll.png; sourceTree = "<group>"; };
 		4D0D573518216E47007AB070 /* uncheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uncheck.png; path = ../../../../../Downloads/ravenna/PNG/uncheck.png; sourceTree = "<group>"; };
@@ -174,6 +201,11 @@
 		4D17C7EE1817B05700942F0F /* apps_list.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = apps_list.xib; sourceTree = "<group>"; };
 		4D17CA521817B88700942F0F /* app_cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app_cell.h; sourceTree = "<group>"; };
 		4D17CA531817B88700942F0F /* app_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = app_cell.m; sourceTree = "<group>"; };
+		4D36B2FF1830F4C10017788C /* selectPeriod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = selectPeriod.h; sourceTree = "<group>"; };
+		4D36B3001830F4C10017788C /* selectPeriod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = selectPeriod.m; sourceTree = "<group>"; };
+		4D36B3011830F4C10017788C /* selectPeriod.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = selectPeriod.xib; sourceTree = "<group>"; };
+		4D36B305183116B70017788C /* Save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save.png; sourceTree = "<group>"; };
+		4D36B306183116B70017788C /* Recycle Bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Recycle Bin.png"; sourceTree = "<group>"; };
 		4D67C04B1827BCA300CF5FEA /* venduto_report_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = venduto_report_header.h; sourceTree = "<group>"; };
 		4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = venduto_report_header.m; sourceTree = "<group>"; };
 		4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = venduto_report_header.xib; sourceTree = "<group>"; };
@@ -202,9 +234,6 @@
 		4DF4A182181EC54000360682 /* venduto_report_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = venduto_report_cell.m; sourceTree = "<group>"; };
 		4DFC3E50182CDE59008B5896 /* MqttBroker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MqttBroker.h; sourceTree = "<group>"; };
 		4DFC3E51182CDE59008B5896 /* MqttBroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MqttBroker.m; sourceTree = "<group>"; };
-		4DFC3E6D182D3C4E008B5896 /* selectPeriod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = selectPeriod.h; sourceTree = SOURCE_ROOT; };
-		4DFC3E6E182D3C4E008B5896 /* selectPeriod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = selectPeriod.m; sourceTree = SOURCE_ROOT; };
-		4DFC3E6F182D3C4E008B5896 /* selectPeriod.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = selectPeriod.xib; sourceTree = SOURCE_ROOT; };
 		4DFC3E76182D44DB008B5896 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Delete.png; sourceTree = "<group>"; };
 		4DFC3E78182D452D008B5896 /* Accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Accept.png; sourceTree = "<group>"; };
 		4DFC3E7A182D453D008B5896 /* Alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Alert.png; sourceTree = "<group>"; };
@@ -277,6 +306,22 @@
 				4D17C7E81816AFC100942F0F /* app.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		4D36B309183120880017788C /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				4D02470B1832A2F000CBD5BE /* Connected.png */,
+				4D02470C1832A2F000CBD5BE /* Connecting.png */,
+				4D02470D1832A2F000CBD5BE /* Disconnected.png */,
+				4D36B305183116B70017788C /* Save.png */,
+				4D36B306183116B70017788C /* Recycle Bin.png */,
+				4D06A7071830DC9400971391 /* close.png */,
+				4DFC3E7C182D454C008B5896 /* Calendar.png */,
+				4DFC3E78182D452D008B5896 /* Accept.png */,
+				4DFC3E76182D44DB008B5896 /* Delete.png */,
+			);
+			name = icons;
 			sourceTree = "<group>";
 		};
 		4DDB48AA18167EF100993975 /* Controllers */ = {
@@ -440,18 +485,16 @@
 		4DFC3E74182D4452008B5896 /* Clients List */ = {
 			isa = PBXGroup;
 			children = (
-				4DFC3E7C182D454C008B5896 /* Calendar.png */,
-				4DFC3E78182D452D008B5896 /* Accept.png */,
-				4DFC3E76182D44DB008B5896 /* Delete.png */,
-				4DFC3E6D182D3C4E008B5896 /* selectPeriod.h */,
-				4DFC3E6E182D3C4E008B5896 /* selectPeriod.m */,
-				4DFC3E6F182D3C4E008B5896 /* selectPeriod.xib */,
+				4D36B309183120880017788C /* icons */,
 				4D024A2F18198611005BA4B0 /* client_list.h */,
 				4D024A3018198611005BA4B0 /* client_list.m */,
 				4D024A3118198611005BA4B0 /* client_list.xib */,
 				4D024A65181A8AF3005BA4B0 /* client_cell.h */,
 				4D024A66181A8AF3005BA4B0 /* client_cell.m */,
 				4D00C89B181FB6D10038B6EC /* client_cell.xib */,
+				4D36B2FF1830F4C10017788C /* selectPeriod.h */,
+				4D36B3001830F4C10017788C /* selectPeriod.m */,
+				4D36B3011830F4C10017788C /* selectPeriod.xib */,
 			);
 			name = "Clients List";
 			sourceTree = "<group>";
@@ -459,6 +502,8 @@
 		4DFC3E75182D4462008B5896 /* Report Venduto */ = {
 			isa = PBXGroup;
 			children = (
+				4D0261FB183BCC0F0060CEB7 /* collapse.png */,
+				4D0261FC183BCC100060CEB7 /* expand.png */,
 				4DFC3E7E182D455F008B5896 /* Clock.png */,
 				4DFC3E7A182D453D008B5896 /* Alert.png */,
 				4D024A6F181AC4CE005BA4B0 /* venduto_report.h */,
@@ -470,6 +515,14 @@
 				4D67C04B1827BCA300CF5FEA /* venduto_report_header.h */,
 				4D67C04E1827BCDA00CF5FEA /* venduto_report_header.xib */,
 				4D67C04C1827BCA300CF5FEA /* venduto_report_header.m */,
+				4D0261ED183A0E980060CEB7 /* report_venduto.h */,
+				4D0261EE183A0E980060CEB7 /* report_venduto.m */,
+				4D0261EF183A0E980060CEB7 /* report_venduto.xib */,
+				4D0261F3183A0F020060CEB7 /* report_venduto_header.h */,
+				4D0261F4183A0F020060CEB7 /* report_venduto_header.m */,
+				4D0261F5183A0F020060CEB7 /* report_venduto_header.xib */,
+				4D0261F8183BB6C50060CEB7 /* buttonWithSource.h */,
+				4D0261F9183BB6C50060CEB7 /* buttonWithSource.m */,
 			);
 			name = "Report Venduto";
 			sourceTree = "<group>";
@@ -583,11 +636,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D36B307183116B70017788C /* Save.png in Resources */,
 				4D67C04F1827BCDA00CF5FEA /* venduto_report_header.xib in Resources */,
 				4D0D573E18216E47007AB070 /* check.png in Resources */,
+				4D0261F1183A0E980060CEB7 /* report_venduto.xib in Resources */,
+				4D36B3031830F4C10017788C /* selectPeriod.xib in Resources */,
 				4D00C89C181FB6D10038B6EC /* client_cell.xib in Resources */,
 				4D0D573918216E47007AB070 /* deSelectAll.png in Resources */,
-				4DFC3E71182D3C4E008B5896 /* selectPeriod.xib in Resources */,
+				4D0247101832A2F000CBD5BE /* Disconnected.png in Resources */,
 				4D0D573B18216E47007AB070 /* uncheck.png in Resources */,
 				4DFC3E77182D44DB008B5896 /* Delete.png in Resources */,
 				4D00C89F181FC6310038B6EC /* show.png in Resources */,
@@ -599,13 +655,20 @@
 				4D024A3318198611005BA4B0 /* client_list.xib in Resources */,
 				4DFC3E7B182D453D008B5896 /* Alert.png in Resources */,
 				4D0D573D18216E47007AB070 /* filter.png in Resources */,
+				4D0261FE183BCC100060CEB7 /* expand.png in Resources */,
 				4DDB48B91816AB9000993975 /* concrete_wall@2X.png in Resources */,
+				4D36B308183116B70017788C /* Recycle Bin.png in Resources */,
 				4DE4B7A5181665490027A06B /* Images.xcassets in Resources */,
+				4D0261FD183BCC100060CEB7 /* collapse.png in Resources */,
 				4D17C7EB1816C57F00942F0F /* placeholder.png in Resources */,
+				4D02470F1832A2F000CBD5BE /* Connecting.png in Resources */,
 				4DDB48B81816AB9000993975 /* concrete_wall.png in Resources */,
+				4D0261F7183A0F020060CEB7 /* report_venduto_header.xib in Resources */,
+				4D06A7081830DC9400971391 /* close.png in Resources */,
 				4DDB489E181678FA00993975 /* loginBundle.bundle in Resources */,
 				4D00C899181FAD620038B6EC /* venduto_report_cell.xib in Resources */,
 				4D0D573A18216E47007AB070 /* selectAll.png in Resources */,
+				4D02470E1832A2F000CBD5BE /* Connected.png in Resources */,
 				4DFC3E7F182D455F008B5896 /* Clock.png in Resources */,
 				4DFC3E79182D452D008B5896 /* Accept.png in Resources */,
 			);
@@ -659,14 +722,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DFC3E70182D3C4E008B5896 /* selectPeriod.m in Sources */,
+				4D36B3021830F4C10017788C /* selectPeriod.m in Sources */,
 				4DFC3E56182CF952008B5896 /* MqttBroker.m in Sources */,
 				4D024A67181A8AF3005BA4B0 /* client_cell.m in Sources */,
 				4DE4B7A3181665490027A06B /* AppDelegate.m in Sources */,
 				4D17C7EF1817B05700942F0F /* apps_list.m in Sources */,
+				4D0261FA183BB6C50060CEB7 /* buttonWithSource.m in Sources */,
 				4DF4A183181EC54000360682 /* venduto_report_cell.m in Sources */,
 				4D024A72181AC4CE005BA4B0 /* venduto_report.m in Sources */,
 				4D024A52181A5D77005BA4B0 /* logging_mosq.c in Sources */,
+				4D0261F6183A0F020060CEB7 /* report_venduto_header.m in Sources */,
 				4DDB48BE1816AC3600993975 /* appslist_source.m in Sources */,
 				4D024A5B181A5D77005BA4B0 /* send_mosq.c in Sources */,
 				4D67C04D1827BCA300CF5FEA /* venduto_report_header.m in Sources */,
@@ -686,6 +751,7 @@
 				4D024A3218198611005BA4B0 /* client_list.m in Sources */,
 				4D024A54181A5D77005BA4B0 /* messages_mosq.c in Sources */,
 				4D024A61181A5D92005BA4B0 /* MosquittoClient.m in Sources */,
+				4D0261F0183A0E980060CEB7 /* report_venduto.m in Sources */,
 				4D024A58181A5D77005BA4B0 /* read_handle_shared.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

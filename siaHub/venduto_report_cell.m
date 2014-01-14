@@ -25,7 +25,7 @@
         
         CALayer * l = [self layer];
         [l setMasksToBounds:YES];
-        [l setCornerRadius:10];
+       // [l setCornerRadius:10];
         
         
     }

@@ -55,10 +55,10 @@
 - (void)setWill: (NSString *)payload toTopic:(NSString *)willTopic withQos:(NSUInteger)willQos retain:(BOOL)retain;
 - (void)clearWill;
 
-- (void)publishString: (NSString *)payload toTopic:(NSString *)topic withQos:(NSUInteger)qos retain:(BOOL)retain;
+- (int)publishString: (NSString *)payload toTopic:(NSString *)topic withQos:(NSUInteger)qos retain:(BOOL)retain;
 
-- (void)subscribe: (NSString *)topic;
-- (void)subscribe: (NSString *)topic withQos:(NSUInteger)qos;
+- (int)subscribe: (NSString *)topic;
+- (int)subscribe: (NSString *)topic withQos:(NSUInteger)qos;
 - (void)unsubscribe: (NSString *)topic;
 
 +(NSString*)createMessageForId:(NSString*)ident responseTo:(NSString*)responseTo

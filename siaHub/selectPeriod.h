@@ -2,7 +2,7 @@
 //  selectPeriod.h
 //  siaHub
 //
-//  Created by Vincenzo on 08/11/13.
+//  Created by Vincenzo on 11/11/13.
 //  Copyright (c) 2013 Vincenzo. All rights reserved.
 //
 
@@ -10,6 +10,4 @@
 
 @interface selectPeriod : UIViewController
 
-
-@property (nonatomic, retain) IBOutlet UILabel *pageTitle;
 @end

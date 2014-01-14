@@ -19,7 +19,8 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong,nonatomic) UINavigationController *navigation;
 @property (strong,nonatomic) NSMutableDictionary *params; //Conserva nome utente password customer code
-
+@property (nonatomic,retain) NSDate *from;
+@property (nonatomic,retain) NSDate *to;
 
 -(void)resetDelegateMosquitto;
 

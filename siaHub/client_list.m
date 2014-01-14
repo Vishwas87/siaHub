@@ -8,6 +8,7 @@
 
 #import "client_list.h"
 #import "selectPeriod.h"
+#import "report_venduto.h"
 @interface client_list ()
 
 @property (nonatomic, strong) IBOutlet UITableView *clientList;
@@ -32,15 +33,61 @@
 @property (nonatomic,retain) NSMutableDictionary *selectedClient;
 @property (assign, readwrite) BOOL reload; //Variabile per indicare che la tabella è stata aggiornata
 
-
-
+@property (nonatomic,retain) UIBarButtonItem *statusBB;
 
 @end
 
 @implementation client_list
 
 
+- (void)modifyStatusClient:(NSDictionary *)statusClient
+{
+    if([[statusClient objectForKey:@"STATUS"] isEqualToString:@"CONNECTING"]){
+        UIButton *btn =  [UIButton buttonWithType:UIButtonTypeContactAdd];
+        UIButton *status =  [UIButton buttonWithType:UIButtonTypeCustom];
+        status.frame= btn.frame;
+        btn = NULL;
+        [status setBackgroundImage:[UIImage imageNamed:@"Connecting.png"] forState:UIControlStateNormal];
+        
+        self.statusBB= [[UIBarButtonItem alloc] initWithCustomView:status];
+        
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:self.statusBB];
+    }
+    else{
+        if([[statusClient objectForKey:@"STATUS"] isEqualToString:@"CONNECTED"]){
+            UIButton *btn =  [UIButton buttonWithType:UIButtonTypeContactAdd];
+            UIButton *status =  [UIButton buttonWithType:UIButtonTypeCustom];
+            status.frame= btn.frame;
+            btn = NULL;
+            [status setBackgroundImage:[UIImage imageNamed:@"Connected.png"] forState:UIControlStateNormal];
+            
+            self.statusBB= [[UIBarButtonItem alloc] initWithCustomView:status];
+            
+            self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:self.statusBB];
+        }
+        else{
+            
+            UIButton *btn =  [UIButton buttonWithType:UIButtonTypeContactAdd];
+            UIButton *status =  [UIButton buttonWithType:UIButtonTypeCustom];
+            status.frame= btn.frame;
+            btn = NULL;
+            [status setBackgroundImage:[UIImage imageNamed:@"Connecting.png"] forState:UIControlStateNormal];
+            
+            self.statusBB= [[UIBarButtonItem alloc] initWithCustomView:status];
+            
+            self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:self.statusBB];
+            
+        }
+    }
+}
 
+-(void)changedStatus:(NSDictionary *)statusClient
+{
+    
+    [self modifyStatusClient:statusClient];
+    
+    
+}
 
 
 - (void)discoverClients:(MqttBroker *)broker
@@ -52,17 +99,22 @@
     
     
     
-    [broker publishMessage:messaggio onTopic:@"C43/BROADCAST" withQos:1 retained:FALSE andPublisher:self];
+   NSDictionary* res = [broker publishMessage:messaggio onTopic:@"C43/BROADCAST" withQos:1 retained:FALSE andPublisher:self];
+    
+    if(![[res objectForKey:@"CODE"] isEqualToString:@"0"]){
+        //messaggio non è pubblicato
+        //Aggiorna status
+    }
+    
+    
 }
 - (IBAction)selectPeriod:(id)sender {
+ 
     
-    selectPeriod *period = [[selectPeriod alloc]initWithNibName:@"selectPeriod" bundle:NULL];
-    
-    
-    [self presentViewController:period animated:NO completion:^{
+    selectPeriod *sel = [[selectPeriod alloc]initWithNibName:@"selectPeriod" bundle:NULL];
+    [self presentViewController:sel animated:NO completion:^{
         
     }];
-    
     
 }
 
@@ -73,7 +125,6 @@
 
     MqttBroker *broker = [MqttBroker instance];
     [broker subscribeClient:self toTopic:@"C43/BROADCAST"];
-
     [self discoverClients:broker];
     
     
@@ -102,6 +153,9 @@
         self.title = NSLocalizedString(@"CLIENT LIST", NULL);
         self.operations = [[NSOperationQueue alloc] init];
         [self.operations setMaxConcurrentOperationCount:1]; //Una sola operazione alla volta
+        
+        
+
     }
     return self;
 }
@@ -115,24 +169,9 @@
     
     [self.clients removeAllObjects];
     [self.selectedClient removeAllObjects];
-    
-    
-  /*  if([[self.clients allKeys]count]>0){
-        [self.headerButton setEnabled:TRUE];
-        if(([[self.selectedClient allKeys]count] == [[self.clients allKeys]count]) ){
-            //Sono stati selezionati tutti gli elementi -> il pulsante deve essere DEseleziona
-            [self.headerTitle setText:NSLocalizedString(@"DESELECT ALL", NULL)];
-            [self.selectAll setImage:[UIImage imageNamed:@"deSelectAll.png"] forState:UIControlStateNormal];
-        }
-        else{
-            [self.headerTitle setText:NSLocalizedString(@"SELECT ALL", NULL)];
-            [self.selectAll setImage:[UIImage imageNamed:@"selectAll.png"] forState:UIControlStateNormal];
-        }
-    }
-    else{*/
-        [self.headerTitle setText:NSLocalizedString(@"NO CONNECTED CLIENT", NULL)];
-        [self.headerButton setEnabled:FALSE];
-    //}
+    [self.headerTitle setText:NSLocalizedString(@"NO CONNECTED CLIENT", NULL)];
+    [self.headerButton setEnabled:FALSE];
+
     
     
     [self discoverClients:broker];
@@ -149,7 +188,12 @@
     else
     {
        
-        venduto_report *vend = [[venduto_report alloc]initWithNibName:@"venduto_report" bundle:NULL];
+  /*      venduto_report *vend = [[venduto_report alloc]initWithNibName:@"venduto_report" bundle:NULL];
+        [vend setSource:self.selectedClient];
+        [self.navigationController pushViewController:vend animated:YES];*/
+        
+        
+        report_venduto *vend = [[report_venduto alloc]initWithNibName:@"report_venduto" bundle:NULL];
         [vend setSource:self.selectedClient];
         [self.navigationController pushViewController:vend animated:YES];
 
@@ -201,6 +245,11 @@
     [super viewDidLoad];
     
     
+    //Inizializzazione della maschera per il modale
+
+    
+    
+    
 }
 
 
@@ -209,12 +258,10 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
-     [self.clientList setContentInset:UIEdgeInsetsMake(20, 0, 0, 0)];
     
-
+    MqttBroker *broker = [MqttBroker instance];
     
-  //  [self refresh:NULL];
-    
+    [self modifyStatusClient:[broker getStatus]];
 }
 
 
@@ -224,17 +271,6 @@
   //  [msq_tto unsubscribe:[NSString stringWithFormat:@"%@/BROADCAST",self.queue]];
 
 }
-
-#pragma mark MosquittoClientDelegateMethod
-
-- (void) didConnect: (NSUInteger)code{
-    
-
-
-    
-    
-}
-
 
 
 

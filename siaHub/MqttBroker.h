@@ -16,6 +16,7 @@
 @protocol broker_protocol <NSObject>
 
 -(void)receivedAMessage:(mosquitto_message*)aMessage withStatus:(NSDictionary*)aConfig;
+-(void)changedStatus:(NSDictionary*)statusClient; //Metodo richiamato quando c'è una variazione dello stato nella connessione
 
 
 @end
@@ -24,10 +25,11 @@
 
 
 
--(int)unsubscribeClient:(id)aClient fromTopic:(NSString*)aTopic;
--(int)subscribeClient:(id)aClient toTopic:(NSString*)aTopic;
--(void)publishMessage:(NSString*)aMessage onTopic:(NSString*)topic withQos:(int)Qos retained:(BOOL)retain andPublisher:(id)publisher;
+-(void)unsubscribeClient:(id)aClient fromTopic:(NSString*)aTopic;
+-(NSDictionary*)subscribeClient:(id)aClient toTopic:(NSString*)aTopic;
+-(NSDictionary*)publishMessage:(NSString*)aMessage onTopic:(NSString*)topic withQos:(int)Qos retained:(BOOL)retain andPublisher:(id)publisher;
 -(int)getIncrementalInt; //Metodo utilizzato per ottenere un autoincremental number
+-(NSDictionary*)getStatus;
 
 
 +(MqttBroker*)instance;

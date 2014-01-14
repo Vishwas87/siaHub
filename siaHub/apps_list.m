@@ -150,7 +150,7 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
     
     client_list *client = [[client_list alloc]initWithNibName:@"client_list" bundle:NULL];
 
-    [self.navigationController pushViewController:client animated:YES];
+    [self.navigationController pushViewController:client animated:NO];
     
 }
 
