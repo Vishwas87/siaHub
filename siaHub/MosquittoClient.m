@@ -200,6 +200,7 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
 
 - (int)subscribe: (NSString *)topic withQos:(NSUInteger)qos {
     const char* cstrTopic = [topic cStringUsingEncoding:NSUTF8StringEncoding];
+    
     return mosquitto_subscribe(mosq, NULL, cstrTopic, qos);
 }
 

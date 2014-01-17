@@ -28,10 +28,16 @@
 @property (nonatomic, strong) IBOutlet UILabel *headerTitle;
 
 
+
 @property (nonatomic,retain) NSOperationQueue *operations;
+@property (nonatomic,retain) MqttBroker *broker;
+
+@property (nonatomic,retain) NSMutableArray *operationBackground; //Coda che memorizza i messaggi ricevuti quando la view non è visibile
 @property (nonatomic,retain) NSMutableDictionary *clients;
 @property (nonatomic,retain) NSMutableDictionary *selectedClient;
 @property (assign, readwrite) BOOL reload; //Variabile per indicare che la tabella è stata aggiornata
+
+
 
 @property (nonatomic,retain) UIBarButtonItem *statusBB;
 
@@ -42,43 +48,33 @@
 
 - (void)modifyStatusClient:(NSDictionary *)statusClient
 {
+    
+    UIButton *btn =  [UIButton buttonWithType:UIButtonTypeContactAdd];
+    UIButton *status =  [UIButton buttonWithType:UIButtonTypeCustom];
+    status.frame= btn.frame;
+    btn = NULL;
+
     if([[statusClient objectForKey:@"STATUS"] isEqualToString:@"CONNECTING"]){
-        UIButton *btn =  [UIButton buttonWithType:UIButtonTypeContactAdd];
-        UIButton *status =  [UIButton buttonWithType:UIButtonTypeCustom];
-        status.frame= btn.frame;
-        btn = NULL;
+        [self.clients removeAllObjects];
+        [self.clientList reloadData];
+
         [status setBackgroundImage:[UIImage imageNamed:@"Connecting.png"] forState:UIControlStateNormal];
-        
-        self.statusBB= [[UIBarButtonItem alloc] initWithCustomView:status];
-        
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:self.statusBB];
     }
     else{
-        if([[statusClient objectForKey:@"STATUS"] isEqualToString:@"CONNECTED"]){
-            UIButton *btn =  [UIButton buttonWithType:UIButtonTypeContactAdd];
-            UIButton *status =  [UIButton buttonWithType:UIButtonTypeCustom];
-            status.frame= btn.frame;
-            btn = NULL;
+        if([[statusClient objectForKey:@"STATUS"] isEqualToString:@"CONNECTED"])
+        {
+            [self refresh:self.refresh];
             [status setBackgroundImage:[UIImage imageNamed:@"Connected.png"] forState:UIControlStateNormal];
-            
-            self.statusBB= [[UIBarButtonItem alloc] initWithCustomView:status];
-            
-            self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:self.statusBB];
         }
         else{
-            
-            UIButton *btn =  [UIButton buttonWithType:UIButtonTypeContactAdd];
-            UIButton *status =  [UIButton buttonWithType:UIButtonTypeCustom];
-            status.frame= btn.frame;
-            btn = NULL;
-            [status setBackgroundImage:[UIImage imageNamed:@"Connecting.png"] forState:UIControlStateNormal];
-            
-            self.statusBB= [[UIBarButtonItem alloc] initWithCustomView:status];
-            
-            self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:self.statusBB];
-            
+            [self.clients removeAllObjects];
+            [self.clientList reloadData];
+
+            [status setBackgroundImage:[UIImage imageNamed:@"Disconnected.png"] forState:UIControlStateNormal];
         }
     }
+    self.statusBB= [[UIBarButtonItem alloc] initWithCustomView:status];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:self.statusBB];
 }
 
 -(void)changedStatus:(NSDictionary *)statusClient
@@ -95,10 +91,6 @@
     
     NSDictionary*parm = ((AppDelegate*)[UIApplication sharedApplication].delegate).params;
     
-    
-    
-    NSLog(@"Params %@",parm);
-    
     int num = 0;
     NSDictionary* res;
     NSString* azienda =  NULL;
@@ -114,13 +106,13 @@
         
         for (NSDictionary* d in [parm objectForKey:@"gruppi"]) {
            groupName  = [d objectForKey:@"groupName"];
-           num =[broker getIncrementalInt];
+           num =[self.broker getIncrementalInt];
             messaggio =
             [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,num] responseTo:@"" name:@"DISCOVERINGCONNECTEDCLIENT" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
             NSLog(@"Coda %@",[NSString stringWithFormat:@"%@/%@",azienda,groupName]);
             topic = [NSString stringWithFormat:@"%@/%@/BROADCAST",azienda,groupName];
-            [broker subscribeClient:self toTopic:topic];
-            res = [broker publishMessage:messaggio onTopic:topic withQos:1 retained:FALSE andPublisher:self];
+            [self.broker subscribeClient:self toTopic:topic];
+            res = [self.broker publishMessage:messaggio onTopic:topic withQos:1 retained:FALSE andPublisher:self];
             
             if(![[res objectForKey:@"CODE"] isEqualToString:@"0"]){
                 //messaggio non è pubblicato
@@ -157,9 +149,9 @@
  
    
 
-    MqttBroker *broker = [MqttBroker instance];
+    self.broker = [MqttBroker instance];
     //[broker subscribeClient:self toTopic:@"C43/BROADCAST"];
-    [self discoverClients:broker];
+    //[self discoverClients:self.broker];
     
     
 }
@@ -187,7 +179,7 @@
         self.title = NSLocalizedString(@"CLIENT LIST", NULL);
         self.operations = [[NSOperationQueue alloc] init];
         [self.operations setMaxConcurrentOperationCount:1]; //Una sola operazione alla volta
-        
+        self.operationBackground = [[NSMutableArray alloc]init];
         
 
     }
@@ -199,16 +191,14 @@
 -(IBAction)refresh:(id)sender
 {
   
-    MqttBroker *broker = [MqttBroker instance];
+  //  MqttBroker *broker = [MqttBroker instance];
     
     [self.clients removeAllObjects];
     [self.selectedClient removeAllObjects];
     [self.headerTitle setText:NSLocalizedString(@"NO CONNECTED CLIENT", NULL)];
     [self.headerButton setEnabled:FALSE];
-
-    
-    
-    [self discoverClients:broker];
+    [self.clientList performSelectorOnMainThread:@selector(reloadData) withObject:NULL waitUntilDone:NO];
+    [self discoverClients:self.broker];
     
 }
 -(IBAction)show:(id)sender
@@ -241,6 +231,14 @@
 
 -(void)receivedAMessage:(mosquitto_message*)aMessage withStatus:(NSDictionary*)aConfig
 {
+    
+    
+    
+    /*
+        Prima di eseguirlo dobbiamo controllare che la view sia visibile.
+        se non è visibile -->
+     
+     */
     
     
     
@@ -286,23 +284,56 @@
     
 }
 
+-(void)didMoveToParentViewController:(UIViewController *)parent
+{
+    //Effettuare l'unsubscribe
+    
+    NSDictionary*parm = ((AppDelegate*)[UIApplication sharedApplication].delegate).params;
+    
+    NSString* azienda =  NULL;
+    NSString* topic;
+    if([parm objectForKey:@"azienda"]!= NULL) azienda = [parm objectForKey:@"azienda"];
+    
+    
+    
+    if(azienda!= NULL && [parm objectForKey:@"gruppi"]!= NULL){
+        NSString *groupName;
+        
+        for (NSDictionary* d in [parm objectForKey:@"gruppi"]) {
+            groupName  = [d objectForKey:@"groupName"];
+        
+            NSLog(@"Coda %@",[NSString stringWithFormat:@"%@/%@",azienda,groupName]);
+            topic = [NSString stringWithFormat:@"%@/%@/BROADCAST",azienda,groupName];
+            [self.broker unsubscribeClient:self fromTopic:topic];
+        }
+    }
+}
 
 
 
+-(void)viewDidAppear:(BOOL)animated{
+   
+    [self performSelector:@selector(refresh:) withObject:self.refresh afterDelay:0.1];
+}
 
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    MqttBroker *broker = [MqttBroker instance];
+       [self modifyStatusClient:[self.broker getStatus]];
     
-    [self modifyStatusClient:[broker getStatus]];
+    
 }
+
+
+
+
+
 
 
 -(void)viewWillDisappear:(BOOL)animated{
     
     //In modo che non vengano più gestite le eventuali comunicazioni  da questa view
-  //  [msq_tto unsubscribe:[NSString stringWithFormat:@"%@/BROADCAST",self.queue]];
+  //
 
 }
 
@@ -488,6 +519,8 @@
    // [self.header setNeedsDisplay];
     [self.clientList reloadData];
 }
+
+
 
 
 

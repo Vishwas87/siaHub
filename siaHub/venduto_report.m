@@ -28,6 +28,7 @@
 - (void)requestSold:(MqttBroker *)broker
 {
     
+    
     int num =[broker getIncrementalInt];
     NSString *unique = [MqttBroker getUniqueClientId];
     
@@ -46,15 +47,30 @@
     NSString* messaggio =
     [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,num] responseTo:@"" name:@"CURRENTSTOREPERFORMANCEINDEX" command:[[NSDictionary alloc]init] header:[[NSDictionary alloc]init] body:[[NSDictionary alloc]init] andSender:unique];
     
+    
+    
+    /*
+     c43/ORTA1245052345/IN
+     {"name":"CURRENTSTOREPERFORMANCEINDEX","id":"8C58FA75-08B9-4B8E-AE56-228A892915DD_1","responseto":"","header":{
+     "DATE_FROM":"2013-01-02","DATE_TO":"2013-01-02"},"body":{},"command":{},"sender"
+     :"8C58FA75-08B9-4B8E-AE56-228A892915DD"}
+     
+     */
+    
+    [broker subscribeClient:self toTopic:@"C43/ORTA1245052345/OUT/8C58FA75-08B9-4B8E-AE56-228A892915DD"];
+    id ret=[[broker publishMessage:messaggio onTopic:@"c43/ORTA1245052345/IN" withQos:1 retained:FALSE andPublisher:self] objectForKey:@"CODE"];
+    NSLog(@"%@",ret);
 
-    [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+ /*   [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
+        [broker subscribeClient:self toTopic:[NSString stringWithFormat:@"C43/%@/OUT/%@",obj,unique]];
+        
         if(![[[broker publishMessage:messaggio onTopic:[NSString stringWithFormat:@"C43/%@/IN",obj] withQos:1 retained:FALSE andPublisher:self] objectForKey:@"CODE"]isEqualToString:@"0"] ){
             
         }
         
         
-    }];
+    }];*/
     
     
     

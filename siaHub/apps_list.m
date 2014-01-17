@@ -7,7 +7,7 @@
 //
 
 #import "apps_list.h"
-
+#import "AppDelegate.h"
 
 static NSString * const AppTitleIdentifier = @"AppTitle";
 
@@ -25,6 +25,7 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 
 
 -(void)viewDidLayoutSubviews{
+    //Nasconde la barra di stato
     self.navigationController.navigationBar.opaque = FALSE;
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
         self.edgesForExtendedLayout = UIRectEdgeNone;   // iOS 7 specific
@@ -32,6 +33,8 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 
 -(void)listReady:(NSMutableArray*)arrayList
 {
+    
+    //Metodo eseguito in seguito all'evento di ricezione Lista delle applicazioni
     
     [loading stopAnimating];
     [loading removeFromSuperview];
@@ -46,6 +49,8 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 
 -(void)viewWillAppear:(BOOL)animated{
     
+    //Specifico per la collectionview. Serve a posizionarlo correttamente
+    
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
 }
@@ -54,26 +59,36 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 {
     [super viewDidLoad];
     
-    [self setTitle:NSLocalizedString(@"APPS", NULL)];
+    [self setTitle:NSLocalizedString(@"APPS", NULL)]; //Setting del nome della view
     appslist_source *source = [appslist_source sharedInstance];
     
+    //Loading indicator per il caricamento della lista
     loading = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    
     [loading setHidesWhenStopped:TRUE];
-    
-    
-    
-    
+    //Ingrandimento dell'activity inditicator
     loading.transform = CGAffineTransformMakeScale(2.75, 2.75);
-    loading.center = CGPointMake(self.collectionView.frame.size.width /2 , self.collectionView.frame.size.height /2 );
+    
+    loading.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                UIViewAutoresizingFlexibleRightMargin |
+                                UIViewAutoresizingFlexibleTopMargin |
+                                UIViewAutoresizingFlexibleBottomMargin);
+    loading.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds)/2);
+    
+    
     [loading setColor:[UIColor yellowColor]];
     [loading startAnimating];
+    
+    
+    
+    
+    
     [source setDelegate:self];
-    [source startListDownlod:@"htp://google.it"];
+    
+    
+    AppDelegate *delegate = ((AppDelegate*)[UIApplication sharedApplication].delegate);
+    [source startListDownlod:[delegate.addresses objectForKey: @"getAppList"]];
     
     [self.collectionView addSubview:loading];
-    
-    
 	[self setupCollectionView];
     
     self.thumbnailQueue = [[NSOperationQueue alloc] init];
@@ -93,9 +108,6 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 
 -(void)setupCollectionView {
     [self.collectionView registerClass:[app_cell class] forCellWithReuseIdentifier:@"cellIdentifier"];
-
-
-        
     [self.collectionView setPagingEnabled:NO];
 
 }
@@ -147,7 +159,7 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    //TODO: MODIFICA IN MODO DA RENDERLO GENERICO 
     client_list *client = [[client_list alloc]initWithNibName:@"client_list" bundle:NULL];
 
     [self.navigationController pushViewController:client animated:NO];
@@ -166,6 +178,12 @@ static NSString * const AppTitleIdentifier = @"AppTitle";
     [UIView animateWithDuration:0.01 animations:^{
         [self.collectionView setAlpha:0];
     }];
+    
+
+    
+
+    
+    
     [self.collectionView.collectionViewLayout invalidateLayout];
 }
 

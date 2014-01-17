@@ -10,6 +10,10 @@
  
     Ogetto SINGLETON che rappresenta la sorgente della lista di app
  
+ 
+    IN questo momento ritorna un solo valore a costante ma successivamente potrà effettuare 
+    richieste asincrone
+ 
  */
 #import "appslist_source.h"
 
@@ -60,7 +64,15 @@ static appslist_source *sharedInstance = nil;
     
         //Questo metodo avvierà la richiesta per la lista di funzionalità
     NSURL *url = [NSURL URLWithString:@"https://cdn1.iconfinder.com/data/icons/pretty_office_3/128/sales-report.png"];
-    app *Venduto = [app appWithIconUrl:url name:@"Venduto"  andQuery:@"SELECT * FROM VENDUTO"];
+    
+    //App venduto è il modello di ogni singola applicazione
+    /*
+        Ogni applicazione viene caratterizzata da una icona , un nome ed una eventuale query da eseguire
+     
+     */
+    
+    app *Venduto = [app appWithIconUrl:url name:@"Venduto"
+                                            andQuery:@"SELECT * FROM VENDUTO"];
     
     [sharedInstance.appsList addObject:Venduto];    
     Venduto = NULL;

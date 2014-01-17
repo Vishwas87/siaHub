@@ -13,7 +13,7 @@
 @end
 
 @implementation report_venduto_header
-@synthesize store,hour,date,day;
+@synthesize store,hour,date,day,loading;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

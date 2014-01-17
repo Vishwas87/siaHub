@@ -15,7 +15,7 @@
 @property (nonatomic,retain)IBOutlet UILabel *hour;
 @property (nonatomic,retain)IBOutlet UILabel *date;
 @property (nonatomic,retain)IBOutlet UILabel *day;
-
+@property (nonatomic,retain)IBOutlet UIActivityIndicatorView *loading;
 
 +(float)getHeaderHeight; //Ritorna l'altezza dell'header
 @end

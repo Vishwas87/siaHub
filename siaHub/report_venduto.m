@@ -58,15 +58,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+         self.delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
         self.sectionsHeaders = [[NSMutableDictionary alloc]init];
-        self.queue = [[self.delegate params] objectForKey:@"customer_code"];
+        self.queue = [[self.delegate params] objectForKey:@"azienda"];
 
-        self.queue = @"C43";//TODO DA RIMUOVERE
         self.title = NSLocalizedString(@"REPORT VENDUTO", NULL);
-        self.delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+       
         
         self.operations = [[NSOperationQueue alloc] init];
-        [self.operations setMaxConcurrentOperationCount:1]; //Una sola operazione alla volta
+        [self.operations setMaxConcurrentOperationCount:4]; //Una sola operazione alla volta
 
         
     
@@ -123,19 +123,16 @@
     [MosquittoClient createMessageForId:[NSString stringWithFormat:@"%@_%d",unique,num] responseTo:@"" name:@"CURRENTSTOREPERFORMANCEINDEX" command:[[NSDictionary alloc]init] header:header body:[[NSDictionary alloc]init] andSender:unique];
     
 
-    [[self.source allKeys] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"%@/%@/OUT/%@",self.queue,obj,unique);
-        [broker subscribeClient:self toTopic:[NSString stringWithFormat:@"%@/%@/OUT/%@",self.queue,obj,unique]];
-        
-        
-        
-        if(![[[broker publishMessage:messaggio onTopic:[NSString stringWithFormat:@"%@/%@/IN",self.queue,obj] withQos:1 retained:FALSE andPublisher:self] objectForKey:@"CODE"]isEqualToString:@"0"] ){
-            
-        }
-        
-        
-    }];
     
+    
+    NSString *topicToSub;
+    NSString *topicToPub;
+    for (NSString* obj in [self.source allKeys]) {
+        topicToSub =[NSString stringWithFormat:@"%@/%@/OUT/%@",self.queue,obj,unique];
+        topicToPub =[NSString stringWithFormat:@"%@/%@/IN",self.queue,obj];
+        [broker subscribeClient:self toTopic:topicToSub];
+        [broker publishMessage:messaggio onTopic:topicToPub withQos:1 retained:FALSE andPublisher:self];
+  }
     
 }
 
@@ -170,8 +167,8 @@
     
     
     __weak report_venduto *weakSelf = self;
-    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
-        
+    
+    [self.operations addOperationWithBlock:^{
         
         NSString* sender;
         @try {
@@ -231,7 +228,7 @@
                     
                     //Aggiorna la sezione specifica
                     int index = [[weakSelf.source allKeys] indexOfObject:sender];
-
+                    
                     
                     
                     [weakSelf performSelectorOnMainThread:@selector(reloadTableWithSectionAndAnimation:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",index],@"index", nil] waitUntilDone:NO];
@@ -243,24 +240,28 @@
             else{
                 //Il negozio ha mandato un messaggio di errore (array di errori)
                 
-
+                sender = aMessage.sender;
+                 int index = [[weakSelf.source allKeys] indexOfObject:sender];
                 switch ([[aMessage.header objectForKey:@"return_code"] intValue]) {
                     case -1:
                     {
-                        NSDictionary * dic = [NSDictionary  dictionaryWithObjectsAndKeys:[aMessage.header objectForKey:@"error_messages"],@"NO DATA AVAIABLE", nil];
+                        NSDictionary * dic = [NSDictionary  dictionaryWithObjectsAndKeys:[aMessage.header objectForKey:@"error_messages"],@"ERROR", nil];
+                        NSMutableDictionary *tmp = [[NSMutableDictionary alloc]init];
+                        [tmp setObject:dic forKey:@"BODY"];
                         NSString* sender = aMessage.sender;
-                        [weakSelf.source setObject:dic forKey:sender];
+                        [weakSelf.source setObject:tmp forKey:sender];
+                        [weakSelf performSelectorOnMainThread:@selector(reloadTableWithSectionAndAnimation:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",index],@"index", nil] waitUntilDone:NO];
                     }
-                    break;
+                        break;
                         
                     default:
                         break;
                 }
                 
-
+                
                 
             }
-
+            
         }
         @catch (NSException *exception) {
             
@@ -271,13 +272,8 @@
             
         }
         
-      
-        
+
     }];
-    
-    [self.operations addOperation:op];
-    
-    
  
     
 }
@@ -288,7 +284,7 @@
     
     int  index = [[dict objectForKey:@"index"] integerValue];
 
-    if(index >= 0  || index < self.clients.numberOfSections)
+    if(self.clients.numberOfSections > 0 && (index >= 0  && index < self.clients.numberOfSections))
     {
         [self.clients reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -302,6 +298,12 @@
 
 -(void)changedStatus:(NSDictionary*)statusClient //Metodo richiamato quando c'è una variazione dello stato nella connessione
 {
+    
+    
+    
+    
+    
+    
     
 }
 
@@ -510,6 +512,7 @@
         }
         //cell.detailTextLabel.text = @"ciao";
         buttonWithSource * n = (buttonWithSource*)[cell viewWithTag:100];
+        [((report_venduto_header*)[self.sectionsHeaders objectForKey:store]).loading stopAnimating];
         if([[self.exapdanded objectForKey:store] boolValue])
         {
             
@@ -537,20 +540,30 @@
             NSString *label;
             
             
+            if([dict objectForKey:@"ERROR"]!= NULL){
+                //C'è stato un errore nella richiesta
+                if([[dict objectForKey:@"ERROR"] count]>0) [cell.key setText:[[dict objectForKey:@"ERROR"] objectAtIndex:0]];
+                else [cell.key setText:NSLocalizedString(@"NO FIELD DATA", NULL)];
+                
+                [cell.valore setHidden:TRUE];
+            }
+            else{
+                key = [self setKey:indexPath];
+                label = NSLocalizedString(key, NULL);
+                
+                value = ([dict objectForKey:key]!= NULL)?[dict objectForKey:key]: NSLocalizedString(@"N.A.", NULL);
+                value = [NSString stringWithFormat:@"%@",value];
+                
+                [self setValue:&value key:key];
+                
+                [cell.valore setTextAlignment:NSTextAlignmentRight];
+                [cell.valore setText:value];
+                
+                [cell.key setText:label];
+                [cell.valore setText:value];
+            }
             
-            key = [self setKey:indexPath];
-            label = NSLocalizedString(key, NULL);
-            
-            value = ([dict objectForKey:key]!= NULL)?[dict objectForKey:key]: NSLocalizedString(@"N.A.", NULL);
-            value = [NSString stringWithFormat:@"%@",value];
-            
-            [self setValue:&value key:key];
-            
-            [cell.valore setTextAlignment:NSTextAlignmentRight];
-            [cell.valore setText:value];
-            
-            [cell.key setText:label];
-            [cell.valore setText:value];
+
         }
         @catch (NSException *exception) {
             
@@ -559,6 +572,10 @@
             
         }
         @finally {
+            
+            if(indexPath.row == [self.clients numberOfRowsInSection:indexPath.section]-1){
+                [((report_venduto_header*)[self.sectionsHeaders objectForKey:store]).loading stopAnimating];
+            }
             
             return cell;
         }
@@ -584,6 +601,12 @@
     if([self.source objectForKey:key]!= NULL &&
        [[self.source objectForKey:key] objectForKey:@"BODY"] != NULL )
     {
+        
+        if([[[[self.source objectForKey:key] objectForKey:@"BODY"] allKeys] containsObject:@"ERROR"]){
+            
+            return 1;
+        }
+        
         
         if([[self.exapdanded objectForKey:key] boolValue]){
             //TRUE --> tabella espansa

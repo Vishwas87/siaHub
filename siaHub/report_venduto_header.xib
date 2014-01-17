@@ -9,6 +9,7 @@
                 <outlet property="date" destination="JMS-ct-lRj" id="JTL-JM-tOB"/>
                 <outlet property="day" destination="UVA-fe-cJH" id="DRV-82-oxd"/>
                 <outlet property="hour" destination="h7u-6E-Wpa" id="pXq-9N-0eS"/>
+                <outlet property="loading" destination="kEg-FN-hln" id="9Ou-te-J8h"/>
                 <outlet property="store" destination="rjX-Ff-Qvx" id="jIV-wS-qai"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>

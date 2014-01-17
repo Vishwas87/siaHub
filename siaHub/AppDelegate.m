@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-
-
+#import "Reachability.h"
+@class  MqttBroker;
 @interface AppDelegate()
 
 @property (assign,readwrite) int incrementalNumber;
@@ -17,67 +17,49 @@
 
 
 @property (nonatomic,retain, readwrite) MosquittoClient *mosquittoClient;
-
+@property (nonatomic) Reachability *internetReachability;
+@property (nonatomic) MqttBroker *broker;
 
 @end
 
 @implementation AppDelegate
-@synthesize mosquittoClient,navigation,params;
+@synthesize mosquittoClient,navigation,params,addresses;
 @synthesize from,to;
-
-
-
-
-
--(void)resetDelegateMosquitto{
-
-  //  [mosquittoClient setDelegate:self];
-    
-}
-
-
-
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.incrementalNumber = 0;
-    
-    
-    
-    
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"loginBundle" withExtension:@"bundle"]];
-    login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:@"http://localhost:8888/" andLoginUrl:@"https://192.168.3.109/index.php/login"];
-    [controller setDelegate:self];
-    
-    
-    self.window.rootViewController = controller;
-    
-    /*
-    
-    
-    self.params = [[NSMutableDictionary alloc]init];
-    [self.params setObject:@"C43" forKey:@"customer_code"];
-    [self.params setObject:@"vincenzo" forKey:@"username"];
-    [self.params setObject:@"vincenzo" forKey:@"password"];
-    
-    
-    if(self.navigation == NULL){
-        //Se ancora non è stata avviata l'app
-        apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
-        self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
-    }
 
     
-    self.window.rootViewController = self.navigation;
-    controller = NULL;
-    */
-    [self.window makeKeyAndVisible];
+    
+    @try {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"Address" ofType:@"plist"];
+        self.addresses = [[NSMutableDictionary alloc]initWithContentsOfFile:path];
+        NSString *loginAddress = [self.addresses  objectForKey:@"login"];
+        NSString *spotAddress =[self.addresses  objectForKey:@"spot"];
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+ 
+        self.window.backgroundColor = [UIColor whiteColor];
+        
+        NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"loginBundle" withExtension:@"bundle"]];
+        login_view *controller = [[login_view alloc]initWithNibName:@"login_view" bundle:bundle andSpotsUrl:spotAddress andLoginUrl:loginAddress];
+        [controller setDelegate:self];
+        
+        
+        self.window.rootViewController = controller;
+        
+        [self.window makeKeyAndVisible];
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Errore");
+        //TODO Gestire generico errore
+    }
+    @finally {
+        
+    }
     
     
     
@@ -86,75 +68,107 @@
 
 
 
-
-
-
-
-
-
--(void)loginSuccess:(NSMutableDictionary*)response //Method executed after a succeful login
+- (void) reachabilityChanged:(NSNotification *)note
 {
+    Reachability* curReach = [note object];
     
     
-    if([[response objectForKey:@"RETURNCODE"] intValue] == 0){
-        
-        NSArray* retval = [response objectForKey:@"RETURNVALUES"];
-        if([retval count]>0){
-            
-            NSMutableDictionary *parameters = [retval objectAtIndex:0];
-            if([[parameters allKeys]containsObject:@"azienda"] &&
-               [[parameters allKeys]containsObject:@"username"] &&
-               [[parameters allKeys]containsObject:@"password"]
-               ){
-                
-                
-                
-                
-                
-                
-                self.params = [[NSMutableDictionary alloc]init];
-                
-                [parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                    
-                    [self.params setObject:obj forKey:key];
-                    
-                }];
-                
-                
- /*               [self.params setObject:[parameters objectForKey:@"azienda"] forKey:@"azienda"];
-                [self.params setObject:[parameters objectForKey:@"username"] forKey:@"username"];
-                [self.params setObject:[parameters objectForKey:@"password"] forKey:@"password"];*/
-                parameters = NULL;
-                response = NULL;
-                retval = NULL;
-                
-                if(self.navigation == NULL){
-                    //Se ancora non è stata avviata l'app
-                    apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
-                    self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
-                }
-                [self.window.rootViewController presentViewController:self.navigation animated:NO completion:^{
-                    
-                }];
-                
-                
-            }
-            else{
-                UIAlertView * errorCustomer = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"NO PARAMETERS", NULL) message:NSLocalizedString(@"NO PARAMETERS MESSAGE", NULL) delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
-                [errorCustomer show];
-            }
+    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+    
+    switch (netStatus) {
+        case NotReachable:
+        {
+            [self.broker didDisconnect];
+        }
+            break;
+        case ReachableViaWWAN:
+        case 	ReachableViaWiFi:
+        {
+            [self.broker performSelector:@selector(tryConnection) withObject:NULL afterDelay:1];
             
         }
-           
-        
-        
-
+        default:
+            break;
     }
     
-    
+}
 
+
+
+-(void)loginSuccess:(NSMutableDictionary*)response
+//Method executed after a succeful login
+{
+    
+    @try {
+        if([[response objectForKey:@"RETURNCODE"] intValue] == 0){
+            NSArray* retval = [response objectForKey:@"RETURNVALUES"];
+            if([retval count]>0){
+                
+                NSMutableDictionary *parameters = [retval objectAtIndex:0];
+                if([[parameters allKeys]containsObject:@"azienda"] &&
+                   [[parameters allKeys]containsObject:@"username"] &&
+                   [[parameters allKeys]containsObject:@"password"]  &&
+                   [[parameters allKeys] containsObject:@"authParams"] && //Ci sono i parametri di autenticazione al sistema
+                   [[[parameters  objectForKey:@"authParams"] allKeys] containsObject:@"token"] //Esiste il token
+                   
+                   ){
+                        //Salviamo i parametri ricevuti in una variabile che sarà accessibile da tutti i controller
+                    
+                        self.params = [[NSMutableDictionary alloc]init];
+                    
+                        [parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                        
+                            //salviamo tutti i parametri ricevuti dal login
+                            [self.params setObject:obj forKey:key];
+                        
+                        }];
+                        if(self.navigation == NULL){
+                                //Se ancora non è stata avviata l'app
+                                apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
+                                self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
+                            
+                                self.broker = [MqttBroker instance];
+                                self.internetReachability = [Reachability reachabilityForInternetConnection];
+                                [self.internetReachability startNotifier];
+                                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+
+                            
+                            }
+                        [self.window.rootViewController presentViewController:self.navigation animated:NO completion:^{}];
+                    }
+                else{
+                    
+                    //Non tutti i parametri sono stati passati
+                    //Bisogna riavviare l'applicazione
+                    UIAlertView * errorCustomer = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"NO PARAMETERS", NULL) message:NSLocalizedString(@"NO PARAMETERS MESSAGE", NULL) delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
+                    [errorCustomer show];
+                    
+                }
+            }
+            else{
+                
+                
+                //TODO GESTIRE MEGLIO L'errore ricevuto dal server CASE????
+                //Bisogna riavviare l'applicazione
+                UIAlertView * errorCustomer = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"NO SERVER RESONSE", NULL) message:NSLocalizedString(@"NO SERVER RESONSE MESSAGE", NULL) delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
+                [errorCustomer show];
+            
+            }
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Errore");
+        //Gestire visualizzazione generico errore
+        
+    }
+    @finally {
+        
+    }
     
 }
+
+
+
 -(void)loginError:(id)errorStatus //Method executed after a failed login
 {
     
