@@ -1,3 +1,4 @@
+
 //
 //  MqttBroker.m
 //  siaHub
@@ -27,14 +28,16 @@
 @property (nonatomic,retain) NSOperationQueue *operation; //Coda per l'operazione di riconnessione
 @property (nonatomic,retain) NSTimer *timerReconnect; //Timer di riconnessione
 
+#define REPEAT_INTERVAL 3
 
 
--(void) tryConnection;
+
+
 @end
 
 @implementation MqttBroker
 static MqttBroker *uniqueInstance = NULL;
-
+@synthesize user,pwd,address;
 
 
 +(NSString*)getUniqueClientId
@@ -72,7 +75,33 @@ static MqttBroker *uniqueInstance = NULL;
 }
 
 
+-(void)setAddress:(NSString *)addr
+{
+    //Aggiungere controlli sul tipo di address
+    
+
+    [self.mosquittoClient setHost:addr];
+    
+}
+
+-(void)setUser:(NSString *)usr
+{
+
+    [self.mosquittoClient setUsername:usr];
+}
+-(void)setPwd:(NSString *)password
+{
+
+    [self.mosquittoClient setPassword:password];
+}
+
+
+
+
+
 -(id)init{
+    
+
     
     self = [super init];
     
@@ -91,64 +120,66 @@ static MqttBroker *uniqueInstance = NULL;
         self.clients = [[NSMutableArray alloc]init];
         if(!self.mosquittoClient) self.mosquittoClient  = [[MosquittoClient alloc]initWithClientId:unique];
         
-       // [self.mosquittoClient setHost: @"85.39.190.50"];
-        [self.mosquittoClient setHost: @"192.168.1.109"];
-        
+        // [self.mosquittoClient setHost: @"85.39.190.50"];
         [self.mosquittoClient setDelegate:self];
-        
-        [self.mosquittoClient setUsername:@"fabio2"];
-        [self.mosquittoClient setPassword:@"fabio"];
-        self.status = @"CONNECTING";
-        
-
-        self.timerReconnect = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tryConnection) userInfo:NULL repeats:YES];
-
         //[self tryConnection];
         
     }
     
+    
     return self;
 }
 -(NSDictionary*)getStatus{
-    
-    
-    
     return [NSDictionary dictionaryWithObjectsAndKeys:self.status,@"STATUS", nil];
 }
 
 -(void) tryConnection
 {
-    //Esegue la connessione al client in maniera asincrona (consentendo di non bloccare i client)
-    __weak MqttBroker *weakSelf = self;
-    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // then set them via the main queue if the cell is still visible.
-            weakSelf.status = @"CONNECTING";
+    
+    //Se non è in esecuzione un'istanza di tryConnection (un evento di disconnessone precedente) Esegui
+    
+    if([self.status isEqualToString:@"DISCONNECTED"]){
+        //Esegue la connessione al client in maniera asincrona (consentendo di non bloccare i client)
+        __weak MqttBroker *weakSelf = self;
+        NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
             
-            [weakSelf.clients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.timerReconnect invalidate];
+                // then set them via the main queue if the cell is still visible.
+                weakSelf.status = @"CONNECTING";
                 
-                if([obj respondsToSelector:@selector(changedStatus:)]){
-                    [obj changedStatus:[NSDictionary dictionaryWithObjectsAndKeys:weakSelf.status,@"STATUS", nil]];
+                [weakSelf.clients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    
+                    if([obj respondsToSelector:@selector(changedStatus:)]){
+                        [obj changedStatus:[NSDictionary dictionaryWithObjectsAndKeys:weakSelf.status,@"STATUS", nil]];
+                    }
+                    
+                    
+                }];
+                int c= [weakSelf.mosquittoClient connect];
+                if(c != 0) {
+                    weakSelf.status = @"DISCONNECTED";
+                   /* [weakSelf.clients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        
+                        if([obj respondsToSelector:@selector(changedStatus:)]){
+                            [obj changedStatus:[NSDictionary dictionaryWithObjectsAndKeys:weakSelf.status,@"STATUS", nil]];
+                        }
+                        
+                        
+                    }];*/
+                    if(![weakSelf.timerReconnect isValid]){
+                        weakSelf.timerReconnect = [NSTimer scheduledTimerWithTimeInterval:REPEAT_INTERVAL target:self selector:@selector(tryConnection) userInfo:NULL repeats:YES];
+                    }
                 }
                 
-                
-            }];
-            [weakSelf.mosquittoClient setHost: @"192.168.1.109"];
-            
-            [weakSelf.mosquittoClient setDelegate:self];
-            
-            [weakSelf.mosquittoClient setUsername:@"fabio2"];
-            [weakSelf.mosquittoClient setPassword:@"fabio"];
-            [weakSelf.mosquittoClient connect];
-        });
-    }];
-    
-    operation.queuePriority = NSOperationQueuePriorityHigh ;
-    
-    [self.operation addOperation:operation];
-
+            });
+        }];
+        
+        operation.queuePriority = NSOperationQueuePriorityHigh ;
+        
+        [self.operation addOperation:operation];
+    }
 
 }
 
@@ -185,6 +216,17 @@ static MqttBroker *uniqueInstance = NULL;
     
     if(![self.clients containsObject:aClient]){
         [self.clients addObject:aClient];
+        
+        //Se il client si aggiunge la prima volta -> gli passo lo stato attuale
+        [self.clients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            if(obj != NULL && [obj respondsToSelector:@selector(changedStatus:)]){
+                //Avviso che lo stato è DISCONNESSO
+                [obj changedStatus:[NSDictionary dictionaryWithObjectsAndKeys:self.status,@"STATUS", nil]];
+            }
+            
+        }];
+        
     }
     
     if([self.topicsReuqested objectForKey:aTopic]== NULL){
@@ -198,6 +240,9 @@ static MqttBroker *uniqueInstance = NULL;
     int ris = [self.mosquittoClient subscribe:aTopic];
     NSMutableDictionary *result;
     result = [self generateStatusRequest:ris];
+    
+    
+    
     
     
     return result;
@@ -307,14 +352,11 @@ static MqttBroker *uniqueInstance = NULL;
         }
         
     }];
-    self.timerReconnect = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(tryConnection) userInfo:NULL repeats:YES];
-    //Provo a ricollegarmi
-       // [uniqueInstance performSelector:@selector(tryConnection) withObject:NULL afterDelay:1];
-    
-/*    NSInvocationOperation *op = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(tryConnection) object:NULL];
-    [self.operation addOperation:op];*/
+    self.timerReconnect = [NSTimer scheduledTimerWithTimeInterval:REPEAT_INTERVAL target:self selector:@selector(tryConnection) userInfo:NULL repeats:YES];
     
 }
+
+
 
 
 

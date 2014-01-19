@@ -656,7 +656,6 @@ int _mosquitto_packet_write(struct mosquitto *mosq)
 			}else{
 #ifdef WIN32
 				errno = WSAGetLastError();
-                printf("%d",errno_t);
 #endif
 				if(errno == EAGAIN || errno == COMPAT_EWOULDBLOCK){
 					pthread_mutex_unlock(&mosq->current_out_packet_mutex);

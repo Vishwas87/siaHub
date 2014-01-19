@@ -124,11 +124,9 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
 }
 
 
-- (void) connect {
+- (int) connect {
     const char *cstrHost = [host cStringUsingEncoding:NSASCIIStringEncoding];
     const char *cstrUsername = NULL, *cstrPassword = NULL;
-    
-    
     
     if (username)
         cstrUsername = [username cStringUsingEncoding:NSUTF8StringEncoding];
@@ -139,7 +137,7 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
     // FIXME: check for errors
     mosquitto_username_pw_set(mosq, cstrUsername, cstrPassword);
     
-    mosquitto_connect(mosq, cstrHost, port, keepAlive);
+    int c =  mosquitto_connect(mosq, cstrHost, port, keepAlive);
     
     // Setup timer to handle network events
     // FIXME: better way to do this - hook into iOS Run Loop select() ?
@@ -149,6 +147,7 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
                                            selector:@selector(loop:)
                                            userInfo:nil
                                             repeats:YES];
+    return c;
 }
 
 - (void) connectToHost: (NSString*)aHost {

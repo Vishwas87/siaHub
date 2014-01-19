@@ -57,6 +57,7 @@
     if([[statusClient objectForKey:@"STATUS"] isEqualToString:@"CONNECTING"]){
         [self.clients removeAllObjects];
         [self.clientList reloadData];
+        
 
         [status setBackgroundImage:[UIImage imageNamed:@"Connecting.png"] forState:UIControlStateNormal];
     }
@@ -144,17 +145,7 @@
     
 }
 
-- (void)setMosquittoClient
-{
- 
-   
 
-    self.broker = [MqttBroker instance];
-    //[broker subscribeClient:self toTopic:@"C43/BROADCAST"];
-    //[self discoverClients:self.broker];
-    
-    
-}
 
 
 -(void)viewDidLayoutSubviews{
@@ -172,7 +163,7 @@
         // Custom initialization
         self.clients = [[NSMutableDictionary alloc] init];
         self.reload = FALSE;
-        [self setMosquittoClient];
+
         self.selectedClient = [[NSMutableDictionary alloc]init];
         AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication]delegate];
         self.queue = [[app params] objectForKey:@"customer_code"];
@@ -275,6 +266,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    AppDelegate *del = ((AppDelegate*)[UIApplication sharedApplication].delegate);
+    NSDictionary* params= del.params;
+    
+    if(![[params allKeys]containsObject:@"username"] || ![[params allKeys]containsObject:@"password"] || ![[params allKeys]containsObject:@"authParams"] || ![[params allKeys]containsObject:@"azienda"]){
+    
+        //Visualizza errore
+        
+    }
+    else{
+        
+        self.broker = [MqttBroker instance];
+        
+  
+        [self.broker setAddress:[del.addresses objectForKey:@"MQTT"]];
+        [self.broker setUser:[params objectForKey:@"username"]];
+        [self.broker setPwd:[params objectForKey:@"password"]];
+        
+        [self.broker tryConnection];
+    }
+    
+    
+    
+    
     
     
     //Inizializzazione della maschera per il modale
@@ -311,8 +325,8 @@
 
 
 
--(void)viewDidAppear:(BOOL)animated{
-   
+-(void)viewDidAppear:(BOOL)animated
+{
     [self performSelector:@selector(refresh:) withObject:self.refresh afterDelay:0.1];
 }
 
@@ -323,7 +337,6 @@
     
     
 }
-
 
 
 

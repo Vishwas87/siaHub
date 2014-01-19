@@ -10,10 +10,10 @@
 #import "login_view.h"
 #import "apps_list.h"
 
+#import "MosquittoClient.h"
 
 
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate,login_view_protocol>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,login_view_protocol,MosquittoClientDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong,nonatomic) UINavigationController *navigation;

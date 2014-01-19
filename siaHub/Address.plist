@@ -8,5 +8,7 @@
 	<string>http://localhost:8888/</string>
 	<key>getAppList</key>
 	<string>http://appList.com</string>
+	<key>MQTT</key>
+	<string>192.168.1.109</string>
 </dict>
 </plist>

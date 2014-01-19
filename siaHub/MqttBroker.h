@@ -31,8 +31,13 @@
 -(int)getIncrementalInt; //Metodo utilizzato per ottenere un autoincremental number
 -(NSDictionary*)getStatus;
 
-
+-(void) tryConnection;
 +(MqttBroker*)instance;
 +(NSString*)getUniqueClientId;
+
+
+@property (nonatomic,retain) NSString*user;
+@property (nonatomic,retain) NSString *pwd;
+@property (nonatomic,retain) NSString *address;
 
 @end

@@ -47,7 +47,7 @@
 
 - (MosquittoClient*) initWithClientId: (NSString *)clientId;
 - (void) setMessageRetry: (NSUInteger)seconds;
-- (void) connect;
+- (int) connect;
 - (void) connectToHost: (NSString*)host;
 - (void) reconnect;
 - (void) disconnect;

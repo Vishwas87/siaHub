@@ -74,7 +74,7 @@
     
     
     NetworkStatus netStatus = [curReach currentReachabilityStatus];
-    
+    if(!self.broker)self.broker = [MqttBroker instance];
     switch (netStatus) {
         case NotReachable:
         {
@@ -127,7 +127,8 @@
                                 apps_list *cn = [[apps_list alloc]initWithNibName:@"apps_list" bundle:nil];
                                 self.navigation = [[UINavigationController alloc]initWithRootViewController:cn];
                             
-                                self.broker = [MqttBroker instance];
+                               // self.broker = [MqttBroker instance];
+
                                 self.internetReachability = [Reachability reachabilityForInternetConnection];
                                 [self.internetReachability startNotifier];
                                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
@@ -135,6 +136,10 @@
                             
                             }
                         [self.window.rootViewController presentViewController:self.navigation animated:NO completion:^{}];
+                    
+                    
+
+
                     }
                 else{
                     
@@ -173,6 +178,7 @@
 {
     
 }
+
 
 
 
